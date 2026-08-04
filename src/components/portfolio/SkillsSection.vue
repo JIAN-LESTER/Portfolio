@@ -123,7 +123,7 @@ function getIcon(item: SkillItem): Component {
         :class="{ 'is-active': isActiveSection }"
     >
         <div class="section-inner" data-stage-scroll>
-            <p class="eyebrow">SKILLS</p>
+            <p class="eyebrow">TECH STACK</p>
 
             <div class="grid">
                 <article
@@ -290,6 +290,7 @@ function getIcon(item: SkillItem): Component {
     color: var(--depth);
     text-align: center;
     line-height: 1.2;
+    overflow-wrap: anywhere;
 }
 
 .icon-tile:hover {

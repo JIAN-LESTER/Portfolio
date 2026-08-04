@@ -158,7 +158,7 @@ export const portfolioData: PortfolioData = {
                 { name: 'PHP', logo: 'braces' },
                 { name: 'Laravel', logo: 'layers' },
                 { name: 'REST APIs', logo: 'network' },
-                { name: 'Firebase Functions', logo: 'firebase' },
+                { name: 'Firebase Cloud Functions', logo: 'firebase' },
                 { name: 'Python', logo: 'code' },
                 { name: 'Java', logo: 'coffee' },
             ],
@@ -200,7 +200,7 @@ export const portfolioData: PortfolioData = {
         {
             title: 'AI & Data Retrieval',
             items: [
-                { name: 'RAG', logo: 'brain' },
+                { name: 'Retrieval-Augmented Generation (RAG)', logo: 'brain' },
                 { name: 'Pinecone', logo: 'search' },
                 { name: 'Gemini', logo: 'sparkles' },
                 { name: 'Embeddings', logo: 'scan-search' },
@@ -213,7 +213,7 @@ export const portfolioData: PortfolioData = {
                 { name: 'Figma', logo: 'pen-tool' },
                 { name: 'Wireframing', logo: 'drafting-compass' },
                 { name: 'Prototyping', logo: 'panel-top' },
-                { name: 'UI Design', logo: 'palette' },
+                { name: 'User Interface Design', logo: 'palette' },
             ],
         },
         {

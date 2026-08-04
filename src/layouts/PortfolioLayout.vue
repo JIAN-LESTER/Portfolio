@@ -9,7 +9,7 @@ import { portfolioData } from '@/data/portfolio';
 const sections: StageSection[] = [
     { id: 'hero', label: '', slides: 1 },
     { id: 'about', label: 'About', slides: 1 },
-    { id: 'skills', label: 'Skills', slides: 1 },
+    { id: 'skills', label: 'Tech\nStack', slides: 1 },
     {
         id: 'projects',
         label: 'Projects',
