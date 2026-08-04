@@ -15,7 +15,7 @@ const showIdentity = ref(false);
 const showTerminal = ref(true);
 
 const fullQuery =
-    "query --role='developer' --status='available' --window='Aug 2026'";
+    "query --role='developer' --status='open-to-work' --location='Singapore'";
 const fullResult = '-> 1 match found';
 
 const reducedMotion =

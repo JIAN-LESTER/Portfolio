@@ -38,7 +38,7 @@ const { isActiveSection } = useSectionSlide('about');
                         <li>
                             <span class="k">Focus</span
                             ><span class="v"
-                                >Web &middot; Mobile &middot; AI</span
+                                >Web &middot; Mobile &middot; Backend &middot; Frontend &middot; AI</span
                             >
                         </li>
                     </ul>

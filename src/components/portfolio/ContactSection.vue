@@ -77,6 +77,13 @@ function submitBuildRequest() {
                                 {{ personal.email }}
                             </a>
                             <a
+                                v-if="personal.phone"
+                                :href="`tel:${personal.phone.replace(/\s/g, '')}`"
+                                class="contact-link border-white/15 px-5 py-2 text-white hover:border-cyan-200/40 hover:bg-white/10"
+                            >
+                                {{ personal.phone }}
+                            </a>
+                            <a
                                 v-if="personal.github"
                                 :href="personal.github"
                                 target="_blank"
