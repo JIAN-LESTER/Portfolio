@@ -218,8 +218,8 @@ export const portfolioData: PortfolioData = {
         {
             title: 'System Architecture',
             items: [
-                { name: 'Monolithic Architecture', logo: 'blocks' },
-                { name: 'Microservice Architecture', logo: 'network' },
+                { name: 'Monolithic', logo: 'blocks' },
+                { name: 'Microservice', logo: 'network' },
                 { name: 'OOP', logo: 'braces' },
                 { name: 'Modular Design', logo: 'layout-template' },
             ],
