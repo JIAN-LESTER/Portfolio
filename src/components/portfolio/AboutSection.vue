@@ -61,7 +61,7 @@ const { isActiveSection } = useSectionSlide('about');
     padding-inline: clamp(15px, 8vw, 140px);
     max-width: 1600px;
     margin-inline: auto;
-    overflow-y: auto;
+    overflow: hidden;
     overscroll-behavior: contain;
 }
 
@@ -164,6 +164,7 @@ const { isActiveSection } = useSectionSlide('about');
     .section-inner {
         padding-block: 5.25rem 2rem;
         padding-inline: clamp(18px, 6vw, 30px);
+        overflow-y: auto;
     }
 
     .eyebrow {
