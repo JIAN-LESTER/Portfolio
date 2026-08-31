@@ -17,9 +17,8 @@ const { isActiveSection } = useSectionSlide('about');
 
             <div class="grid">
                 <h2 class="headline">
-                    I turn ideas into applications with clean UI, reliable
-                    backend logic, structured databases, real-time dashboards,
-                    and AI-powered features built for real-world use.
+                    A fresh IT graduate with 3+ years of project-based
+                    experience building web, mobile, and AI-powered software.
                 </h2>
 
                 <div class="copy">
@@ -38,7 +37,7 @@ const { isActiveSection } = useSectionSlide('about');
                         <li>
                             <span class="k">Focus</span
                             ><span class="v"
-                                >Web &middot; Mobile &middot; Backend &middot; Frontend &middot; AI</span
+                                >Web &middot; Mobile &middot; AI &middot; APIs &middot; Testing</span
                             >
                         </li>
                     </ul>

@@ -2,7 +2,7 @@
 import PortfolioLayout from '@/layouts/PortfolioLayout.vue';
 import Portfolio from '@/pages/Portfolio.vue';
 
-document.title = 'Jian Lester Tabarno - Full-Stack Web & Mobile Developer';
+document.title = 'Jian Lester Tabarno - Software Engineer | Full Stack Web & Mobile Developer';
 </script>
 
 <template>

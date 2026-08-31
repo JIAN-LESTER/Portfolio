@@ -3,17 +3,18 @@ import type { PortfolioData } from '@/types/portfolio';
 export const portfolioData: PortfolioData = {
     personal: {
         name: 'Jian Lester Tabarno',
-        role: 'Full-Stack Web & Mobile Developer',
+        role: 'Software Engineer | Full Stack Web & Mobile Developer',
         tagline:
-            'I build complete software systems - combining clean UI, reliable backend logic, structured databases, APIs, and practical features that solve real-world problems.',
-        bio: 'BS Information Technology graduate (Cum Laude) specializing in full-stack web and mobile development. I work across Laravel, React, Flutter, Firebase, and AI-assisted retrieval - building authentication, dashboards, real-time data, APIs, and database layers that fit together as one system rather than a pile of features. Based in Singapore and open to work.',
+            'I build functional web, mobile, and AI-powered applications with clean interfaces, reliable backend logic, structured data, and quality-tested features.',
+        bio: 'Bachelor of Science in Information Technology fresh graduate with over three years of project-based software development experience across academic, personal, and internship projects. I build full-stack web, mobile, and AI-powered applications using Laravel, React, Flutter, Node.js, and related technologies, with authentication, dashboards, APIs, database integration, and database design. I also apply feature testing, defect documentation, debugging, and fix verification to deliver dependable software.',
         location: 'Singapore',
         availability: 'Open to work',
         email: 'tabarno.jian@gmail.com',
         phone: '+65 8931 4707',
         github: 'https://github.com/JIAN-LESTER',
         linkedin: 'https://www.linkedin.com/in/jian-lester-tabarno/',
-        website: 'https://jianlester.dev',
+        facebook: 'https://www.facebook.com/jian.lester.tabarno/',
+        website: 'https://jianlester.vercel.app',
         image: '/images/profile.jpg',
         resumeUrl: '/images/Jian_Tabarno_Resume.pdf',
     },
@@ -22,11 +23,11 @@ export const portfolioData: PortfolioData = {
         school: 'Central Mindanao University',
         degree: 'Bachelor of Science',
         field: 'Information Technology',
-        start: '2022',
-        end: '2026',
+        start: 'Aug 2022',
+        end: 'Jul 2026',
         honor: 'Cum Laude',
         description:
-            'Graduated with a GWA of 1.551, with 1.00 as the highest grade. Coursework and capstone work focused on applied software systems, including full-stack development, mobile applications, database design, and real-world system implementation.',
+            'GPA: 4.31. Coursework and capstone work focused on applied software systems, full-stack development, mobile applications, database design, and real-world system implementation.',
     },
 
     experience: {
@@ -36,131 +37,138 @@ export const portfolioData: PortfolioData = {
         end: 'May 2026',
         location: 'Cagayan de Oro City, Philippines',
         highlights: [
-            'Tested internal web and mobile applications, documented issues, verified fixes, and supported QA workflows across development cycles.',
-            'Debugged web modules and shipped front-end improvements that resolved reported usability issues.',
-            'Implemented and tested mobile app features — user-facing workflows, validation, and functionality checks — before release.',
+            'Tested 32+ web and mobile application features across multiple development cycles, documented 190+ defects, verified fixes, and supported release QA.',
+            'Assisted in debugging 2 web modules and applied front-end improvements that resolved reported usability issues and reduced recurring defects.',
+            'Implemented and tested 15+ mobile app features, including user workflows, input validation, media uploads, and functional checks before release.',
         ],
     },
 
     projects: [
         {
             title: 'OASP Assist',
-            tag: 'AI · RAG',
+            tag: 'AI / RAG',
             summary:
-                'An inquiry assistant for CMU\u2019s Office of Admissions, Scholarships & Placement.',
+                'An inquiry assistant for CMU-OASP using AI-powered data retrieval.',
             description:
-                'Cross-platform Flutter app that answers student inquiries using retrieval-augmented generation. Pinecone handles vector search over admissions data, Gemini generates the response, and Firebase Cloud Functions (TypeScript) tie retrieval, embeddings, and real-time data together so answers stay fast and grounded instead of generic.',
+                'Developed a cross-platform Flutter inquiry assistant that answers student inquiries using AI-powered data retrieval. Implemented a RAG workflow by converting knowledge-base content into embeddings, storing and searching them in Pinecone, and generating contextual responses through Gemini. Firebase services provide authentication, real-time data, and backend logic.',
             stack: [
                 'Flutter',
                 'Firebase',
-                'Pinecone',
                 'Gemini',
                 'RAG',
+                'Pinecone',
+                'Firebase Cloud Functions',
                 'TypeScript',
             ],
         },
         {
-            title: 'Gym Management System',
-            tag: 'Web · Systems',
-            summary:
-                'QR-based membership and operations platform for EZ Fitness Gym, Valencia, Bukidnon.',
-            description:
-                'Laravel system covering inventory, point-of-sale, and day-to-day gym operations, built around QR-code member authentication and attendance tracking — replacing manual sign-in sheets with something the front desk actually wants to use.',
-            stack: ['Laravel', 'PHP', 'Blade', 'JavaScript', 'MySQL'],
-        },
-        {
-            title: 'BukCast',
-            tag: 'Web · Real-time data',
-            summary:
-                'Real-time weather monitoring for the province of Bukidnon.',
-            description:
-                'A system that collects, processes, and displays live weather data on a map and dashboard, giving a province-wide view of conditions as they change rather than a single-station snapshot.',
-            stack: ['Laravel', 'PHP', 'Blade', 'JavaScript', 'MySQL'],
-        },
-        {
             title: 'JobTrackr',
-            tag: 'Web · Productivity',
+            tag: 'Web / Productivity',
             summary:
-                'A personal job application tracker with a companion browser extension.',
+                'A job application tracker with an AI resume analyzer and browser extension.',
             description:
-                'A focused tracking system for managing job applications, company details, statuses, notes, and follow-ups. Its browser extension can capture job details directly from job websites and add them to JobTrackr, reducing manual entry and keeping the search pipeline organized.',
+                'Created a personal job tracking system for applications, statuses, notes, and follow-ups, with a browser extension for capturing job details and an AI resume analyzer that compares job descriptions for tailored recommendations.',
             stack: [
                 'Laravel',
                 'PHP',
                 'React',
                 'TypeScript',
+                'Gemini',
                 'PostgreSQL',
-                'Browser Extension',
             ],
+        },
+        {
+            title: 'Gym Management System',
+            tag: 'Web / Systems',
+            summary:
+                'A QR-enabled operations platform for EZ Fitness Gym in Valencia, Bukidnon.',
+            description:
+                'Built a gym management system with member management, attendance tracking, inventory, point-of-sale, and reporting features. Integrated QR-based member authentication to speed up check-ins and improve attendance accuracy for daily gym operations.',
+            stack: ['Laravel', 'PHP', 'Blade', 'JavaScript', 'PostgreSQL'],
+        },
+        {
+            title: 'BukCast',
+            tag: 'Web / Real-time data',
+            summary:
+                'A real-time weather monitoring system for Bukidnon.',
+            description:
+                'Developed a weather dashboard for Bukidnon with an interactive map, real-time weather data, and municipality-specific forecasts using Maps and Weather APIs.',
+            stack: ['Laravel', 'PHP', 'Blade', 'JavaScript', 'PostgreSQL'],
         },
     ],
 
     services: [
         {
             code: 'WEB',
-            title: 'Web Application Development',
+            title: 'Full-Stack Web Development',
             paragraphs: [
-                'I build full-stack web applications with clean user interfaces, reliable backend logic, and database-driven features. This includes developing responsive dashboards, management systems, tracking platforms, admin panels, and business tools that are easy to use and organized.',
-                'I focus on both functionality and design, making sure the system is not only working properly but also user-friendly, responsive, and visually clean across different screen sizes.',
+                'I build full-stack web applications with responsive interfaces, reliable backend logic, APIs, and structured databases. This includes dashboards, management systems, tracking platforms, admin panels, and business tools.',
+                'I connect each layer around real user workflows so the result is functional, organized, and easy to use across different screen sizes.',
             ],
         },
         {
             code: 'MOBILE',
-            title: 'Mobile Application Development',
+            title: 'Mobile App Development',
             paragraphs: [
-                'I develop cross-platform and native mobile applications with practical features, smooth navigation, and clean UI design. I build mobile apps that can include authentication, real-time databases, file uploads, notifications, forms, dashboards, offline-ready features, and API integrations.',
-                'My mobile development focuses on creating functional, responsive, and user-friendly applications for Android and iOS, suitable for businesses, organizations, student systems, tracking systems, and internal tools.',
+                'I develop cross-platform and native mobile applications with practical features, smooth navigation, and clean UI design using Flutter and Android development tools.',
+                'Mobile features can include authentication, real-time data, media uploads, forms, dashboards, validation, and API integrations for business, student, and internal systems.',
             ],
         },
         {
             code: 'AI',
-            title: 'AI Development',
+            title: 'AI-Powered Features',
             paragraphs: [
-                'I develop AI-powered features using generative AI and retrieval-augmented generation, also known as RAG. These features can help applications provide automated responses, analyze documents, answer user inquiries, generate content, and improve user support.',
-                'This service is suitable for AI chatbots, inquiry assistants, document-based search systems, resume analyzers, automated FAQ systems, and smart application features.',
+                'I develop AI-powered application features using generative AI and retrieval-augmented generation. These features can answer inquiries, analyze documents, compare resumes with job descriptions, and improve user support.',
+                'I focus on grounding useful AI behavior in application data through embeddings, vector search, backend logic, and clear user workflows.',
+            ],
+        },
+        {
+            code: 'QA',
+            title: 'Software Testing & QA',
+            paragraphs: [
+                'I test web and mobile features across development cycles, covering functional workflows, input validation, media uploads, API behavior, and regression checks before release.',
+                'I document defects clearly, verify fixes, assist with debugging, and help reduce recurring issues so software is more stable and dependable for its users.',
             ],
         },
         {
             code: 'DESIGN',
-            title: 'Web Design',
+            title: 'Interface & System Design',
             paragraphs: [
-                'I design clean, modern, and user-friendly interfaces for websites and web applications. This includes creating wireframes, prototypes, page layouts, dashboard designs, and responsive UI designs that guide the development process.',
-                'My goal is to create designs that are visually organized, easy to navigate, and aligned with the purpose of the system before development begins.',
+                'I plan clean, modern interfaces and the system structure behind them, including wireframes, responsive layouts, user roles, modules, workflows, and component-based design.',
+                'This creates a clear path from an idea to a maintainable application that is easy to navigate and aligned with its purpose.',
             ],
         },
         {
             code: 'DATA',
-            title: 'Database Design',
+            title: 'Database & API Integration',
             paragraphs: [
-                'I design structured and efficient databases for web, mobile, and full-stack applications. This includes planning tables, collections, relationships, user data, system records, and data flow to support the features of the application.',
-                'I focus on creating database structures that are organized, scalable, and easy to maintain for systems such as dashboards, management platforms, tracking systems, and business applications.',
+                'I design structured databases and integrate APIs for web, mobile, and full-stack applications. This includes tables, collections, relationships, data validation, authentication, and real-time data flows.',
+                'I work with SQL and NoSQL systems to keep application data organized, reliable, and ready for features such as dashboards, reporting, tracking, and management workflows.',
             ],
         },
         {
             code: 'SYS',
-            title: 'System Design',
+            title: 'System Architecture',
             paragraphs: [
-                'I design the overall structure and flow of software systems before development. This includes planning system modules, user roles, features, workflows, data flow, architecture, and how different parts of the application will work together.',
-                'This helps ensure that the system is clear, organized, scalable, and easier to develop, test, and maintain.',
+                'I plan the overall structure of software systems, including modules, user roles, features, workflows, data flow, and architecture patterns such as MVC, clean architecture, and event-driven design.',
+                'Good system planning keeps applications clear, scalable, testable, and easier to maintain as more features are added.',
             ],
         },
     ],
 
-    // `logo` holds a lucide-vue-next icon name (kebab-case), rendered dynamically
-    // in SkillsSection.vue. A few are thematic stand-ins rather than brand marks,
-    // since lucide is a generic icon set, not a brand-logo set — e.g. `coffee`
-    // for Java, `wind` for Tailwind, `flame` for Firebase, `atom` for React
-    // (which is, fittingly, React's actual logo shape).
     skills: [
         {
-            title: 'Languages',
+            title: 'Programming Languages',
             items: [
                 { name: 'PHP', logo: 'braces' },
                 { name: 'JavaScript', logo: 'javascript' },
                 { name: 'TypeScript', logo: 'typescript' },
                 { name: 'Java', logo: 'coffee' },
                 { name: 'Python', logo: 'python' },
+                { name: 'Visual Basic .NET', logo: 'code' },
                 { name: 'Dart', logo: 'dart' },
+                { name: 'HTML', logo: 'file-type' },
+                { name: 'CSS', logo: 'palette' },
             ],
         },
         {
@@ -168,28 +176,48 @@ export const portfolioData: PortfolioData = {
             items: [
                 { name: 'Laravel', logo: 'laravel' },
                 { name: 'NestJS', logo: 'layers' },
+                { name: 'Node.js', logo: 'code' },
                 { name: 'REST API', logo: 'network' },
+                { name: 'Spring Boot', logo: 'layers' },
+                { name: 'Firebase Cloud Functions', logo: 'cloud' },
+                { name: 'Microservices', logo: 'network' },
+                { name: 'JSON', logo: 'braces' },
             ],
         },
         {
             title: 'Frontend',
             items: [
                 { name: 'React', logo: 'react' },
-                { name: 'HTML5', logo: 'file-type' },
-                { name: 'CSS3', logo: 'palette' },
+                { name: 'Next.js', logo: 'nextjs' },
                 { name: 'Tailwind CSS', logo: 'wind' },
-                { name: 'Vue', logo: 'blocks' },
-                { name: 'Blade', logo: 'file-type' },
                 { name: 'Flutter', logo: 'smartphone' },
+                { name: 'Android XML', logo: 'file-type' },
+                { name: 'Responsive Design', logo: 'layout-template' },
             ],
         },
         {
-            title: 'Databases',
+            title: 'Databases & ORM',
             items: [
                 { name: 'PostgreSQL', logo: 'database' },
                 { name: 'MySQL', logo: 'database' },
                 { name: 'Firebase Firestore', logo: 'cloud' },
-                { name: 'Supabase', logo: 'database' },
+                { name: 'Prisma', logo: 'database' },
+                { name: 'SQL & NoSQL', logo: 'table-2' },
+            ],
+        },
+        {
+            title: 'Application Features & Workflows',
+            items: [
+                { name: 'Authentication', logo: 'braces' },
+                { name: 'Role-Based Access', logo: 'network' },
+                { name: 'Dashboards', logo: 'layout-template' },
+                { name: 'Reporting', logo: 'table-2' },
+                { name: 'Activity Logging', logo: 'table-2' },
+                { name: 'CRUD Workflows', logo: 'network' },
+                { name: 'File/Media Uploads', logo: 'folder-open' },
+                { name: 'Real-Time Data', logo: 'cloud' },
+                { name: 'Data Validation', logo: 'braces' },
+                { name: 'API Integration', logo: 'api' },
             ],
         },
         {
@@ -202,6 +230,7 @@ export const portfolioData: PortfolioData = {
                 { name: 'Vercel', logo: 'triangle' },
                 { name: 'Render', logo: 'cloud' },
                 { name: 'Firebase', logo: 'flame' },
+                { name: 'Powershell', logo: 'file-type' },
             ],
         },
         {
@@ -212,32 +241,41 @@ export const portfolioData: PortfolioData = {
                 { name: 'Gemini', logo: 'sparkles' },
                 { name: 'Embeddings', logo: 'scan-search' },
                 { name: 'NLP', logo: 'message-square-text' },
-                { name: 'AI-assisted Development (Codex, Claude)', logo: 'sparkles' },
+                { name: 'Claude', logo: 'sparkles' },
             ],
         },
         {
-            title: 'System Architecture',
+            title: 'Testing & Quality',
             items: [
-                { name: 'Monolithic', logo: 'blocks' },
-                { name: 'Microservice', logo: 'network' },
+                { name: 'Unit Testing', logo: 'check' },
+                { name: 'Functional Testing', logo: 'check' },
+                { name: 'API Testing', logo: 'api' },
+                { name: 'Regression Testing', logo: 'network' },
+                { name: 'Bug Fixing', logo: 'braces' },
+                { name: 'Defect Documentation', logo: 'file-type' },
+                { name: 'Fix Verification', logo: 'check' },
+            ],
+        },
+        {
+            title: 'Architecture & Design Patterns',
+            items: [
                 { name: 'OOP', logo: 'braces' },
-                { name: 'Modular Design', logo: 'layout-template' },
+                { name: 'MVC', logo: 'layers' },
+                { name: 'SDLC', logo: 'network' },
+                { name: 'Clean Architecture', logo: 'blocks' },
+                { name: 'Component-Based Architecture', logo: 'blocks' },
+                { name: 'Event-Driven Architecture', logo: 'network' },
             ],
         },
         {
-            title: 'System Design',
-            items: [
-                { name: 'Figma', logo: 'pen-tool' },
-                { name: 'Wireframing', logo: 'drafting-compass' },
-                { name: 'Prototyping', logo: 'panel-top' },
-            ],
-        },
-        {
-            title: 'Development Tools',
+            title: 'Build & Development Tools',
             items: [
                 { name: 'Visual Studio Code', logo: 'code' },
                 { name: 'Android Studio', logo: 'smartphone' },
                 { name: 'Postman', logo: 'send' },
+                { name: 'Figma', logo: 'pen-tool' },
+                { name: 'Jira', logo: 'folder-open' },
+                { name: 'Maven', logo: 'layers' },
             ],
         },
     ],

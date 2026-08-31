@@ -15,7 +15,7 @@ const showIdentity = ref(false);
 const showTerminal = ref(true);
 
 const fullQuery =
-    "query --role='developer' --status='open-to-work' --location='Singapore'";
+    "query --role='software-engineer' --status='open-to-work' --location='Singapore'";
 const fullResult = '-> 1 match found';
 
 const reducedMotion =
@@ -154,6 +154,22 @@ onMounted(() => {
                             target="_blank"
                             rel="noreferrer"
                             >GitHub</a
+                        >
+                        <a
+                            v-if="personal.linkedin"
+                            class="btn btn-ghost"
+                            :href="personal.linkedin"
+                            target="_blank"
+                            rel="noreferrer"
+                            >LinkedIn</a
+                        >
+                        <a
+                            v-if="personal.facebook"
+                            class="btn btn-ghost"
+                            :href="personal.facebook"
+                            target="_blank"
+                            rel="noreferrer"
+                            >Facebook</a
                         >
                     </div>
                 </div>

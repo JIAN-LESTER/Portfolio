@@ -17,7 +17,7 @@ const sections: StageSection[] = [
     },
     {
         id: 'services',
-        label: 'Services\nOffered',
+        label: 'What I\nDo',
         slides: portfolioData.services.length,
     },
     { id: 'journey', label: 'Education\nExperience', slides: 3 },

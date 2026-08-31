@@ -101,6 +101,15 @@ function submitBuildRequest() {
                             >
                                 LinkedIn
                             </a>
+                            <a
+                                v-if="personal.facebook"
+                                :href="personal.facebook"
+                                target="_blank"
+                                rel="noreferrer"
+                                class="contact-link border-white/15 px-5 py-2 text-white hover:border-cyan-200/40 hover:bg-white/10"
+                            >
+                                Facebook
+                            </a>
                         </div>
                     </div>
 

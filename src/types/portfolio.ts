@@ -9,6 +9,7 @@ export interface PersonalInfo {
     phone?: string;
     github?: string;
     linkedin?: string;
+    facebook?: string;
     website?: string;
     image?: string;
     resumeUrl?: string;
