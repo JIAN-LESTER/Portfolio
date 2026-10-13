@@ -7,10 +7,10 @@ export const portfolioData: PortfolioData = {
         tagline:
             'I build functional web, mobile, and AI-powered applications with clean interfaces, reliable backend logic, structured data, and quality-tested features.',
         bio: 'Bachelor of Science in Information Technology fresh graduate with over three years of project-based software development experience across academic, personal, and internship projects. I build full-stack web, mobile, and AI-powered applications using Laravel, React, Flutter, Node.js, and related technologies, with authentication, dashboards, APIs, database integration, and database design. I also apply feature testing, defect documentation, debugging, and fix verification to deliver dependable software.',
-        location: 'Singapore',
+        location: 'Kibawe, Bukidnon, Philippines',
         availability: 'Open to work',
         email: 'tabarno.jian@gmail.com',
-        phone: '+65 8931 4707',
+        phone: '+63 9072894778',
         github: 'https://github.com/JIAN-LESTER',
         linkedin: 'https://www.linkedin.com/in/jian-lester-tabarno/',
         facebook: 'https://www.facebook.com/jian.lester.tabarno/',
@@ -60,6 +60,33 @@ export const portfolioData: PortfolioData = {
                 'Firebase Cloud Functions',
                 'TypeScript',
             ],
+        },
+        {
+            title: 'Ticket Hub',
+            tag: 'Web / Ticketing',
+            summary:
+                'A ticketing platform with in-app voice and video calls for support teams.',
+            description:
+                'Built a ticket management system for tracking requests, coordinating responses, and resolving support issues. Integrated WebRTC calls so users and support staff can discuss tickets directly in the app.',
+            stack: ['Java', 'Spring Boot', 'Next.js', 'WebRTC', 'PostgreSQL', 'Docker'],
+        },
+        {
+            title: 'Store System',
+            tag: 'Web / Mobile commerce',
+            summary:
+                'An online store and ordering platform with rider delivery and a dedicated mobile app.',
+            description:
+                'Developed an e-commerce system that connects product browsing, order placement, and delivery workflows. A dedicated React Native app supports mobile ordering and rider delivery operations.',
+            stack: ['Python', 'FastAPI', 'React', 'React Native', 'PostgreSQL'],
+        },
+        {
+            title: 'AI Hire',
+            tag: 'AI / Recruitment',
+            summary:
+                'A recruitment platform with an AI agent supporting the hiring pipeline.',
+            description:
+                'Created a recruitment workflow where an AI agent helps recruiters review applications, schedule interviews, evaluate interview results, and prepare offers. The platform keeps candidate progress organized from application through offer.',
+            stack: ['Next.js', 'Prisma ORM', 'PostgreSQL'],
         },
         {
             title: 'JobTrackr',
@@ -179,6 +206,7 @@ export const portfolioData: PortfolioData = {
                 { name: 'Node.js', logo: 'code' },
                 { name: 'REST API', logo: 'network' },
                 { name: 'Spring Boot', logo: 'layers' },
+                { name: 'FastAPI', logo: 'api' },
                 { name: 'Firebase Cloud Functions', logo: 'cloud' },
                 { name: 'Microservices', logo: 'network' },
                 { name: 'JSON', logo: 'braces' },

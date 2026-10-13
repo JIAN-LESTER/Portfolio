@@ -3,7 +3,7 @@ import { computed, onMounted, ref } from 'vue';
 import { useScrollStage, useSectionSlide } from '@/composables/useScrollStage';
 import type { PersonalInfo } from '@/types/portfolio';
 
-defineProps<{ personal: PersonalInfo }>();
+const props = defineProps<{ personal: PersonalInfo }>();
 
 const { isActiveSection } = useSectionSlide('hero');
 const stage = useScrollStage();
@@ -14,8 +14,7 @@ const showResult = ref(false);
 const showIdentity = ref(false);
 const showTerminal = ref(true);
 
-const fullQuery =
-    "query --role='software-engineer' --status='open-to-work' --location='Singapore'";
+const fullQuery = `query --role='software-engineer' --status='open-to-work' --location='${props.personal.location}'`;
 const fullResult = '-> 1 match found';
 
 const reducedMotion =
