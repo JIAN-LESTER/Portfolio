@@ -13,10 +13,10 @@ import { portfolioData } from '@/data/portfolio';
 
 <template>
     <HeroSection :personal="portfolioData.personal" />
+    <ServicesSection :services="portfolioData.services" />
     <AboutSection :personal="portfolioData.personal" />
     <SkillsSection :skills="portfolioData.skills" />
     <ProjectsSection :projects="portfolioData.projects" />
-    <ServicesSection :services="portfolioData.services" />
     <JourneySection
         :education="portfolioData.education"
         :experience="portfolioData.experience"

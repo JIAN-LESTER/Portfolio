@@ -3,7 +3,7 @@ import type { PortfolioData } from '@/types/portfolio';
 export const portfolioData: PortfolioData = {
     personal: {
         name: 'Jian Lester Tabarno',
-        role: 'Software Engineer | Full Stack Web & Mobile Developer',
+        role: 'Full Stack Web & Mobile Developer',
         tagline:
             'I build functional web, mobile, and AI-powered applications with clean interfaces, reliable backend logic, structured data, and quality-tested features.',
         bio: 'Bachelor of Science in Information Technology fresh graduate with over three years of project-based software development experience across academic, personal, and internship projects. I build full-stack web, mobile, and AI-powered applications using Laravel, React, Flutter, Node.js, and related technologies, with authentication, dashboards, APIs, database integration, and database design. I also apply feature testing, defect documentation, debugging, and fix verification to deliver dependable software.',
@@ -126,59 +126,24 @@ export const portfolioData: PortfolioData = {
 
     services: [
         {
-            code: 'WEB',
-            title: 'Full-Stack Web Development',
+            code: 'SOFTWARE',
+            title: 'Custom Software Development',
             paragraphs: [
-                'I build full-stack web applications with responsive interfaces, reliable backend logic, APIs, and structured databases. This includes dashboards, management systems, tracking platforms, admin panels, and business tools.',
-                'I connect each layer around real user workflows so the result is functional, organized, and easy to use across different screen sizes.',
-            ],
-        },
-        {
-            code: 'MOBILE',
-            title: 'Mobile App Development',
-            paragraphs: [
-                'I develop cross-platform and native mobile applications with practical features, smooth navigation, and clean UI design using Flutter and Android development tools.',
-                'Mobile features can include authentication, real-time data, media uploads, forms, dashboards, validation, and API integrations for business, student, and internal systems.',
-            ],
-        },
-        {
-            code: 'AI',
-            title: 'AI-Powered Features',
-            paragraphs: [
-                'I develop AI-powered application features using generative AI and retrieval-augmented generation. These features can answer inquiries, analyze documents, compare resumes with job descriptions, and improve user support.',
-                'I focus on grounding useful AI behavior in application data through embeddings, vector search, backend logic, and clear user workflows.',
-            ],
-        },
-        {
-            code: 'QA',
-            title: 'Software Testing & QA',
-            paragraphs: [
-                'I test web and mobile features across development cycles, covering functional workflows, input validation, media uploads, API behavior, and regression checks before release.',
-                'I document defects clearly, verify fixes, assist with debugging, and help reduce recurring issues so software is more stable and dependable for its users.',
+                'Purpose-built systems, dashboards, and business tools shaped around your workflows, users, and long-term goals.',
             ],
         },
         {
             code: 'DESIGN',
-            title: 'Interface & System Design',
+            title: 'Web Design',
             paragraphs: [
-                'I plan clean, modern interfaces and the system structure behind them, including wireframes, responsive layouts, user roles, modules, workflows, and component-based design.',
-                'This creates a clear path from an idea to a maintainable application that is easy to navigate and aligned with its purpose.',
+                'Clear, responsive interfaces that turn your ideas into accessible digital experiences with a distinct visual identity.',
             ],
         },
         {
-            code: 'DATA',
-            title: 'Database & API Integration',
+            code: 'WEB',
+            title: 'Web Development',
             paragraphs: [
-                'I design structured databases and integrate APIs for web, mobile, and full-stack applications. This includes tables, collections, relationships, data validation, authentication, and real-time data flows.',
-                'I work with SQL and NoSQL systems to keep application data organized, reliable, and ready for features such as dashboards, reporting, tracking, and management workflows.',
-            ],
-        },
-        {
-            code: 'SYS',
-            title: 'System Architecture',
-            paragraphs: [
-                'I plan the overall structure of software systems, including modules, user roles, features, workflows, data flow, and architecture patterns such as MVC, clean architecture, and event-driven design.',
-                'Good system planning keeps applications clear, scalable, testable, and easier to maintain as more features are added.',
+                'Reliable, maintainable websites and web applications built across the frontend, backend, APIs, and database.',
             ],
         },
     ],

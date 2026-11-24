@@ -22,17 +22,17 @@ const routes: Record<string, PageRoute> = {
         title: 'Jian Lester Tabarno - Software Engineer',
         sections: [
             { id: 'hero', label: 'Home', slides: 1 },
+            {
+                id: 'services',
+                label: 'What I\nDo',
+                slides: 1,
+            },
             { id: 'about', label: 'About', slides: 1 },
             { id: 'skills', label: 'Tech\nStack', slides: 1 },
             {
                 id: 'projects',
                 label: 'Projects',
                 slides: portfolioData.projects.length,
-            },
-            {
-                id: 'services',
-                label: 'What I\nDo',
-                slides: portfolioData.services.length,
             },
             { id: 'journey', label: 'Education\nExperience', slides: 3 },
             { id: 'resume', label: 'Resume', slides: 1 },
@@ -70,7 +70,7 @@ const routes: Record<string, PageRoute> = {
             {
                 id: 'services',
                 label: 'What I\nDo',
-                slides: portfolioData.services.length,
+                slides: 1,
             },
             { id: 'footer', label: 'Footer', slides: 1 },
         ],
