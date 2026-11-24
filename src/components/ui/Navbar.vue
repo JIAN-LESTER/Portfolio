@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { Menu, X } from 'lucide-vue-next';
+import { Menu, Moon, X } from 'lucide-vue-next';
 import { normalizePath, siteNavigation } from '@/data/navigation';
 
 const isMenuOpen = ref(false);
 const currentPath = normalizePath(window.location.pathname);
+const primaryNavigation = siteNavigation.filter((item) => item.path !== '/contact');
+const contactNavigation = siteNavigation.find((item) => item.path === '/contact');
 
 function handleNavigation(path: string) {
     if (!siteNavigation.some((item) => item.path === path)) {
@@ -42,18 +44,36 @@ function handleNavigation(path: string) {
                 <Menu v-else :size="20" aria-hidden="true" />
             </button>
 
-            <div id="primary-menu" class="nav-links">
-                <a
-                    v-for="item in siteNavigation"
-                    :key="item.path"
-                    :href="item.path"
-                    class="nav-link"
-                    :class="{ 'is-active': currentPath === item.path }"
-                    :aria-current="currentPath === item.path ? 'page' : undefined"
-                    @click="handleNavigation(item.path)"
-                >
-                    {{ item.label }}
-                </a>
+            <div id="primary-menu" class="nav-menu">
+                <div class="nav-links">
+                    <a
+                        v-for="item in primaryNavigation"
+                        :key="item.path"
+                        :href="item.path"
+                        class="nav-link"
+                        :class="{ 'is-active': currentPath === item.path }"
+                        :aria-current="currentPath === item.path ? 'page' : undefined"
+                        @click="handleNavigation(item.path)"
+                    >
+                        {{ item.label }}
+                    </a>
+                </div>
+
+                <div class="nav-actions">
+                    <span class="theme-indicator" role="img" aria-label="Dark mode">
+                        <Moon :size="16" aria-hidden="true" />
+                    </span>
+                    <a
+                        v-if="contactNavigation"
+                        :href="contactNavigation.path"
+                        class="contact-link"
+                        :class="{ 'is-active': currentPath === contactNavigation.path }"
+                        :aria-current="currentPath === contactNavigation.path ? 'page' : undefined"
+                        @click="handleNavigation(contactNavigation.path)"
+                    >
+                        {{ contactNavigation.label }}
+                    </a>
+                </div>
             </div>
         </nav>
     </header>
@@ -65,15 +85,15 @@ function handleNavigation(path: string) {
     top: clamp(0.75rem, 2.5vw, 1.4rem);
     left: 50%;
     z-index: 50;
-    width: min(calc(100% - 2rem), 1180px);
+    width: min(calc(100% - 2rem), 1600px);
     transform: translateX(-50%);
 }
 
 .navbar {
-    display: flex;
+    display: grid;
     min-height: 3.5rem;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
     align-items: center;
-    justify-content: space-between;
     gap: 1.5rem;
     padding: 0.55rem 0.65rem 0.55rem 0.75rem;
     border: 1px solid rgb(237 233 226 / 0.1);
@@ -117,7 +137,63 @@ function handleNavigation(path: string) {
 .nav-links {
     display: flex;
     align-items: center;
-    gap: 0.15rem;
+    gap: 0.75rem;
+}
+
+.nav-menu {
+    display: contents;
+}
+
+.nav-actions {
+    display: flex;
+    align-items: center;
+    justify-self: end;
+    gap: 0.55rem;
+}
+
+.theme-indicator {
+    display: inline-flex;
+    width: 2.35rem;
+    height: 2.35rem;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgb(237 233 226 / 0.12);
+    border-radius: 999px;
+    background: rgb(237 233 226 / 0.05);
+    color: var(--signal);
+}
+
+.contact-link {
+    display: inline-flex;
+    min-height: 2.35rem;
+    align-items: center;
+    justify-content: center;
+    padding: 0.55rem 1rem;
+    border: 1px solid var(--paper);
+    border-radius: 999px;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    text-decoration: none;
+    transition:
+        background-color 180ms ease,
+        border-color 180ms ease,
+        color 180ms ease,
+        transform 180ms ease;
+}
+
+.contact-link:hover,
+.contact-link.is-active {
+    border-color: var(--signal);
+    background: var(--signal);
+}
+
+.contact-link:hover {
+    transform: translateY(-1px);
 }
 
 .nav-link {
@@ -126,7 +202,7 @@ function handleNavigation(path: string) {
     border-radius: 0.55rem;
     color: var(--muted);
     font-family: var(--font-mono);
-    font-size: 0.72rem;
+    font-size: 0.82rem;
     font-weight: 500;
     letter-spacing: 0.02em;
     text-decoration: none;
@@ -181,8 +257,13 @@ function handleNavigation(path: string) {
 
     .navbar {
         position: relative;
+        display: flex;
         min-height: 3.4rem;
         padding: 0.45rem 0.5rem 0.45rem 0.65rem;
+    }
+
+    .brand {
+        margin-right: auto;
     }
 
     .menu-toggle {
@@ -190,7 +271,7 @@ function handleNavigation(path: string) {
         flex: 0 0 auto;
     }
 
-    .nav-links {
+    .nav-menu {
         position: absolute;
         top: calc(100% + 0.5rem);
         right: 0;
@@ -211,10 +292,33 @@ function handleNavigation(path: string) {
         backdrop-filter: blur(18px);
     }
 
-    .menu-open .nav-links {
+    .menu-open .nav-menu {
         opacity: 1;
         pointer-events: auto;
         transform: translateY(0);
+    }
+
+    .nav-links {
+        display: grid;
+        gap: 0.2rem;
+    }
+
+    .nav-actions {
+        display: grid;
+        grid-template-columns: 2.75rem minmax(0, 1fr);
+        justify-self: stretch;
+        gap: 0.45rem;
+        padding-top: 0.35rem;
+        border-top: 1px solid rgb(237 233 226 / 0.08);
+    }
+
+    .theme-indicator {
+        width: 2.75rem;
+        height: 2.75rem;
+    }
+
+    .contact-link {
+        min-height: 2.75rem;
     }
 
     .nav-link {
@@ -222,7 +326,7 @@ function handleNavigation(path: string) {
         display: flex;
         align-items: center;
         padding-inline: 0.85rem;
-        font-size: 0.78rem;
+        font-size: 0.82rem;
     }
 
     .nav-link::after {
@@ -244,7 +348,8 @@ function handleNavigation(path: string) {
 @media (prefers-reduced-motion: reduce) {
     .nav-link,
     .nav-link::after,
-    .nav-links {
+    .nav-menu,
+    .contact-link {
         transition: none;
     }
 }
