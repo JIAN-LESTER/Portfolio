@@ -15,7 +15,7 @@ export const portfolioData: PortfolioData = {
         linkedin: 'https://www.linkedin.com/in/jian-lester-tabarno/',
         facebook: 'https://www.facebook.com/jian.lester.tabarno/',
         website: 'https://jianlester.vercel.app',
-        image: '/images/profile.jpg',
+        image: '/images/profile-transparent.png',
         resumeUrl: '/images/Jian_Tabarno_Resume.pdf',
     },
 

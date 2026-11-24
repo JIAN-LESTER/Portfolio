@@ -1,51 +1,49 @@
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, onMounted } from 'vue';
 import BackgroundField from '@/components/portfolio/BackgroundField.vue';
-import SectionNav from '@/components/portfolio/SectionNav.vue';
+import Navbar from '@/components/ui/Navbar.vue';
 import { provideScrollStage } from '@/composables/useScrollStage';
 import type { StageSection } from '@/composables/useScrollStage';
-import { portfolioData } from '@/data/portfolio';
 
-const sections: StageSection[] = [
-    { id: 'hero', label: '', slides: 1 },
-    { id: 'about', label: 'About', slides: 1 },
-    { id: 'skills', label: 'Tech\nStack', slides: 1 },
-    {
-        id: 'projects',
-        label: 'Projects',
-        slides: portfolioData.projects.length,
-    },
-    {
-        id: 'services',
-        label: 'What I\nDo',
-        slides: portfolioData.services.length,
-    },
-    { id: 'journey', label: 'Education\nExperience', slides: 3 },
-    { id: 'resume', label: 'Resume', slides: 1 },
-    { id: 'contact', label: 'Contact Me', slides: 1 },
-];
+const props = defineProps<{
+    sections: StageSection[];
+}>();
 
-const stage = provideScrollStage(sections);
+const stage = provideScrollStage(props.sections);
 
 const trackStyle = computed(() => ({
     transform: `translate3d(0, calc(var(--vh, 1vh) * -100 * ${stage.state.activeSection}), 0)`,
 }));
+
+onMounted(() => {
+    const requestedSection = window.location.hash.replace('#', '');
+
+    if (!requestedSection) {
+        return;
+    }
+
+    const sectionIndex = props.sections.findIndex(
+        (section) => section.id === requestedSection,
+    );
+
+    if (sectionIndex < 0) {
+        console.error(
+            `[PortfolioLayout] Section "${requestedSection}" was not found on this page.`,
+        );
+        return;
+    }
+
+    stage.goToSection(sectionIndex);
+    console.info(
+        `[PortfolioLayout] Opened section "${requestedSection}" on the current page.`,
+    );
+});
 </script>
 
 <template>
     <div class="stage">
         <BackgroundField />
-
-        <a href="#hero" class="brand" @click.prevent="stage.goToSection(0)">
-            <span class="brand-mark">JLT</span>
-            <span class="brand-name">Jian Lester Tabarno</span>
-        </a>
-
-        <SectionNav
-            :sections="sections"
-            :active="stage.state.activeSection"
-            @go="stage.goToSection"
-        />
+        <Navbar />
 
         <div class="stage-track" :style="trackStyle">
             <slot />
@@ -136,40 +134,6 @@ body {
     flex-direction: column;
     transition: transform 0.85s cubic-bezier(0.65, 0, 0.35, 1);
     will-change: transform;
-}
-
-.brand {
-    position: fixed;
-    top: clamp(1rem, 3vw, 1.75rem);
-    left: clamp(1rem, 3vw, 2rem);
-    z-index: 40;
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-    text-decoration: none;
-}
-
-.brand-mark {
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
-    letter-spacing: 0.08em;
-    color: var(--ink);
-    background: var(--signal);
-    padding: 0.25rem 0.5rem;
-    border-radius: 5px;
-}
-
-.brand-name {
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
-    color: var(--muted);
-    letter-spacing: 0.03em;
-}
-
-@media (max-width: 720px) {
-    .brand-name {
-        display: none;
-    }
 }
 
 @media (prefers-reduced-motion: reduce) {
