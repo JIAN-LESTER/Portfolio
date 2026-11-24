@@ -132,6 +132,7 @@ function getIcon(item: SkillItem): Component {
 
 <template>
     <section
+        id="skills"
         class="stage-section skills"
         :class="{ 'is-active': isActiveSection }"
     >

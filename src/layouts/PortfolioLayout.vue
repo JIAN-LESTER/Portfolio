@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted } from 'vue';
+import { onMounted } from 'vue';
 import BackgroundField from '@/components/portfolio/BackgroundField.vue';
 import Navbar from '@/components/ui/Navbar.vue';
 import { provideScrollStage } from '@/composables/useScrollStage';
@@ -10,10 +10,6 @@ const props = defineProps<{
 }>();
 
 const stage = provideScrollStage(props.sections);
-
-const trackStyle = computed(() => ({
-    transform: `translate3d(0, calc(var(--vh, 1vh) * -100 * ${stage.state.activeSection}), 0)`,
-}));
 
 onMounted(() => {
     const requestedSection = window.location.hash.replace('#', '');
@@ -41,104 +37,14 @@ onMounted(() => {
 </script>
 
 <template>
-    <div class="stage">
+    <div
+        class="relative min-h-screen overflow-x-clip bg-[var(--ink)] font-[var(--font-body)] text-[var(--paper)] [&_*:focus-visible]:outline-2 [&_*:focus-visible]:outline-offset-[3px] [&_*:focus-visible]:outline-[var(--signal)] [&_.hero]:h-svh [&_.hero]:min-h-svh [&_.hero]:overflow-hidden [&_.stage-section:not(.hero):not(.about):not(.services):not(.site-footer)]:py-[clamp(4rem,8vh,6rem)] [&_.stage-section]:relative [&_.stage-section]:z-[1] [&_.stage-section]:h-auto [&_.stage-section]:min-h-0 [&_.stage-section]:w-full [&_.stage-section]:scroll-mt-20 [&_.stage-section]:overflow-visible [&_.stage-section]:opacity-100 [&_.stage-section]:[backface-visibility:hidden] [&_.stage-section]:[transform:translateZ(0)] [&_[data-stage-scroll]]:max-h-none [&_[data-stage-scroll]]:overflow-y-visible [&_[data-stage-scroll]]:overscroll-auto [&_[v-cloak]]:hidden motion-reduce:[&_.stage-section]:transition-none max-[780px]:[&_.hero]:h-auto max-[780px]:[&_.hero]:min-h-svh max-[780px]:[&_.hero]:overflow-visible"
+    >
         <BackgroundField />
         <Navbar />
 
-        <div class="stage-track" :style="trackStyle">
+        <main class="relative">
             <slot />
-        </div>
+        </main>
     </div>
 </template>
-
-<style>
-/* Global tokens — intentionally unscoped so every portfolio section can use them. */
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
-
-:root {
-    --ink: #0b0e12;
-    --panel: #151a21;
-    --panel-2: #1b222b;
-    --line: #262f3a;
-    --paper: #ede9e2;
-    --muted: #8b93a1;
-    --signal: #f5a623;
-    --signal-dim: #7a5518;
-    --depth: #6c7bff;
-    --depth-dim: #2e3468;
-
-    --font-display: 'Space Grotesk', sans-serif;
-    --font-body: 'IBM Plex Sans', sans-serif;
-    --font-mono: 'JetBrains Mono', monospace;
-}
-
-html.stage-lock,
-html.stage-lock body {
-    height: 100%;
-    margin: 0;
-    overflow: hidden;
-    overscroll-behavior: none;
-    background: var(--ink);
-}
-
-body {
-    font-family: var(--font-body);
-    color: var(--paper);
-}
-
-/* Shared section sizing — each portfolio section component renders its own
-   root <section class="stage-section">, sized here so the layout can page
-   through them by translating .stage-track. */
-.stage-section {
-    position: relative;
-    width: 100%;
-    height: calc(var(--vh, 1vh) * 100);
-    flex-shrink: 0;
-    overflow: hidden;
-    z-index: 1;
-    opacity: 1;
-    transform: translateZ(0);
-    backface-visibility: hidden;
-}
-
-.stage-section.is-active {
-    opacity: 1;
-}
-
-*:focus-visible {
-    outline: 2px solid var(--signal);
-    outline-offset: 3px;
-}
-
-[v-cloak] {
-    display: none;
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .stage-section {
-        transition: none;
-    }
-}
-</style>
-
-<style scoped>
-.stage {
-    position: fixed;
-    inset: 0;
-    background: var(--ink);
-    overflow: hidden;
-}
-
-.stage-track {
-    display: flex;
-    flex-direction: column;
-    transition: transform 0.85s cubic-bezier(0.65, 0, 0.35, 1);
-    will-change: transform;
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .stage-track {
-        transition: none;
-    }
-}
-</style>

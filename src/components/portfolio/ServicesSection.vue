@@ -1,246 +1,126 @@
 <script setup lang="ts">
+import { computed, onMounted, type Component } from 'vue';
+import {
+    ArrowUpRight,
+    Braces,
+    MonitorSmartphone,
+    PenTool,
+} from 'lucide-vue-next';
 import { useSectionSlide } from '@/composables/useScrollStage';
 import type { ServiceItem } from '@/types/portfolio';
-import PaginationDots from './PaginationDots.vue';
 
-defineProps<{ services: ServiceItem[] }>();
+const props = defineProps<{ services: ServiceItem[] }>();
 
-const { active, count, isActiveSection, next, prev, goTo } =
-    useSectionSlide('services');
+const { isActiveSection } = useSectionSlide('services');
+
+const serviceIcons: Record<string, Component> = {
+    SOFTWARE: Braces,
+    DESIGN: PenTool,
+    WEB: MonitorSmartphone,
+};
+
+const displayedServices = computed(() => props.services.slice(0, 3));
+
+onMounted(() => {
+    if (displayedServices.value.length < 3) {
+        console.error(
+            '[ServicesSection] Expected three primary services but received fewer.',
+        );
+        return;
+    }
+
+    console.info(
+        `[ServicesSection] Displayed ${displayedServices.value.length} primary services.`,
+    );
+});
 </script>
 
 <template>
     <section
-        class="stage-section services"
+        id="services"
+        class="stage-section group flex items-center bg-[linear-gradient(90deg,rgb(245_166_35_/_0.035)_1px,transparent_1px),linear-gradient(rgb(245_166_35_/_0.035)_1px,transparent_1px),rgb(11_14_18_/_0.46)] bg-[length:4.5rem_4.5rem] max-[820px]:items-stretch"
         :class="{ 'is-active': isActiveSection }"
+        aria-labelledby="services-title"
     >
-        <div class="section-inner">
-            <div class="head-row">
-                <p class="eyebrow">WHAT I DO</p>
-                <div class="head-right">
-                    <PaginationDots
-                        :count="count"
-                        :active="active"
-                        @prev="prev"
-                        @next="next"
-                        @go="goTo"
-                    />
+        <div
+            class="mx-auto max-h-full w-[min(100%,92rem)] overflow-y-auto px-[clamp(1.25rem,7vw,6rem)] pt-[clamp(5.75rem,11vh,8rem)] pb-12 overscroll-contain max-[820px]:h-full max-[820px]:max-h-full max-[820px]:pt-[5.5rem]"
+            data-stage-scroll
+        >
+            <header
+                class="mb-[clamp(2rem,5vh,3.5rem)] flex translate-y-4 items-end justify-between gap-8 opacity-0 transition-[opacity,transform] duration-600 ease-out group-[.is-active]:translate-y-0 group-[.is-active]:opacity-100 motion-reduce:translate-y-0 motion-reduce:opacity-100 motion-reduce:transition-none max-[820px]:items-start max-[560px]:grid max-[560px]:gap-5"
+            >
+                <div>
+                    <p
+                        class="mb-3 flex items-center gap-[0.65rem] font-[var(--font-mono)] text-xs text-[var(--signal)] before:h-px before:w-6 before:bg-current before:content-['']"
+                    >
+                        Services
+                    </p>
+                    <h2
+                        id="services-title"
+                        class="m-0 font-[var(--font-display)] text-[clamp(2.4rem,5vw,4.6rem)] leading-[0.98] font-bold tracking-[-0.06em] text-[var(--paper)] [text-wrap:balance]"
+                    >
+                        Services I provide
+                    </h2>
                 </div>
-            </div>
+
+                <a
+                    class="inline-flex min-h-[2.8rem] shrink-0 items-center justify-center gap-[0.55rem] rounded-full border border-[var(--signal-dim)] bg-[rgb(245_166_35_/_0.08)] py-[0.72rem] pr-4 pl-[1.2rem] font-[var(--font-mono)] text-[0.72rem] text-[var(--signal)] no-underline transition-[background-color,color,transform] duration-200 hover:-translate-y-0.5 hover:bg-[var(--signal)] hover:text-[var(--ink)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--signal)] max-[560px]:w-fit"
+                    href="/services"
+                >
+                    View all services
+                    <ArrowUpRight :size="17" aria-hidden="true" />
+                </a>
+            </header>
 
             <div
-                class="track"
-                :style="{ transform: `translateX(-${active * 100}%)` }"
+                class="grid grid-cols-3 gap-[clamp(0.9rem,2vw,1.4rem)] max-[820px]:grid-cols-1"
             >
                 <article
-                    v-for="(service, i) in services"
+                    v-for="(service, index) in displayedServices"
                     :key="service.code"
-                    class="slide"
+                    class="group/card flex min-w-0 translate-y-5 flex-col rounded-2xl border border-[var(--line)] bg-[linear-gradient(155deg,rgb(27_34_43_/_0.96),rgb(21_26_33_/_0.96))] p-[clamp(1.35rem,2.7vw,2rem)] opacity-0 shadow-[0_1.25rem_3rem_rgb(0_0_0_/_0.16)] transition-[border-color,opacity,transform] duration-[620ms] ease-out group-[.is-active]:translate-y-0 group-[.is-active]:opacity-100 hover:border-[var(--signal-dim)] motion-reduce:translate-y-0 motion-reduce:opacity-100 motion-reduce:transition-none max-[820px]:min-h-56 max-[560px]:min-h-0"
+                    :style="{
+                        transitionDelay: isActiveSection
+                            ? `${120 + index * 90}ms`
+                            : '0ms',
+                    }"
                 >
-                    <div class="card">
-                        <span class="watermark" aria-hidden="true">{{
-                            String(i + 1).padStart(2, '0')
-                        }}</span>
-
-                        <div class="card-head">
-                            <span class="kicker">{{ service.code }}</span>
-                            <h3 class="title">{{ service.title }}</h3>
-                        </div>
-
-                        <div class="paragraphs">
-                            <p
-                                v-for="(paragraph, pi) in service.paragraphs"
-                                :key="pi"
-                                class="para"
-                                :class="{ lead: pi === 0 }"
-                            >
-                                {{ paragraph }}
-                            </p>
-                        </div>
+                    <div
+                        class="mb-[clamp(2rem,5vh,3.75rem)] grid size-[3.2rem] place-items-center rounded-[0.8rem] border border-[rgb(245_166_35_/_0.26)] bg-[rgb(245_166_35_/_0.08)] text-[var(--signal)] transition-transform duration-200 group-hover/card:translate-x-[0.2rem] group-hover/card:-translate-y-[0.2rem] max-[820px]:mb-7"
+                        aria-hidden="true"
+                    >
+                        <component
+                            :is="serviceIcons[service.code] ?? Braces"
+                            :size="28"
+                            :stroke-width="1.7"
+                        />
                     </div>
+
+                    <p
+                        class="mb-[0.65rem] font-[var(--font-mono)] text-[0.64rem] tracking-[0.14em] text-[var(--depth)]"
+                    >
+                        {{ service.code }}
+                    </p>
+                    <h3
+                        class="m-0 font-[var(--font-display)] text-[clamp(1.3rem,2.2vw,1.75rem)] leading-[1.15] font-semibold tracking-[-0.035em] text-[var(--paper)]"
+                    >
+                        {{ service.title }}
+                    </h3>
+                    <p
+                        class="mt-4 mb-7 text-[0.92rem] leading-[1.65] text-[var(--muted)]"
+                    >
+                        {{ service.paragraphs[0] }}
+                    </p>
+
+                    <a
+                        class="mt-auto inline-flex w-fit items-center justify-center gap-[0.55rem] font-[var(--font-mono)] text-[0.68rem] text-[var(--paper)] no-underline transition-colors duration-200 hover:text-[var(--signal)] focus-visible:rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--signal)]"
+                        href="/contact"
+                    >
+                        Discuss this service
+                        <ArrowUpRight :size="16" aria-hidden="true" />
+                    </a>
                 </article>
             </div>
         </div>
     </section>
 </template>
-
-<style scoped>
-.services {
-    display: flex;
-    align-items: center;
-}
-
-.section-inner {
-    width: 100%;
-    padding: 0 15px;
-    padding-inline: clamp(15px, 7vw, 120px);
-    max-width: 1600px;
-    margin-inline: auto;
-    overflow: hidden;
-}
-
-.head-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: clamp(1.5rem, 4vw, 2.5rem);
-    flex-wrap: wrap;
-    gap: 1rem;
-}
-
-.eyebrow {
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
-    letter-spacing: 0.18em;
-    color: var(--depth);
-}
-
-.head-right {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-}
-
-.track {
-    display: flex;
-    transition: transform 0.6s cubic-bezier(0.65, 0, 0.35, 1);
-}
-
-.slide {
-    flex: 0 0 100%;
-    width: 100%;
-    max-width: 100%;
-}
-
-.card {
-    position: relative;
-    max-width: 1100px;
-    overflow: hidden;
-    padding: clamp(1.75rem, 4vw, 3rem);
-    border: 1px solid var(--line);
-    border-radius: 16px;
-    background: linear-gradient(160deg, var(--panel), var(--panel-2));
-    opacity: 0;
-    transform: translateY(10px);
-    transition:
-        border-color 0.25s ease,
-        transform 0.25s ease;
-}
-
-.is-active .card {
-    animation: rise 0.6s ease-out 0.1s forwards;
-}
-
-.card:hover {
-    border-color: var(--depth-dim);
-}
-
-.watermark {
-    position: absolute;
-    top: -0.35em;
-    right: 0.2em;
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: clamp(5rem, 11vw, 9rem);
-    line-height: 1;
-    color: transparent;
-    -webkit-text-stroke: 1.5px var(--line);
-    opacity: 0.7;
-    z-index: 0;
-    pointer-events: none;
-    user-select: none;
-}
-
-.card-head {
-    position: relative;
-    z-index: 1;
-}
-
-.kicker {
-    display: inline-block;
-    font-family: var(--font-mono);
-    font-size: 0.7rem;
-    letter-spacing: 0.12em;
-    color: var(--signal);
-    padding: 0.3rem 0.7rem;
-    border: 1px solid var(--signal-dim);
-    border-radius: 999px;
-}
-
-.title {
-    margin: 0.9rem 0 0;
-    font-family: var(--font-display);
-    font-weight: 600;
-    font-size: clamp(1.55rem, 3.2vw, 2.35rem);
-    color: var(--paper);
-    line-height: 1.15;
-    max-width: 22ch;
-}
-
-.paragraphs {
-    position: relative;
-    z-index: 1;
-    margin-top: 1.6rem;
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1rem 2.5rem;
-    padding-top: 1.4rem;
-    border-top: 1px solid var(--line);
-}
-
-.para {
-    line-height: 1.7;
-    color: var(--muted);
-    font-size: 0.95rem;
-}
-
-.para.lead {
-    color: var(--paper);
-    font-size: 1.02rem;
-}
-
-@media (min-width: 860px) {
-    .paragraphs {
-        grid-template-columns: 1fr 1fr;
-    }
-}
-
-@keyframes rise {
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .track {
-        transition: none;
-    }
-    .card {
-        animation: none !important;
-        opacity: 1;
-        transform: none;
-    }
-}
-
-@media (max-width: 640px) {
-    .section-inner {
-        padding-inline: 0;
-    }
-
-    .head-row {
-        padding-inline: clamp(15px, 6vw, 28px);
-    }
-
-    .slide {
-        box-sizing: border-box;
-        padding-inline: clamp(18px, 6vw, 30px);
-    }
-}
-
-@media (max-width: 520px) {
-    .watermark {
-        font-size: 4rem;
-    }
-}
-</style>

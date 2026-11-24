@@ -18,6 +18,7 @@ interface StageState {
     sections: StageSection[];
     activeSection: number;
     activeSlide: number[];
+    revealedSections: boolean[];
     isAnimating: boolean;
 }
 
@@ -25,15 +26,16 @@ const STAGE_KEY = Symbol('portfolio-scroll-stage');
 const STAGE_TRANSITION_MS = 900;
 
 /**
- * Owns the scroll-jacking state for the whole page: which section is active
- * (vertical axis) and which slide is active within that section (horizontal
- * axis). Call this once, from the top-level layout component.
+ * Tracks the section currently visible in the browser's native scroll area and
+ * owns the horizontal slide state within each section. Call this once from the
+ * top-level layout component.
  */
 export function provideScrollStage(sections: StageSection[]) {
     const state = reactive<StageState>({
         sections,
         activeSection: 0,
         activeSlide: sections.map(() => 0),
+        revealedSections: sections.map(() => false),
         isAnimating: false,
     });
 
@@ -43,6 +45,7 @@ export function provideScrollStage(sections: StageSection[]) {
             : false;
 
     let unlockTimer: number | undefined;
+    let sectionObserver: IntersectionObserver | undefined;
 
     function lock(duration = reducedMotion ? 50 : STAGE_TRANSITION_MS) {
         state.isAnimating = true;
@@ -70,8 +73,7 @@ export function provideScrollStage(sections: StageSection[]) {
             }
 
             if (secIndex < state.sections.length - 1) {
-                state.activeSection = secIndex + 1;
-                lock();
+                goToSection(secIndex + 1);
             }
 
             return;
@@ -85,10 +87,9 @@ export function provideScrollStage(sections: StageSection[]) {
         }
 
         if (secIndex > 0) {
-            state.activeSection = secIndex - 1;
             state.activeSlide[secIndex - 1] =
                 state.sections[secIndex - 1].slides - 1;
-            lock();
+            goToSection(secIndex - 1);
         }
     }
 
@@ -110,16 +111,24 @@ export function provideScrollStage(sections: StageSection[]) {
     }
 
     function goToSection(index: number) {
-        if (state.isAnimating || index === state.activeSection) {
+        if (index < 0 || index >= state.sections.length) {
+            console.error(`[ScrollStage] Section index ${index} is out of range.`);
             return;
         }
 
-        if (index < 0 || index >= state.sections.length) {
+        const section = document.getElementById(state.sections[index].id);
+
+        if (!section) {
+            console.error(
+                `[ScrollStage] Section "${state.sections[index].id}" was not found.`,
+            );
             return;
         }
 
         state.activeSection = index;
-        lock();
+        state.revealedSections[index] = true;
+        section.scrollIntoView({ behavior: 'auto', block: 'start' });
+        console.info(`[ScrollStage] Scrolled to section "${state.sections[index].id}".`);
     }
 
     function goToSlide(index: number) {
@@ -137,122 +146,48 @@ export function provideScrollStage(sections: StageSection[]) {
         lock();
     }
 
-    function getScrollableTarget(target: EventTarget | null) {
-        if (!(target instanceof Element)) {
-            return null;
-        }
-
-        return target.closest<HTMLElement>('[data-stage-scroll]');
-    }
-
-    function canScrollTarget(target: EventTarget | null, dir: 1 | -1) {
-        const scrollable = getScrollableTarget(target);
-
-        if (!scrollable) {
-            return false;
-        }
-
-        const maxScroll = scrollable.scrollHeight - scrollable.clientHeight;
-
-        if (maxScroll <= 0) {
-            return false;
-        }
-
-        return dir > 0
-            ? scrollable.scrollTop < maxScroll - 1
-            : scrollable.scrollTop > 1;
-    }
-
-    function onWheel(e: WheelEvent) {
-        if (Math.abs(e.deltaY) < 4) {
-            return;
-        }
-
-        const dir = e.deltaY > 0 ? 1 : -1;
-
-        if (canScrollTarget(e.target, dir)) {
-            return;
-        }
-
-        e.preventDefault();
-        navigate(dir);
-    }
-
-    let touchStartX = 0;
-    let touchStartY = 0;
-    let touchScrollTarget: EventTarget | null = null;
-
-    function onTouchStart(e: TouchEvent) {
-        touchStartX = e.touches[0].clientX;
-        touchStartY = e.touches[0].clientY;
-        touchScrollTarget = e.target;
-    }
-
-    function onTouchEnd(e: TouchEvent) {
-        const dx = e.changedTouches[0].clientX - touchStartX;
-        const dy = e.changedTouches[0].clientY - touchStartY;
-        const threshold = 48;
-
-        if (Math.abs(dx) > Math.abs(dy)) {
-            if (Math.abs(dx) > threshold) {
-                navigateSlide(dx < 0 ? 1 : -1);
-            }
-        } else if (Math.abs(dy) > threshold) {
-            const dir = dy < 0 ? 1 : -1;
-
-            if (!canScrollTarget(touchScrollTarget, dir)) {
-                navigate(dir);
-            }
-        }
-    }
-
-    function onKeydown(e: KeyboardEvent) {
-        switch (e.key) {
-            case 'ArrowDown':
-            case 'PageDown':
-                e.preventDefault();
-                navigate(1);
-                break;
-            case 'ArrowUp':
-            case 'PageUp':
-                e.preventDefault();
-                navigate(-1);
-                break;
-            case 'ArrowRight':
-                e.preventDefault();
-                navigateSlide(1);
-                break;
-            case 'ArrowLeft':
-                e.preventDefault();
-                navigateSlide(-1);
-                break;
-        }
-    }
-
-    function setViewportUnit() {
-        document.documentElement.style.setProperty(
-            '--vh',
-            `${window.innerHeight * 0.01}px`,
-        );
-    }
-
     onMounted(() => {
-        setViewportUnit();
-        window.addEventListener('resize', setViewportUnit);
-        window.addEventListener('wheel', onWheel, { passive: false });
-        window.addEventListener('touchstart', onTouchStart, { passive: true });
-        window.addEventListener('touchend', onTouchEnd, { passive: true });
-        window.addEventListener('keydown', onKeydown);
-        document.documentElement.classList.add('stage-lock');
+        const sectionElements = state.sections
+            .map((section) => document.getElementById(section.id))
+            .filter((section): section is HTMLElement => section !== null);
+
+        if (sectionElements.length !== state.sections.length) {
+            console.error('[ScrollStage] One or more page sections could not be observed.');
+        }
+
+        const visibility = new Map<Element, number>();
+        sectionObserver = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    visibility.set(entry.target, entry.intersectionRatio);
+                });
+
+                const mostVisible = [...visibility.entries()].sort(
+                    (a, b) => b[1] - a[1],
+                )[0];
+
+                if (!mostVisible || mostVisible[1] === 0) {
+                    return;
+                }
+
+                const nextIndex = state.sections.findIndex(
+                    (section) => section.id === mostVisible[0].id,
+                );
+
+                if (nextIndex >= 0) {
+                    state.activeSection = nextIndex;
+                    state.revealedSections[nextIndex] = true;
+                }
+            },
+            { threshold: [0, 0.25, 0.5, 0.75, 1] },
+        );
+
+        sectionElements.forEach((section) => sectionObserver?.observe(section));
+        console.info('[ScrollStage] Native page scrolling initialized.');
     });
 
     onBeforeUnmount(() => {
-        window.removeEventListener('resize', setViewportUnit);
-        window.removeEventListener('wheel', onWheel);
-        window.removeEventListener('touchstart', onTouchStart);
-        window.removeEventListener('touchend', onTouchEnd);
-        window.removeEventListener('keydown', onKeydown);
-        document.documentElement.classList.remove('stage-lock');
+        sectionObserver?.disconnect();
         window.clearTimeout(unlockTimer);
     });
 
@@ -297,22 +232,27 @@ export function useSectionSlide(id: string) {
     const count = computed(
         () => stage.state.sections[index.value]?.slides ?? 1,
     );
-    const isActiveSection = computed(
+    const isCurrentSection = computed(
         () => stage.state.activeSection === index.value,
+    );
+    const isActiveSection = computed(
+        () =>
+            isCurrentSection.value ||
+            (stage.state.revealedSections[index.value] ?? false),
     );
 
     function next() {
-        if (isActiveSection.value) {
+        if (isCurrentSection.value) {
             stage.navigateSlide(1);
         }
     }
     function prev() {
-        if (isActiveSection.value) {
+        if (isCurrentSection.value) {
             stage.navigateSlide(-1);
         }
     }
     function goTo(i: number) {
-        if (isActiveSection.value) {
+        if (isCurrentSection.value) {
             stage.goToSlide(i);
         }
     }

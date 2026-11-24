@@ -36,6 +36,7 @@ function handleImageError() {
 
 <template>
     <section
+        id="hero"
         v-cloak
         class="stage-section hero"
         :class="{ 'is-active': isActiveSection }"
@@ -205,7 +206,9 @@ function handleImageError() {
     position: relative;
     z-index: 1;
     width: min(100%, 112rem);
-    height: 100%;
+    min-height: 100vh;
+    min-height: 100svh;
+    box-sizing: border-box;
     margin-inline: auto;
     padding: clamp(5.6rem, 10vh, 6.7rem) clamp(1.25rem, 5.5vw, 5.5rem) 5rem;
 }
@@ -777,7 +780,8 @@ function handleImageError() {
 
     .hero-inner {
         height: auto;
-        min-height: 100%;
+        min-height: 100vh;
+        min-height: 100svh;
         display: grid;
         grid-template-columns: 1fr;
         padding: 6rem 1.2rem 2rem;

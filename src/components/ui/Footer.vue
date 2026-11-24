@@ -31,7 +31,7 @@ function goToTop() {
         return;
     }
 
-    stage.goToSection(0);
+    window.scrollTo({ top: 0, behavior: 'auto' });
     console.info('[Footer] Returned to the top of the current page.');
 }
 </script>

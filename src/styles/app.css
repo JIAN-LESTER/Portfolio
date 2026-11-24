@@ -1,8 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+
 @import 'tailwindcss';
 
 @import 'tw-animate-css';
 
 @custom-variant dark (&:is(.dark *));
+
+:root {
+    --ink: #0b0e12;
+    --panel: #151a21;
+    --panel-2: #1b222b;
+    --line: #262f3a;
+    --paper: #ede9e2;
+    --muted: #8b93a1;
+    --signal: #f5a623;
+    --signal-dim: #7a5518;
+    --depth: #6c7bff;
+    --depth-dim: #2e3468;
+
+    --font-display: 'Space Grotesk', sans-serif;
+    --font-body: 'IBM Plex Sans', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+}
 
 @theme inline {
     --font-sans:

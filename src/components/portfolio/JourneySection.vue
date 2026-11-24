@@ -19,6 +19,7 @@ const { active, count, isActiveSection, next, prev, goTo } =
 
 <template>
     <section
+        id="journey"
         class="stage-section journey"
         :class="{ 'is-active': isActiveSection }"
     >
