@@ -1,13 +1,15 @@
 <script setup lang="ts">
-import { computed, reactive } from 'vue';
+import { computed, onBeforeUnmount, reactive } from 'vue';
 import {
     ArrowUpRight,
+    CheckCircle2,
     Facebook,
     Github,
     Linkedin,
     Mail,
     MapPin,
     Phone,
+    X,
 } from 'lucide-vue-next';
 import { useSectionSlide } from '@/composables/useScrollStage';
 import type { PersonalInfo } from '@/types/portfolio';
@@ -44,6 +46,29 @@ const form = reactive({
     processing: false,
     wasSuccessful: false,
     error: '',
+});
+
+let successToastTimer: ReturnType<typeof setTimeout> | undefined;
+
+function dismissSuccessToast() {
+    form.wasSuccessful = false;
+
+    if (successToastTimer) {
+        clearTimeout(successToastTimer);
+        successToastTimer = undefined;
+    }
+}
+
+function showSuccessToast() {
+    dismissSuccessToast();
+    form.wasSuccessful = true;
+    successToastTimer = setTimeout(dismissSuccessToast, 6000);
+}
+
+onBeforeUnmount(() => {
+    if (successToastTimer) {
+        clearTimeout(successToastTimer);
+    }
 });
 
 const selectedCountry = computed(() =>
@@ -83,7 +108,7 @@ function handleCountryChange() {
 
 async function submitBuildRequest() {
     form.processing = true;
-    form.wasSuccessful = false;
+    dismissSuccessToast();
     form.error = '';
 
     try {
@@ -134,7 +159,7 @@ async function submitBuildRequest() {
             );
         }
 
-        form.wasSuccessful = true;
+        showSuccessToast();
         form.name = '';
         form.email = '';
         form.phone = '';
@@ -158,6 +183,31 @@ async function submitBuildRequest() {
 
 <template>
     <section id="contact" class="stage-section contact" :class="{ 'is-active': isActiveSection }">
+        <Teleport to="body">
+            <Transition name="toast">
+                <div
+                    v-if="form.wasSuccessful"
+                    class="success-toast"
+                    role="status"
+                    aria-live="polite"
+                >
+                    <span class="toast-icon" aria-hidden="true"><CheckCircle2 :size="20" /></span>
+                    <span class="toast-copy">
+                        <strong>Inquiry sent</strong>
+                        <span>Your message is on its way. I&rsquo;ll get back to you soon.</span>
+                    </span>
+                    <button
+                        class="toast-dismiss"
+                        type="button"
+                        aria-label="Dismiss success message"
+                        @click="dismissSuccessToast"
+                    >
+                        <X :size="18" />
+                    </button>
+                </div>
+            </Transition>
+        </Teleport>
+
         <div class="section-inner" data-stage-scroll>
             <div class="contact-panel">
                 <div class="contact-copy">
@@ -316,14 +366,6 @@ async function submitBuildRequest() {
                     </div>
 
                     <p v-if="form.error" class="form-status form-error" role="alert">{{ form.error }}</p>
-                    <p
-                        v-else-if="form.wasSuccessful"
-                        class="form-status form-success"
-                        role="status"
-                    >
-                        Your inquiry was sent successfully. I&rsquo;ll get back to you soon.
-                    </p>
-
                     <button type="submit" :disabled="form.processing">
                         <span>{{ form.processing ? 'Sending…' : 'Send inquiry' }}</span>
                         <span class="button-icon" aria-hidden="true"><ArrowUpRight :size="17" /></span>
@@ -578,12 +620,87 @@ async function submitBuildRequest() {
     line-height: 1.5;
 }
 
-.form-success {
-    color: var(--signal);
-}
-
 .form-error {
     color: #fca5a5;
+}
+
+.success-toast {
+    position: fixed;
+    z-index: 1000;
+    top: 1.25rem;
+    right: 1.25rem;
+    display: grid;
+    width: min(24rem, calc(100vw - 2rem));
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: start;
+    gap: 0.8rem;
+    padding: 1rem;
+    border: 1px solid rgb(245 166 35 / 0.35);
+    border-radius: 14px;
+    color: var(--paper);
+    background: rgb(23 23 23 / 0.97);
+    box-shadow: 0 20px 55px rgb(0 0 0 / 0.35);
+}
+
+.toast-icon {
+    display: grid;
+    width: 2.15rem;
+    height: 2.15rem;
+    place-items: center;
+    border-radius: 50%;
+    color: var(--ink);
+    background: var(--signal);
+}
+
+.toast-copy {
+    display: grid;
+    gap: 0.2rem;
+    min-width: 0;
+}
+
+.toast-copy strong {
+    font-size: 0.85rem;
+    line-height: 1.35;
+}
+
+.toast-copy > span {
+    color: var(--muted);
+    font-size: 0.75rem;
+    line-height: 1.45;
+}
+
+.toast-dismiss {
+    display: grid;
+    width: 2rem;
+    height: 2rem;
+    padding: 0;
+    place-items: center;
+    border: 0;
+    border-radius: 50%;
+    color: var(--muted);
+    background: transparent;
+    cursor: pointer;
+}
+
+.toast-dismiss:hover {
+    color: var(--paper);
+    background: rgb(255 255 255 / 0.08);
+}
+
+.toast-dismiss:focus-visible {
+    outline: 2px solid var(--signal);
+    outline-offset: 2px;
+}
+
+.toast-enter-active,
+.toast-leave-active {
+    transition: opacity 180ms ease, transform 180ms ease;
+}
+
+.toast-enter-from,
+.toast-leave-to {
+    opacity: 0;
+    transform: translateY(-0.75rem);
 }
 
 .contact-form button {
@@ -651,6 +768,11 @@ async function submitBuildRequest() {
 }
 
 @media (max-width: 560px) {
+    .success-toast {
+        top: 0.75rem;
+        right: 1rem;
+    }
+
     .contact-copy h2 {
         font-size: clamp(2rem, 11vw, 2.65rem);
     }
@@ -677,7 +799,9 @@ async function submitBuildRequest() {
     }
 
     .social-links a,
-    .contact-form button {
+    .contact-form button,
+    .toast-enter-active,
+    .toast-leave-active {
         transition: none;
     }
 }
