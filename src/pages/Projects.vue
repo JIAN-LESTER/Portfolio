@@ -5,6 +5,6 @@ import { portfolioData } from '@/data/portfolio';
 </script>
 
 <template>
-    <ProjectsSection :projects="portfolioData.projects" />
+    <ProjectsSection :projects="portfolioData.projects" show-all />
     <Footer :personal="portfolioData.personal" />
 </template>

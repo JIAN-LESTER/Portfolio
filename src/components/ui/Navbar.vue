@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { Menu, Moon, X } from 'lucide-vue-next';
+import { ArrowRight, Menu, Moon, X } from 'lucide-vue-next';
 import { normalizePath, siteNavigation } from '@/data/navigation';
 
 const isMenuOpen = ref(false);
@@ -71,7 +71,10 @@ function handleNavigation(path: string) {
                         :aria-current="currentPath === contactNavigation.path ? 'page' : undefined"
                         @click="handleNavigation(contactNavigation.path)"
                     >
-                        {{ contactNavigation.label }}
+                        <span>{{ contactNavigation.label }}</span>
+                        <span class="contact-arrow" aria-hidden="true">
+                            <ArrowRight :size="16" />
+                        </span>
                     </a>
                 </div>
             </div>
@@ -85,7 +88,7 @@ function handleNavigation(path: string) {
     top: clamp(0.75rem, 2.5vw, 1.4rem);
     left: 50%;
     z-index: 50;
-    width: min(calc(100% - 2rem), 1600px);
+    width: min(calc(100% - 2rem), 1200px);
     transform: translateX(-50%);
 }
 
@@ -137,7 +140,7 @@ function handleNavigation(path: string) {
 .nav-links {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
+    gap: clamp(0.8rem, 1.8vw, 1.4rem);
 }
 
 .nav-menu {
@@ -166,14 +169,15 @@ function handleNavigation(path: string) {
 
 .contact-link {
     display: inline-flex;
-    min-height: 2.35rem;
+    min-height: 2.65rem;
     align-items: center;
     justify-content: center;
-    padding: 0.55rem 1rem;
-    border: 1px solid var(--paper);
+    gap: 0.55rem;
+    padding: 0.25rem 0.3rem 0.25rem 1rem;
+    border: 1px solid rgb(245 166 35 / 0.5);
     border-radius: 999px;
-    background: var(--paper);
-    color: var(--ink);
+    background: #15251f;
+    color: var(--paper);
     font-family: var(--font-mono);
     font-size: 0.82rem;
     font-weight: 600;
@@ -189,17 +193,31 @@ function handleNavigation(path: string) {
 .contact-link:hover,
 .contact-link.is-active {
     border-color: var(--signal);
-    background: var(--signal);
 }
 
 .contact-link:hover {
     transform: translateY(-1px);
 }
 
+.contact-arrow {
+    display: grid;
+    width: 2rem;
+    height: 2rem;
+    flex: 0 0 auto;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--signal);
+    color: var(--ink);
+    transition: transform 180ms ease;
+}
+
+.contact-link:hover .contact-arrow {
+    transform: rotate(-35deg);
+}
+
 .nav-link {
     position: relative;
-    padding: 0.7rem 0.8rem;
-    border-radius: 0.55rem;
+    padding: 0.65rem 0.15rem;
     color: var(--muted);
     font-family: var(--font-mono);
     font-size: 0.82rem;
@@ -207,34 +225,31 @@ function handleNavigation(path: string) {
     letter-spacing: 0.02em;
     text-decoration: none;
     transition:
-        color 180ms ease,
-        background-color 180ms ease;
+        color 180ms ease;
 }
 
 .nav-link::after {
     position: absolute;
-    right: 0.8rem;
-    bottom: 0.42rem;
-    left: 0.8rem;
+    right: 0;
+    bottom: 0.3rem;
+    left: 0;
     height: 1px;
     background: var(--signal);
     content: '';
-    opacity: 0;
-    transform: scaleX(0.3);
-    transition:
-        opacity 180ms ease,
-        transform 180ms ease;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 180ms ease;
 }
 
 .nav-link:hover,
 .nav-link.is-active {
     color: var(--paper);
-    background: rgb(237 233 226 / 0.06);
 }
 
+.nav-link:hover::after,
 .nav-link.is-active::after {
-    opacity: 1;
     transform: scaleX(1);
+    transform-origin: left;
 }
 
 .menu-toggle {
@@ -319,6 +334,7 @@ function handleNavigation(path: string) {
 
     .contact-link {
         min-height: 2.75rem;
+        justify-content: space-between;
     }
 
     .nav-link {
@@ -330,11 +346,9 @@ function handleNavigation(path: string) {
     }
 
     .nav-link::after {
-        top: 50%;
-        right: 0.75rem;
-        bottom: auto;
-        left: auto;
-        width: 1.5rem;
+        right: 0.85rem;
+        bottom: 0.35rem;
+        left: 0.85rem;
     }
 }
 
@@ -350,6 +364,10 @@ function handleNavigation(path: string) {
     .nav-link::after,
     .nav-menu,
     .contact-link {
+        transition: none;
+    }
+
+    .contact-arrow {
         transition: none;
     }
 }

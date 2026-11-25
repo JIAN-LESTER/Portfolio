@@ -3,7 +3,6 @@ import { computed, type Component } from 'vue';
 import PortfolioLayout from '@/layouts/PortfolioLayout.vue';
 import type { StageSection } from '@/composables/useScrollStage';
 import { normalizePath } from '@/data/navigation';
-import { portfolioData } from '@/data/portfolio';
 import About from '@/pages/About.vue';
 import Contact from '@/pages/Contact.vue';
 import Home from '@/pages/Home.vue';
@@ -32,10 +31,8 @@ const routes: Record<string, PageRoute> = {
             {
                 id: 'projects',
                 label: 'Projects',
-                slides: portfolioData.projects.length,
+                slides: 1,
             },
-            { id: 'journey', label: 'Education\nExperience', slides: 3 },
-            { id: 'resume', label: 'Resume', slides: 1 },
             { id: 'contact', label: 'Contact Me', slides: 1 },
             { id: 'footer', label: 'Footer', slides: 1 },
         ],
@@ -46,8 +43,7 @@ const routes: Record<string, PageRoute> = {
         sections: [
             { id: 'about', label: 'About', slides: 1 },
             { id: 'skills', label: 'Tech\nStack', slides: 1 },
-            { id: 'journey', label: 'Education\nExperience', slides: 3 },
-            { id: 'resume', label: 'Resume', slides: 1 },
+            { id: 'journey', label: 'Education\nExperience', slides: 1 },
             { id: 'footer', label: 'Footer', slides: 1 },
         ],
     },
@@ -58,7 +54,7 @@ const routes: Record<string, PageRoute> = {
             {
                 id: 'projects',
                 label: 'Projects',
-                slides: portfolioData.projects.length,
+                slides: 1,
             },
             { id: 'footer', label: 'Footer', slides: 1 },
         ],

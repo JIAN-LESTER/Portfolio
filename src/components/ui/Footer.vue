@@ -1,11 +1,9 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import {
-    ArrowUpRight,
     Facebook,
     Github,
     Linkedin,
-    Mail,
 } from 'lucide-vue-next';
 import { useScrollStage, useSectionSlide } from '@/composables/useScrollStage';
 import { siteNavigation } from '@/data/navigation';
@@ -43,18 +41,6 @@ function goToTop() {
         :class="{ 'is-active': isActiveSection }"
     >
         <div class="footer-inner" data-stage-scroll>
-            <div class="footer-lead">
-                <div>
-                    <p class="footer-kicker">Have a project in mind?</p>
-                    <h2>Let&rsquo;s turn the idea into working software.</h2>
-                </div>
-                <a class="email-link" :href="`mailto:${personal.email}`">
-                    <Mail :size="20" aria-hidden="true" />
-                    <span>{{ personal.email }}</span>
-                    <ArrowUpRight :size="19" aria-hidden="true" />
-                </a>
-            </div>
-
             <div class="footer-directory">
                 <div class="footer-column contact-column">
                     <h3>My contact</h3>
@@ -115,21 +101,11 @@ function goToTop() {
     width: min(100%, 1300px);
     max-height: 100%;
     margin-inline: auto;
-    padding: clamp(6rem, 11vh, 8rem) clamp(1.25rem, 8vw, 7rem) 2rem;
+    padding: clamp(2.5rem, 5vw, 4rem) clamp(1.25rem, 8vw, 7rem) 1.5rem;
     overflow-y: auto;
     overscroll-behavior: contain;
 }
 
-.footer-lead {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
-    align-items: end;
-    gap: 2rem;
-    padding-bottom: clamp(2rem, 5vh, 3.5rem);
-    border-bottom: 1px solid var(--line);
-}
-
-.footer-kicker,
 .footer-column h3 {
     color: var(--signal);
     font-family: var(--font-mono);
@@ -138,46 +114,11 @@ function goToTop() {
     letter-spacing: 0.08em;
 }
 
-.footer-lead h2 {
-    max-width: 16ch;
-    margin-top: 0.85rem;
-    color: var(--paper);
-    font-family: var(--font-display);
-    font-size: clamp(2rem, 5vw, 4.25rem);
-    font-weight: 600;
-    letter-spacing: -0.04em;
-    line-height: 1;
-}
-
-.email-link {
-    display: inline-flex;
-    max-width: 100%;
-    align-items: center;
-    gap: 0.65rem;
-    padding: 0.85rem 1rem;
-    border: 1px solid var(--signal-dim);
-    border-radius: 0.65rem;
-    color: var(--paper);
-    font-family: var(--font-mono);
-    font-size: 0.78rem;
-    text-decoration: none;
-    transition:
-        border-color 180ms ease,
-        background-color 180ms ease,
-        transform 180ms ease;
-}
-
-.email-link:hover {
-    border-color: var(--signal);
-    background: rgb(245 166 35 / 0.08);
-    transform: translateY(-2px);
-}
-
 .footer-directory {
     display: grid;
     grid-template-columns: minmax(14rem, 1.5fr) 1fr 1fr;
     gap: clamp(2rem, 7vw, 6rem);
-    padding-block: clamp(2rem, 5vh, 3.25rem);
+    padding-bottom: clamp(2rem, 4vw, 3rem);
 }
 
 .footer-column {
@@ -244,27 +185,7 @@ function goToTop() {
     }
 
     .footer-inner {
-        padding: 5.75rem 1.25rem 4.5rem;
-    }
-
-    .footer-lead {
-        grid-template-columns: 1fr;
-        align-items: start;
-        gap: 1.4rem;
-    }
-
-    .footer-lead h2 {
-        font-size: clamp(2.15rem, 11vw, 3.2rem);
-    }
-
-    .email-link {
-        width: 100%;
-        justify-content: space-between;
-    }
-
-    .email-link span {
-        min-width: 0;
-        overflow-wrap: anywhere;
+        padding: 3rem 1.25rem 2.25rem;
     }
 
     .footer-directory {
@@ -293,7 +214,6 @@ function goToTop() {
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .email-link,
     .footer-column a {
         transition: none;
     }
