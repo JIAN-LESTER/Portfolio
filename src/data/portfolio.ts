@@ -6,7 +6,7 @@ export const portfolioData: PortfolioData = {
         role: 'Full Stack Web & Mobile Developer',
         tagline:
             'I build functional web, mobile, and AI-powered applications with clean interfaces, reliable backend logic, structured data, and quality-tested features.',
-        bio: 'Bachelor of Science in Information Technology fresh graduate with over three years of project-based software development experience across academic, personal, and internship projects. I build full-stack web, mobile, and AI-powered applications using Laravel, React, Flutter, Node.js, and related technologies, with authentication, dashboards, APIs, database integration, and database design. I also apply feature testing, defect documentation, debugging, and fix verification to deliver dependable software.',
+        bio: 'I am a BSIT graduate and full-stack developer who builds reliable web, mobile, and AI-powered applications using Laravel, React, Flutter, and Node.js.',
         location: 'Kibawe, Bukidnon, Philippines',
         availability: 'Open to work',
         email: 'tabarno.jian@gmail.com',
@@ -49,6 +49,8 @@ export const portfolioData: PortfolioData = {
             tag: 'AI / RAG',
             summary:
                 'An inquiry assistant for CMU-OASP using AI-powered data retrieval.',
+            image: '/images/projects/oasp-assist-thumbnail.png',
+            imageAlt: 'OASP Assist inquiry dashboard preview',
             description:
                 'Developed a cross-platform Flutter inquiry assistant that answers student inquiries using AI-powered data retrieval. Implemented a RAG workflow by converting knowledge-base content into embeddings, storing and searching them in Pinecone, and generating contextual responses through Gemini. Firebase services provide authentication, real-time data, and backend logic.',
             stack: [
@@ -66,33 +68,30 @@ export const portfolioData: PortfolioData = {
             tag: 'Web / Ticketing',
             summary:
                 'A ticketing platform with in-app voice and video calls for support teams.',
+            image: '/images/projects/ticket-hub-thumbnail.png',
+            imageAlt: 'Ticket Hub support workspace preview',
             description:
                 'Built a ticket management system for tracking requests, coordinating responses, and resolving support issues. Integrated WebRTC calls so users and support staff can discuss tickets directly in the app.',
             stack: ['Java', 'Spring Boot', 'Next.js', 'WebRTC', 'PostgreSQL', 'Docker'],
         },
         {
-            title: 'Store System',
+            title: 'E-Store',
             tag: 'Web / Mobile commerce',
             summary:
                 'An online store and ordering platform with rider delivery and a dedicated mobile app.',
+            image: '/images/projects/e-store.png',
+            imageAlt: 'Store System commerce and delivery preview',
             description:
                 'Developed an e-commerce system that connects product browsing, order placement, and delivery workflows. A dedicated React Native app supports mobile ordering and rider delivery operations.',
             stack: ['Python', 'FastAPI', 'React', 'React Native', 'PostgreSQL'],
-        },
-        {
-            title: 'AI Hire',
-            tag: 'AI / Recruitment',
-            summary:
-                'A recruitment platform with an AI agent supporting the hiring pipeline.',
-            description:
-                'Created a recruitment workflow where an AI agent helps recruiters review applications, schedule interviews, evaluate interview results, and prepare offers. The platform keeps candidate progress organized from application through offer.',
-            stack: ['Next.js', 'Prisma ORM', 'PostgreSQL'],
         },
         {
             title: 'JobTrackr',
             tag: 'Web / Productivity',
             summary:
                 'A job application tracker with an AI resume analyzer and browser extension.',
+            image: '/images/projects/jobtrackr.png',
+            imageAlt: 'JobTrackr application tracking dashboard preview',
             description:
                 'Created a personal job tracking system for applications, statuses, notes, and follow-ups, with a browser extension for capturing job details and an AI resume analyzer that compares job descriptions for tailored recommendations.',
             stack: [
@@ -105,10 +104,12 @@ export const portfolioData: PortfolioData = {
             ],
         },
         {
-            title: 'Gym Management System',
+            title: 'EZ Fitness Gym Management',
             tag: 'Web / Systems',
             summary:
                 'A QR-enabled operations platform for EZ Fitness Gym in Valencia, Bukidnon.',
+            image: '/images/projects/ez-fitness-system-thumbnail.png',
+            imageAlt: 'EZ Fitness Gym Management operations preview',
             description:
                 'Built a gym management system with member management, attendance tracking, inventory, point-of-sale, and reporting features. Integrated QR-based member authentication to speed up check-ins and improve attendance accuracy for daily gym operations.',
             stack: ['Laravel', 'PHP', 'Blade', 'JavaScript', 'PostgreSQL'],
@@ -118,6 +119,8 @@ export const portfolioData: PortfolioData = {
             tag: 'Web / Real-time data',
             summary:
                 'A real-time weather monitoring system for Bukidnon.',
+            image: '/images/projects/bukcast-thumbnail.png',
+            imageAlt: 'BukCast weather monitoring map preview',
             description:
                 'Developed a weather dashboard for Bukidnon with an interactive map, real-time weather data, and municipality-specific forecasts using Maps and Weather APIs.',
             stack: ['Laravel', 'PHP', 'Blade', 'JavaScript', 'PostgreSQL'],
@@ -131,6 +134,8 @@ export const portfolioData: PortfolioData = {
             paragraphs: [
                 'Purpose-built systems, dashboards, and business tools shaped around your workflows, users, and long-term goals.',
             ],
+            image: '/images/services/custom-software.jpg',
+            imageAlt: 'Code displayed on a laptop during software development',
         },
         {
             code: 'DESIGN',
@@ -138,6 +143,8 @@ export const portfolioData: PortfolioData = {
             paragraphs: [
                 'Clear, responsive interfaces that turn your ideas into accessible digital experiences with a distinct visual identity.',
             ],
+            image: '/images/services/web-design.jpg',
+            imageAlt: 'Designer working at a desk with digital design tools',
         },
         {
             code: 'WEB',
@@ -145,6 +152,53 @@ export const portfolioData: PortfolioData = {
             paragraphs: [
                 'Reliable, maintainable websites and web applications built across the frontend, backend, APIs, and database.',
             ],
+            image: '/images/services/web-development.jpg',
+            imageAlt: 'Web development workspace with code open on a laptop',
+        },
+        {
+            code: 'MOBILE',
+            title: 'Mobile Development',
+            paragraphs: [
+                'Cross-platform mobile experiences designed for intuitive use, dependable performance, and your users on the go.',
+            ],
+            image: '/images/services/mobile-development.jpg',
+            imageAlt: 'Smartphone displaying a collection of mobile applications',
+        },
+        {
+            code: 'AI',
+            title: 'AI Development',
+            paragraphs: [
+                'Practical AI features, assistants, and retrieval workflows that turn your data into useful, focused experiences.',
+            ],
+            image: '/images/services/ai-development.jpg',
+            imageAlt: 'Abstract artificial intelligence technology visualization',
+        },
+        {
+            code: 'SAAS',
+            title: 'SaaS Development',
+            paragraphs: [
+                'Scalable subscription products with secure accounts, structured data, dashboards, and maintainable product foundations.',
+            ],
+            image: '/images/services/saas.jpg',
+            imageAlt: 'Software analytics dashboard displayed on a monitor',
+        },
+        {
+            code: 'PROTOTYPE',
+            title: 'Prototyping',
+            paragraphs: [
+                'Interactive product concepts that make ideas tangible early, clarify decisions, and reduce risk before development.',
+            ],
+            image: '/images/services/prototyping.jpg',
+            imageAlt: 'Designer sketching an interface prototype on paper',
+        },
+        {
+            code: 'WIREFRAME',
+            title: 'Wireframing',
+            paragraphs: [
+                'Focused screen blueprints that organize content, journeys, and core interactions before visual polish begins.',
+            ],
+            image: '/images/services/wireframing.jpg',
+            imageAlt: 'Interface wireframes being drawn on a tablet',
         },
     ],
 
@@ -167,14 +221,11 @@ export const portfolioData: PortfolioData = {
             title: 'Backend',
             items: [
                 { name: 'Laravel', logo: 'laravel' },
-                { name: 'NestJS', logo: 'layers' },
+                { name: 'FastAPI', logo: 'api' },
                 { name: 'Node.js', logo: 'code' },
                 { name: 'REST API', logo: 'network' },
                 { name: 'Spring Boot', logo: 'layers' },
-                { name: 'FastAPI', logo: 'api' },
                 { name: 'Firebase Cloud Functions', logo: 'cloud' },
-                { name: 'Microservices', logo: 'network' },
-                { name: 'JSON', logo: 'braces' },
             ],
         },
         {
@@ -193,24 +244,10 @@ export const portfolioData: PortfolioData = {
             items: [
                 { name: 'PostgreSQL', logo: 'database' },
                 { name: 'MySQL', logo: 'database' },
-                { name: 'Firebase Firestore', logo: 'cloud' },
+                { name: 'Firebase', logo: 'cloud' },
                 { name: 'Prisma', logo: 'database' },
+                { name: 'Supabase', logo: 'database' },
                 { name: 'SQL & NoSQL', logo: 'table-2' },
-            ],
-        },
-        {
-            title: 'Application Features & Workflows',
-            items: [
-                { name: 'Authentication', logo: 'braces' },
-                { name: 'Role-Based Access', logo: 'network' },
-                { name: 'Dashboards', logo: 'layout-template' },
-                { name: 'Reporting', logo: 'table-2' },
-                { name: 'Activity Logging', logo: 'table-2' },
-                { name: 'CRUD Workflows', logo: 'network' },
-                { name: 'File/Media Uploads', logo: 'folder-open' },
-                { name: 'Real-Time Data', logo: 'cloud' },
-                { name: 'Data Validation', logo: 'braces' },
-                { name: 'API Integration', logo: 'api' },
             ],
         },
         {
@@ -235,29 +272,7 @@ export const portfolioData: PortfolioData = {
                 { name: 'Embeddings', logo: 'scan-search' },
                 { name: 'NLP', logo: 'message-square-text' },
                 { name: 'Claude', logo: 'sparkles' },
-            ],
-        },
-        {
-            title: 'Testing & Quality',
-            items: [
-                { name: 'Unit Testing', logo: 'check' },
-                { name: 'Functional Testing', logo: 'check' },
-                { name: 'API Testing', logo: 'api' },
-                { name: 'Regression Testing', logo: 'network' },
-                { name: 'Bug Fixing', logo: 'braces' },
-                { name: 'Defect Documentation', logo: 'file-type' },
-                { name: 'Fix Verification', logo: 'check' },
-            ],
-        },
-        {
-            title: 'Architecture & Design Patterns',
-            items: [
-                { name: 'OOP', logo: 'braces' },
-                { name: 'MVC', logo: 'layers' },
-                { name: 'SDLC', logo: 'network' },
-                { name: 'Clean Architecture', logo: 'blocks' },
-                { name: 'Component-Based Architecture', logo: 'blocks' },
-                { name: 'Event-Driven Architecture', logo: 'network' },
+                { name: 'Codex', logo: 'sparkles' },
             ],
         },
         {
@@ -269,6 +284,7 @@ export const portfolioData: PortfolioData = {
                 { name: 'Figma', logo: 'pen-tool' },
                 { name: 'Jira', logo: 'folder-open' },
                 { name: 'Maven', logo: 'layers' },
+                { name: 'Canva', logo: 'layers' },
             ],
         },
     ],
