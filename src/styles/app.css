@@ -194,14 +194,13 @@
  */
 .stage-section:not(.hero):not(.site-footer) {
         isolation: isolate;
-        border-top: 1px solid rgb(237 233 226 / 0.1);
         background-color: var(--ink);
         background-repeat: no-repeat;
 }
 
-/* Homepage boundaries use background artwork instead of a visible section rule. */
-.home-section-transition + .stage-section {
-        border-top: 0;
+/* A restrained end rule separates sections without adding decorative UI. */
+.stage-section:not(.site-footer) {
+        border-bottom: 1px solid rgb(237 233 226 / 0.11);
 }
 
 .stage-section:not(.hero):not(.site-footer)::before,

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { reactive } from 'vue';
+import { computed, reactive } from 'vue';
 import {
     ArrowUpRight,
     Facebook,
@@ -15,45 +15,141 @@ import type { PersonalInfo } from '@/types/portfolio';
 const props = defineProps<{ personal: PersonalInfo }>();
 const { isActiveSection } = useSectionSlide('contact');
 
+const countryOptions = [
+    { code: 'PH', name: 'Philippines', currency: 'PHP', locale: 'en-PH', rate: 58 },
+    { code: 'US', name: 'United States', currency: 'USD', locale: 'en-US', rate: 1 },
+    { code: 'CA', name: 'Canada', currency: 'CAD', locale: 'en-CA', rate: 1.4 },
+    { code: 'GB', name: 'United Kingdom', currency: 'GBP', locale: 'en-GB', rate: 0.8 },
+    { code: 'AU', name: 'Australia', currency: 'AUD', locale: 'en-AU', rate: 1.55 },
+    { code: 'NZ', name: 'New Zealand', currency: 'NZD', locale: 'en-NZ', rate: 1.72 },
+    { code: 'SG', name: 'Singapore', currency: 'SGD', locale: 'en-SG', rate: 1.35 },
+    { code: 'MY', name: 'Malaysia', currency: 'MYR', locale: 'en-MY', rate: 4.45 },
+    { code: 'IN', name: 'India', currency: 'INR', locale: 'en-IN', rate: 88 },
+    { code: 'JP', name: 'Japan', currency: 'JPY', locale: 'ja-JP', rate: 155 },
+    { code: 'KR', name: 'South Korea', currency: 'KRW', locale: 'ko-KR', rate: 1470 },
+    { code: 'AE', name: 'United Arab Emirates', currency: 'AED', locale: 'en-AE', rate: 3.67 },
+    { code: 'DE', name: 'Germany', currency: 'EUR', locale: 'de-DE', rate: 0.92 },
+    { code: 'FR', name: 'France', currency: 'EUR', locale: 'fr-FR', rate: 0.92 },
+] as const;
+
 const form = reactive({
     name: '',
     email: '',
     phone: '',
     projectType: '',
+    country: '',
     budget: '',
-    timeline: '',
     message: '',
+    website: '',
     processing: false,
     wasSuccessful: false,
     error: '',
 });
 
-function submitBuildRequest() {
+const selectedCountry = computed(() =>
+    countryOptions.find((country) => country.code === form.country),
+);
+
+const budgetOptions = computed(() => {
+    const country = selectedCountry.value;
+
+    if (!country) {
+        return [];
+    }
+
+    const formatPrice = (usdAmount: number) =>
+        new Intl.NumberFormat(country.locale, {
+            style: 'currency',
+            currency: country.currency,
+            maximumFractionDigits: 0,
+        }).format(usdAmount * country.rate);
+
+    const first = formatPrice(500);
+    const second = formatPrice(1500);
+    const third = formatPrice(3000);
+
+    return [
+        `Under ${first}`,
+        `${first} – ${second}`,
+        `${second} – ${third}`,
+        `${third}+`,
+        'Let’s discuss',
+    ];
+});
+
+function handleCountryChange() {
+    form.budget = '';
+}
+
+async function submitBuildRequest() {
     form.processing = true;
     form.wasSuccessful = false;
     form.error = '';
 
     try {
-        const subject = encodeURIComponent(`Project inquiry: ${form.projectType}`);
-        const body = encodeURIComponent(
-            [
-                `Name: ${form.name}`,
-                `Email: ${form.email}`,
-                `Phone: ${form.phone || 'Not provided'}`,
-                `Project type: ${form.projectType}`,
-                `Budget: ${form.budget || 'Not specified'}`,
-                `Timeline: ${form.timeline || 'Not specified'}`,
-                '',
-                form.message,
-            ].join('\n'),
-        );
+        const response = await fetch('/api/contact', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                name: form.name,
+                email: form.email,
+                phone: form.phone,
+                projectType: form.projectType,
+                country: selectedCountry.value?.name || '',
+                currency: selectedCountry.value?.currency || '',
+                budget: form.budget,
+                message: form.message,
+                website: form.website,
+            }),
+        });
+        const responseText = await response.text();
+        let result: { message?: string } = {};
+        let hasJsonResponse = false;
 
-        window.location.href = `mailto:${props.personal.email}?subject=${subject}&body=${body}`;
+        if (responseText) {
+            try {
+                result = JSON.parse(responseText) as { message?: string };
+                hasJsonResponse = true;
+            } catch (error) {
+                console.error('Contact endpoint returned a non-JSON response.', {
+                    status: response.status,
+                    contentType: response.headers.get('content-type'),
+                    error,
+                });
+            }
+        }
+
+        if (!response.ok) {
+            const fallbackMessage =
+                response.status === 404
+                    ? 'The contact service is unavailable. Use the deployed Vercel site or run it with Vercel Dev.'
+                    : `The inquiry could not be sent (HTTP ${response.status}). Please try again.`;
+
+            throw new Error(result.message || fallbackMessage);
+        }
+
+        if (!responseText || !hasJsonResponse) {
+            throw new Error(
+                'The contact service returned an invalid response. Please try again.',
+            );
+        }
+
         form.wasSuccessful = true;
-        console.info('Contact request opened in the visitor email client.');
+        form.name = '';
+        form.email = '';
+        form.phone = '';
+        form.projectType = '';
+        form.country = '';
+        form.budget = '';
+        form.message = '';
+        form.website = '';
+        console.info('Contact inquiry sent successfully.');
     } catch (error) {
-        form.error = 'The email app could not be opened. Please email me directly instead.';
-        console.error('Failed to open the contact request.', error);
+        form.error =
+            error instanceof Error
+                ? error.message
+                : 'The inquiry could not be sent. Please try again.';
+        console.error('Failed to send the contact inquiry.', error);
     } finally {
         form.processing = false;
     }
@@ -65,7 +161,7 @@ function submitBuildRequest() {
         <div class="section-inner" data-stage-scroll>
             <div class="contact-panel">
                 <div class="contact-copy">
-                    <p class="contact-kicker"><span></span> Contact me</p>
+                
                     <h2>Let&rsquo;s talk about<br /><span>your next project.</span></h2>
                     <p class="contact-intro">
                         Have a website, mobile app, or custom system in mind? Share the details
@@ -113,6 +209,17 @@ function submitBuildRequest() {
                 </div>
 
                 <form class="contact-form" @submit.prevent="submitBuildRequest">
+                    <div class="honeypot-field" aria-hidden="true">
+                        <label for="visitor-website">Website</label>
+                        <input
+                            id="visitor-website"
+                            v-model="form.website"
+                            type="text"
+                            name="website"
+                            tabindex="-1"
+                            autocomplete="off"
+                        />
+                    </div>
                     <div class="form-grid">
                         <div class="field-group">
                             <label for="visitor-name">Your name *</label>
@@ -159,25 +266,38 @@ function submitBuildRequest() {
                             </select>
                         </div>
                         <div class="field-group">
-                            <label for="project-budget">Budget range</label>
-                            <select id="project-budget" v-model="form.budget">
-                                <option value="">Select a range</option>
-                                <option>Under $500</option>
-                                <option>$500 – $1,500</option>
-                                <option>$1,500 – $3,000</option>
-                                <option>$3,000+</option>
-                                <option>Let&rsquo;s discuss</option>
+                            <label for="visitor-country">Country *</label>
+                            <select
+                                id="visitor-country"
+                                v-model="form.country"
+                                required
+                                @change="handleCountryChange"
+                            >
+                                <option value="" disabled>Select your country</option>
+                                <option
+                                    v-for="country in countryOptions"
+                                    :key="country.code"
+                                    :value="country.code"
+                                >
+                                    {{ country.name }} ({{ country.currency }})
+                                </option>
                             </select>
                         </div>
                         <div class="field-group">
-                            <label for="project-timeline">Preferred timeline</label>
-                            <select id="project-timeline" v-model="form.timeline">
-                                <option value="">Select a timeline</option>
-                                <option>As soon as possible</option>
-                                <option>Within 1 month</option>
-                                <option>1–3 months</option>
-                                <option>3+ months</option>
-                                <option>Flexible</option>
+                            <label for="project-budget">
+                                Budget range{{ selectedCountry ? ` (${selectedCountry.currency})` : '' }}
+                            </label>
+                            <select
+                                id="project-budget"
+                                v-model="form.budget"
+                                :disabled="!selectedCountry"
+                            >
+                                <option value="">
+                                    {{ selectedCountry ? 'Select a range' : 'Select a country first' }}
+                                </option>
+                                <option v-for="budget in budgetOptions" :key="budget" :value="budget">
+                                    {{ budget }}
+                                </option>
                             </select>
                         </div>
                     </div>
@@ -201,11 +321,11 @@ function submitBuildRequest() {
                         class="form-status form-success"
                         role="status"
                     >
-                        Your email app is ready with the project details.
+                        Your inquiry was sent successfully. I&rsquo;ll get back to you soon.
                     </p>
 
                     <button type="submit" :disabled="form.processing">
-                        <span>{{ form.processing ? 'Opening…' : 'Send inquiry' }}</span>
+                        <span>{{ form.processing ? 'Sending…' : 'Send inquiry' }}</span>
                         <span class="button-icon" aria-hidden="true"><ArrowUpRight :size="17" /></span>
                     </button>
                 </form>
@@ -235,15 +355,9 @@ function submitBuildRequest() {
     width: 100%;
     max-width: 1120px;
     margin-inline: auto;
-    padding: clamp(1.5rem, 4vw, 3.5rem);
+    padding-block: clamp(1.5rem, 4vw, 3.5rem);
     grid-template-columns: minmax(250px, 0.78fr) minmax(0, 1.35fr);
     gap: clamp(2rem, 6vw, 5rem);
-    border: 1px solid rgb(103 232 249 / 0.16);
-    border-radius: 28px;
-    background:
-        radial-gradient(circle at 0 0, rgb(34 211 238 / 0.09), transparent 34%),
-        rgb(3 15 29 / 0.92);
-    box-shadow: 0 28px 70px rgb(2 8 23 / 0.28);
     animation: contact-rise 520ms ease-out both;
 }
 
@@ -256,7 +370,8 @@ function submitBuildRequest() {
     align-items: center;
     gap: 0.55rem;
     margin: 0;
-    color: #a5f3fc;
+    color: var(--signal);
+    font-family: var(--font-mono);
     font-size: 0.75rem;
     font-weight: 700;
     letter-spacing: 0.08em;
@@ -266,12 +381,13 @@ function submitBuildRequest() {
     width: 1.25rem;
     height: 2px;
     border-radius: 99px;
-    background: #22d3ee;
+    background: var(--signal);
 }
 
 .contact-copy h2 {
     margin-top: 1rem;
-    color: #f8fafc;
+    color: var(--paper);
+    font-family: var(--font-display);
     font-size: clamp(2.1rem, 4vw, 3.35rem);
     font-weight: 650;
     line-height: 1.04;
@@ -279,13 +395,13 @@ function submitBuildRequest() {
 }
 
 .contact-copy h2 span {
-    color: #67e8f9;
+    color: var(--signal);
 }
 
 .contact-intro {
     max-width: 32rem;
     margin-top: 1.2rem;
-    color: #94a3b8;
+    color: var(--muted);
     font-size: 0.9rem;
     line-height: 1.7;
 }
@@ -303,7 +419,7 @@ function submitBuildRequest() {
     align-items: center;
     min-width: 0;
     gap: 0.8rem;
-    color: #e2e8f0;
+    color: var(--paper);
     font-size: 0.82rem;
     line-height: 1.25;
     text-decoration: none;
@@ -314,13 +430,13 @@ function submitBuildRequest() {
 }
 
 .contact-details a:hover {
-    color: #67e8f9;
+    color: var(--signal);
 }
 
 .contact-details small {
     display: block;
     margin-bottom: 0.22rem;
-    color: #64748b;
+    color: var(--muted);
     font-size: 0.68rem;
 }
 
@@ -330,10 +446,10 @@ function submitBuildRequest() {
     height: 2.35rem;
     flex: 0 0 auto;
     place-items: center;
-    border: 1px solid rgb(103 232 249 / 0.22);
+    border: 1px solid rgb(245 166 35 / 0.24);
     border-radius: 50%;
-    color: #67e8f9;
-    background: rgb(8 145 178 / 0.12);
+    color: var(--signal);
+    background: rgb(245 166 35 / 0.08);
 }
 
 .social-links {
@@ -349,19 +465,29 @@ function submitBuildRequest() {
     place-items: center;
     border: 1px solid rgb(148 163 184 / 0.2);
     border-radius: 50%;
-    color: #94a3b8;
+    color: var(--muted);
     transition: color 180ms ease, border-color 180ms ease, transform 180ms ease;
 }
 
 .social-links a:hover {
-    border-color: rgb(103 232 249 / 0.55);
-    color: #67e8f9;
+    border-color: var(--signal);
+    color: var(--signal);
     transform: translateY(-2px);
 }
 
 .contact-form {
+    position: relative;
     min-width: 0;
     animation: contact-rise 620ms 100ms ease-out both;
+}
+
+.honeypot-field {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
 }
 
 .form-grid {
@@ -376,7 +502,8 @@ function submitBuildRequest() {
 }
 
 .field-group label {
-    color: #cbd5e1;
+    color: rgb(237 233 226 / 0.78);
+    font-family: var(--font-mono);
     font-size: 0.73rem;
     font-weight: 600;
 }
@@ -386,11 +513,11 @@ function submitBuildRequest() {
 .field-group textarea {
     width: 100%;
     min-height: 2.8rem;
-    border: 1px solid rgb(148 163 184 / 0.12);
+    border: 1px solid rgb(237 233 226 / 0.12);
     border-radius: 10px;
     outline: none;
-    background: rgb(15 35 54 / 0.88);
-    color: #f1f5f9;
+    background: rgb(11 13 13 / 0.72);
+    color: var(--paper);
     font: inherit;
     font-size: 0.78rem;
     transition: border-color 180ms ease, background-color 180ms ease, box-shadow 180ms ease;
@@ -409,31 +536,36 @@ function submitBuildRequest() {
 
 .field-group input::placeholder,
 .field-group textarea::placeholder {
-    color: #64748b;
+    color: rgb(237 233 226 / 0.36);
 }
 
 .field-group select:invalid,
 .field-group select option[value=''] {
-    color: #64748b;
+    color: rgb(237 233 226 / 0.42);
 }
 
 .field-group select option {
-    color: #e2e8f0;
-    background: #102336;
+    color: var(--paper);
+    background: var(--panel);
 }
 
 .field-group input:hover,
 .field-group select:hover,
 .field-group textarea:hover {
-    border-color: rgb(103 232 249 / 0.28);
+    border-color: rgb(245 166 35 / 0.3);
 }
 
 .field-group input:focus,
 .field-group select:focus,
 .field-group textarea:focus {
-    border-color: #22d3ee;
-    background: rgb(15 35 54);
-    box-shadow: 0 0 0 3px rgb(34 211 238 / 0.12);
+    border-color: var(--signal);
+    background: var(--panel);
+    box-shadow: 0 0 0 3px rgb(245 166 35 / 0.12);
+}
+
+.field-group select:disabled {
+    cursor: not-allowed;
+    opacity: 0.58;
 }
 
 .message-field {
@@ -447,7 +579,7 @@ function submitBuildRequest() {
 }
 
 .form-success {
-    color: #a5f3fc;
+    color: var(--signal);
 }
 
 .form-error {
@@ -461,10 +593,10 @@ function submitBuildRequest() {
     gap: 0.8rem;
     margin-top: 1.15rem;
     padding: 0.3rem 0.35rem 0.3rem 1.15rem;
-    border: 1px solid rgb(103 232 249 / 0.28);
+    border: 1px solid var(--signal);
     border-radius: 999px;
-    color: #082f49;
-    background: #67e8f9;
+    color: var(--ink);
+    background: var(--signal);
     font-size: 0.78rem;
     font-weight: 700;
     cursor: pointer;
@@ -472,15 +604,15 @@ function submitBuildRequest() {
 }
 
 .contact-form button:hover:not(:disabled) {
-    background: #a5f3fc;
-    box-shadow: 0 14px 30px rgb(34 211 238 / 0.18);
+    background: #ffbd52;
+    box-shadow: 0 14px 30px rgb(245 166 35 / 0.18);
     transform: translateY(-2px);
 }
 
 .contact-form button:focus-visible,
 .social-links a:focus-visible,
 .contact-details a:focus-visible {
-    outline: 2px solid #67e8f9;
+    outline: 2px solid var(--signal);
     outline-offset: 3px;
 }
 
@@ -495,8 +627,8 @@ function submitBuildRequest() {
     height: 2rem;
     place-items: center;
     border-radius: 50%;
-    color: #ecfeff;
-    background: #0e7490;
+    color: var(--signal);
+    background: var(--ink);
 }
 
 @media (max-width: 800px) {
@@ -519,11 +651,6 @@ function submitBuildRequest() {
 }
 
 @media (max-width: 560px) {
-    .contact-panel {
-        padding: 1.35rem;
-        border-radius: 20px;
-    }
-
     .contact-copy h2 {
         font-size: clamp(2rem, 11vw, 2.65rem);
     }
