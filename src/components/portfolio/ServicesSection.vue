@@ -135,7 +135,7 @@ onMounted(() => {
                         <h3>{{ service.title }}</h3>
                         <p class="service-description">{{ service.paragraphs[0] }}</p>
 
-                        <a class="service-link" href="/contact">
+                        <a class="service-link" href="/#contact">
                             <span>Discuss this service</span>
                             <span class="service-link-icon" aria-hidden="true">
                                 <ArrowRight :size="16" />

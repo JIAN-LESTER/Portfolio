@@ -8,7 +8,7 @@ export const siteNavigation: SiteNavigationItem[] = [
     { label: 'About', path: '/about' },
     { label: 'Projects', path: '/projects' },
     { label: 'Services', path: '/services' },
-    { label: 'Contact me', path: '/contact' },
+    { label: 'Contact me', path: '/#contact' },
 ];
 
 export function normalizePath(path: string) {

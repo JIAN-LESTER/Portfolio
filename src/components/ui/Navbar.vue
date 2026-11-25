@@ -5,8 +5,8 @@ import { normalizePath, siteNavigation } from '@/data/navigation';
 
 const isMenuOpen = ref(false);
 const currentPath = normalizePath(window.location.pathname);
-const primaryNavigation = siteNavigation.filter((item) => item.path !== '/contact');
-const contactNavigation = siteNavigation.find((item) => item.path === '/contact');
+const contactNavigation = siteNavigation.find((item) => item.path === '/#contact');
+const primaryNavigation = siteNavigation.filter((item) => item !== contactNavigation);
 
 function handleNavigation(path: string) {
     if (!siteNavigation.some((item) => item.path === path)) {
@@ -67,8 +67,6 @@ function handleNavigation(path: string) {
                         v-if="contactNavigation"
                         :href="contactNavigation.path"
                         class="contact-link"
-                        :class="{ 'is-active': currentPath === contactNavigation.path }"
-                        :aria-current="currentPath === contactNavigation.path ? 'page' : undefined"
                         @click="handleNavigation(contactNavigation.path)"
                     >
                         <span>{{ contactNavigation.label }}</span>

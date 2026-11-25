@@ -160,7 +160,7 @@ function handleImageError() {
                     View my works
                     <span aria-hidden="true">●</span>
                 </a>
-                <a class="btn btn-secondary" :href="`mailto:${personal.email}`">
+                <a class="btn btn-secondary" href="/#contact">
                     Contact me
                 </a>
             </div>

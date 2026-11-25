@@ -4,7 +4,6 @@ import PortfolioLayout from '@/layouts/PortfolioLayout.vue';
 import type { StageSection } from '@/composables/useScrollStage';
 import { normalizePath } from '@/data/navigation';
 import About from '@/pages/About.vue';
-import Contact from '@/pages/Contact.vue';
 import Home from '@/pages/Home.vue';
 import Projects from '@/pages/Projects.vue';
 import Services from '@/pages/Services.vue';
@@ -71,15 +70,12 @@ const routes: Record<string, PageRoute> = {
             { id: 'footer', label: 'Footer', slides: 1 },
         ],
     },
-    '/contact': {
-        component: Contact,
-        title: 'Contact - Jian Lester Tabarno',
-        sections: [
-            { id: 'contact', label: 'Contact Me', slides: 1 },
-            { id: 'footer', label: 'Footer', slides: 1 },
-        ],
-    },
 };
+
+if (normalizePath(window.location.pathname) === '/contact') {
+    window.history.replaceState(null, '', '/#contact');
+    console.info('[App] Redirected the legacy contact page to the homepage contact section.');
+}
 
 const requestedPath = normalizePath(window.location.pathname);
 const activeRoute = computed(() => {

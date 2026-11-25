@@ -85,7 +85,7 @@ function handlePortraitError() {
             >
             
                 <h2
-                    class="font-[var(--font-display)] text-[clamp(2.35rem,5vw,4.5rem)] leading-[0.98] font-bold tracking-[-0.06em] text-[var(--paper)] [text-wrap:balance] max-[780px]:text-[clamp(2.15rem,10vw,3.4rem)]"
+                    class="font-[var(--font-display)] text-[clamp(2.4rem,5vw,4.6rem)] leading-[0.98] font-bold tracking-[-0.06em] text-[var(--paper)] [text-wrap:balance] max-[780px]:text-[clamp(2.35rem,12vw,3.6rem)]"
                 >
                     Who is {{ personal.name }}?
                 </h2>
