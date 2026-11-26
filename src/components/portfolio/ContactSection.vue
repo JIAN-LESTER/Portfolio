@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { computed, onBeforeUnmount, reactive } from 'vue';
 import {
     ArrowUpRight,
     CheckCircle2,
@@ -11,6 +10,7 @@ import {
     Phone,
     X,
 } from 'lucide-vue-next';
+import { computed, onBeforeUnmount, reactive } from 'vue';
 import { useSectionSlide } from '@/composables/useScrollStage';
 import type { PersonalInfo } from '@/types/portfolio';
 

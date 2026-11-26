@@ -30,7 +30,8 @@ import {
     Wind,
 } from 'lucide-vue-next';
 import * as si from 'simple-icons/icons';
-import { computed, type Component } from 'vue';
+import { computed  } from 'vue';
+import type {Component} from 'vue';
 import { useSectionSlide } from '@/composables/useScrollStage';
 import type { SkillGroup, SkillItem } from '@/types/portfolio';
 

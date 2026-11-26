@@ -32,6 +32,7 @@ function reportImageError(project: ProjectItem) {
 
 function cardWeight(index: number) {
     const distance = Math.abs(index - exposedIndex.value);
+
     return [12, 6, 2.5, 1.35, 0.8][distance] ?? 0.8;
 }
 </script>
