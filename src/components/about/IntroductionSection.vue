@@ -124,7 +124,7 @@ h2 {
 
 .introduction-copy .lead {
     margin-bottom: 1.15rem;
-    color: rgb(237 233 226 / 0.9);
+    color: color-mix(in srgb, var(--paper) 90%, transparent);
     font-size: clamp(1.08rem, 1.8vw, 1.35rem);
     line-height: 1.65;
 }

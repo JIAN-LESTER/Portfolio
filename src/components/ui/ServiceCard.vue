@@ -69,11 +69,7 @@ function handleImageError(service: ServiceItem) {
     border: 1px solid var(--line);
     border-radius: 1.15rem;
 
-    background: linear-gradient(
-        155deg,
-        rgb(25 30 29 / 0.98),
-        rgb(16 20 19 / 0.98)
-    );
+    background: linear-gradient(155deg, var(--panel-2), var(--panel));
 
     box-shadow: 0 1.4rem 3.5rem rgb(0 0 0 / 0.22);
 
@@ -201,7 +197,7 @@ function handleImageError(service: ServiceItem) {
     border: 1px solid rgb(245 166 35 / 0.46);
     border-radius: 999px;
     background: #15251f;
-    color: var(--paper);
+    color: #ede9e2;
     font-family: var(--font-mono);
     font-size: 0.65rem;
     text-decoration: none;
@@ -216,7 +212,7 @@ function handleImageError(service: ServiceItem) {
     place-items: center;
     border-radius: 50%;
     background: var(--signal);
-    color: var(--ink);
+    color: var(--on-signal);
     transition: transform 180ms ease;
 }
 

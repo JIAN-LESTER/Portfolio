@@ -292,7 +292,7 @@ onMounted(() => {
 }
 
 .service-tab:hover {
-    background: rgb(237 233 226 / 0.07);
+    background: color-mix(in srgb, var(--paper) 7%, transparent);
     color: var(--paper);
 }
 
@@ -362,7 +362,7 @@ onMounted(() => {
 .service-description {
     max-width: 46rem;
     margin: 1.35rem 0 0;
-    color: #c2c4c0;
+    color: var(--muted);
     font-size: clamp(0.92rem, 1.3vw, 1rem);
     line-height: 1.75;
 }

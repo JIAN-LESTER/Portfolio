@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { ArrowRight, Menu, Moon, X } from 'lucide-vue-next';
+import { ArrowRight, Menu, Moon, Sun, X } from 'lucide-vue-next';
 import { normalizePath, siteNavigation } from '@/data/navigation';
 
+const THEME_STORAGE_KEY = 'portfolio-theme';
 const isMenuOpen = ref(false);
+const isDarkMode = ref(document.documentElement.classList.contains('dark'));
 const currentPath = normalizePath(window.location.pathname);
 const contactNavigation = siteNavigation.find((item) => item.path === '/#contact');
 const primaryNavigation = siteNavigation.filter((item) => item !== contactNavigation);
@@ -16,6 +18,21 @@ function handleNavigation(path: string) {
 
     isMenuOpen.value = false;
     console.info(`[Navbar] Opening page "${path}".`);
+}
+
+function toggleTheme() {
+    isDarkMode.value = !isDarkMode.value;
+    const theme = isDarkMode.value ? 'dark' : 'light';
+
+    document.documentElement.classList.toggle('dark', isDarkMode.value);
+    document.documentElement.style.colorScheme = theme;
+
+    try {
+        window.localStorage.setItem(THEME_STORAGE_KEY, theme);
+        console.info(`[Theme] Switched to ${theme} mode.`);
+    } catch (error) {
+        console.error(`[Theme] Switched to ${theme} mode, but the preference could not be saved.`, error);
+    }
 }
 </script>
 
@@ -60,9 +77,16 @@ function handleNavigation(path: string) {
                 </div>
 
                 <div class="nav-actions">
-                    <span class="theme-indicator" role="img" aria-label="Dark mode">
-                        <Moon :size="16" aria-hidden="true" />
-                    </span>
+                    <button
+                        type="button"
+                        class="theme-toggle"
+                        :aria-label="isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'"
+                        :title="isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'"
+                        @click="toggleTheme"
+                    >
+                        <Sun v-if="isDarkMode" :size="17" aria-hidden="true" />
+                        <Moon v-else :size="17" aria-hidden="true" />
+                    </button>
                     <a
                         v-if="contactNavigation"
                         :href="contactNavigation.path"
@@ -97,10 +121,10 @@ function handleNavigation(path: string) {
     align-items: center;
     gap: 1.5rem;
     padding: 0.55rem 0.65rem 0.55rem 0.75rem;
-    border: 1px solid rgb(237 233 226 / 0.1);
+    border: 1px solid var(--nav-border);
     border-radius: 0.9rem;
-    background: rgb(11 14 18 / 0.78);
-    box-shadow: 0 18px 50px rgb(0 0 0 / 0.2);
+    background: var(--nav-surface);
+    box-shadow: var(--nav-shadow);
     backdrop-filter: blur(18px);
 }
 
@@ -118,7 +142,7 @@ function handleNavigation(path: string) {
     padding: 0.3rem 0.52rem;
     border-radius: 0.35rem;
     background: var(--signal);
-    color: var(--ink);
+    color: var(--on-signal);
     font-family: var(--font-mono);
     font-size: 0.72rem;
     font-weight: 600;
@@ -152,17 +176,33 @@ function handleNavigation(path: string) {
     gap: 0.55rem;
 }
 
-.theme-indicator {
+.theme-toggle {
     display: inline-flex;
     width: 2.35rem;
     height: 2.35rem;
     flex: 0 0 auto;
     align-items: center;
     justify-content: center;
-    border: 1px solid rgb(237 233 226 / 0.12);
+    border: 1px solid var(--nav-border);
     border-radius: 999px;
-    background: rgb(237 233 226 / 0.05);
+    background: var(--nav-control);
     color: var(--signal);
+    cursor: pointer;
+    transition:
+        background-color 180ms ease,
+        border-color 180ms ease,
+        color 180ms ease,
+        transform 180ms ease;
+}
+
+.theme-toggle:hover {
+    border-color: rgb(245 166 35 / 0.56);
+    background: var(--nav-control-hover);
+    transform: rotate(8deg);
+}
+
+.theme-toggle:active {
+    transform: scale(0.94);
 }
 
 .contact-link {
@@ -175,7 +215,7 @@ function handleNavigation(path: string) {
     border: 1px solid rgb(245 166 35 / 0.5);
     border-radius: 999px;
     background: #15251f;
-    color: var(--paper);
+    color: #ede9e2;
     font-family: var(--font-mono);
     font-size: 0.82rem;
     font-weight: 600;
@@ -205,7 +245,7 @@ function handleNavigation(path: string) {
     place-items: center;
     border-radius: 50%;
     background: var(--signal);
-    color: var(--ink);
+    color: var(--on-signal);
     transition: transform 180ms ease;
 }
 
@@ -292,10 +332,10 @@ function handleNavigation(path: string) {
         display: grid;
         gap: 0.2rem;
         padding: 0.55rem;
-        border: 1px solid rgb(237 233 226 / 0.1);
+        border: 1px solid var(--nav-border);
         border-radius: 0.9rem;
-        background: rgb(11 14 18 / 0.96);
-        box-shadow: 0 20px 50px rgb(0 0 0 / 0.35);
+        background: var(--nav-menu-surface);
+        box-shadow: var(--nav-menu-shadow);
         opacity: 0;
         pointer-events: none;
         transform: translateY(-0.5rem);
@@ -322,10 +362,10 @@ function handleNavigation(path: string) {
         justify-self: stretch;
         gap: 0.45rem;
         padding-top: 0.35rem;
-        border-top: 1px solid rgb(237 233 226 / 0.08);
+        border-top: 1px solid var(--nav-divider);
     }
 
-    .theme-indicator {
+    .theme-toggle {
         width: 2.75rem;
         height: 2.75rem;
     }
@@ -366,6 +406,10 @@ function handleNavigation(path: string) {
     }
 
     .contact-arrow {
+        transition: none;
+    }
+
+    .theme-toggle {
         transition: none;
     }
 }

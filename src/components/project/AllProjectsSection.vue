@@ -161,7 +161,7 @@ onMounted(() => {
 <style scoped>
 .all-projects {
     background-image:
-        linear-gradient(90deg, rgb(237 233 226 / 0.025) 1px, transparent 1px),
+        linear-gradient(90deg, color-mix(in srgb, var(--paper) 2.5%, transparent) 1px, transparent 1px),
         radial-gradient(circle at 84% 18%, rgb(245 166 35 / 0.08), transparent 25%);
     background-size: 5rem 100%, auto;
 }
@@ -234,7 +234,7 @@ onMounted(() => {
         linear-gradient(90deg, transparent, rgb(245 166 35 / 0.2) 18%, rgb(245 166 35 / 0.2) 82%, transparent) top / 100% 1px no-repeat,
         linear-gradient(90deg, transparent, rgb(245 166 35 / 0.2) 18%, rgb(245 166 35 / 0.2) 82%, transparent) bottom / 100% 1px no-repeat,
         radial-gradient(circle at 50% 50%, rgb(245 166 35 / 0.065), transparent 68%),
-        linear-gradient(90deg, transparent, rgb(237 233 226 / 0.018) 28%, rgb(237 233 226 / 0.018) 72%, transparent);
+        linear-gradient(90deg, transparent, color-mix(in srgb, var(--paper) 1.8%, transparent) 28%, color-mix(in srgb, var(--paper) 1.8%, transparent) 72%, transparent);
     -webkit-mask-image: linear-gradient(90deg, transparent, #000 14%, #000 86%, transparent);
     mask-image: linear-gradient(90deg, transparent, #000 14%, #000 86%, transparent);
     content: '';
@@ -259,7 +259,7 @@ onMounted(() => {
 .project-preview {
     aspect-ratio: 16 / 10;
     overflow: hidden;
-    border: 1px solid rgb(237 233 226 / 0.12);
+    border: 1px solid color-mix(in srgb, var(--paper) 12%, transparent);
     border-radius: 0.65rem;
     background: var(--panel-2);
 }
@@ -345,12 +345,12 @@ onMounted(() => {
     max-width: 39rem;
     margin-top: clamp(2rem, 4vw, 3.5rem);
     padding-top: clamp(1.5rem, 3vw, 2.5rem);
-    border-top: 1px solid rgb(237 233 226 / 0.13);
+    border-top: 1px solid color-mix(in srgb, var(--paper) 13%, transparent);
 }
 
 .project-details > p {
     margin: 0;
-    color: #b7bab6;
+    color: var(--muted);
     font-size: clamp(0.9rem, 1.25vw, 1rem);
     line-height: 1.75;
 }
@@ -393,7 +393,7 @@ onMounted(() => {
 .stack-list li,
 .planned-stack li {
     padding: 0.3rem 0.5rem;
-    border: 1px solid rgb(237 233 226 / 0.13);
+    border: 1px solid color-mix(in srgb, var(--paper) 13%, transparent);
     border-radius: 999px;
     color: var(--depth);
     font-family: var(--font-mono);
@@ -452,7 +452,7 @@ onMounted(() => {
 .upcoming-description {
     max-width: 42rem;
     margin: 0;
-    color: #adafac;
+    color: var(--muted);
     font-size: clamp(0.9rem, 1.25vw, 1rem);
     line-height: 1.75;
 }

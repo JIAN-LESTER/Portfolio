@@ -124,7 +124,7 @@ h2 {
     padding: clamp(1rem, 3vw, 1.75rem);
     border: 1px solid var(--line);
     border-radius: 0.85rem;
-    background: rgb(18 22 22 / 0.9);
+    background: color-mix(in srgb, var(--panel) 90%, transparent);
     box-shadow: 0 1.5rem 4rem rgb(0 0 0 / 0.2);
 }
 
@@ -191,7 +191,7 @@ h2 {
     border: 1px solid var(--signal);
     border-radius: 0.45rem;
     background: var(--signal);
-    color: var(--ink);
+    color: var(--on-signal);
     font-family: var(--font-mono);
     font-size: 0.76rem;
     font-weight: 650;

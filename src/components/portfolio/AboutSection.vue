@@ -179,7 +179,7 @@ function handlePortraitError() {
                 >
                     <a
                         v-if="personal.resumeUrl"
-                        class="inline-flex min-h-12 items-center gap-3 rounded-full border border-[var(--signal)] bg-[var(--signal)] py-1 pr-1 pl-5 font-[var(--font-display)] text-sm font-bold text-[var(--ink)] transition-[transform,background-color,border-color] duration-200 hover:-translate-y-0.5 hover:bg-[#ffc04d] hover:border-[#ffc04d] max-[480px]:flex-1 max-[480px]:justify-between"
+                        class="inline-flex min-h-12 items-center gap-3 rounded-full border border-[var(--signal)] bg-[var(--signal)] py-1 pr-1 pl-5 font-[var(--font-display)] text-sm font-bold text-[var(--on-signal)] transition-[transform,background-color,border-color] duration-200 hover:-translate-y-0.5 hover:bg-[#ffc04d] hover:border-[#ffc04d] max-[480px]:flex-1 max-[480px]:justify-between"
                         :href="personal.resumeUrl"
                         download
                     >
@@ -225,7 +225,7 @@ function handlePortraitError() {
     padding: 0.48rem 0.72rem;
     border: 1px solid rgb(237 233 226 / 0.18);
     border-radius: 0.45rem;
-    background: rgb(18 22 22 / 0.9);
+    background: color-mix(in srgb, var(--panel) 90%, transparent);
     box-shadow: 0 0.8rem 1.8rem rgb(0 0 0 / 0.24);
     color: var(--paper);
     font-family: var(--font-mono);

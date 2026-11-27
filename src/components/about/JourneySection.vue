@@ -197,7 +197,7 @@ onMounted(() => {
 
 .role {
     margin: 0.65rem 0 0;
-    color: rgb(237 233 226 / 0.86);
+    color: color-mix(in srgb, var(--paper) 86%, transparent);
     line-height: 1.5;
 }
 

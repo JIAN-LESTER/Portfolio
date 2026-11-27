@@ -19,7 +19,7 @@ const props = defineProps<{
 const heroContent: Record<HeroVariant, PageHeroContent> = {
     about: {
         title: 'About me',
-        highlight: ['Get to know', 'me better.'],
+        highlight: ['Get to know', 'me better'],
         description:
             'Know who am I, what I do, and how I can help you. Explore my journey, skills, and experiences that shape my approach to creating impactful digital solutions.',
     },
@@ -212,7 +212,7 @@ const handlePreviewError = (label: string) => {
     justify-content: flex-start;
     background:
         radial-gradient(circle at 50% 105%, rgb(245 166 35 / 0.1), transparent 31%),
-        #0b0d0d;
+        var(--ink);
 }
 
 .page-hero-content {
@@ -279,7 +279,7 @@ const handlePreviewError = (label: string) => {
     overflow: hidden;
     border: 1px solid rgb(237 233 226 / 0.16);
     border-radius: 0.8rem;
-    background: #111414;
+    background: var(--panel);
     box-shadow: 0 1.75rem 5rem rgb(0 0 0 / 0.48);
 }
 
@@ -337,7 +337,7 @@ const handlePreviewError = (label: string) => {
     padding: 0.55rem 0.8rem;
     font-family: var(--font-mono);
     font-size: 0.66rem;
-    color: rgb(237 233 226 / 0.48);
+    color: color-mix(in srgb, var(--paper) 48%, transparent);
 }
 
 .project-preview figcaption span:first-child {
@@ -350,7 +350,7 @@ const handlePreviewError = (label: string) => {
     overflow: hidden;
     border: 1px solid rgb(237 233 226 / 0.16);
     border-radius: 0.8rem;
-    background: #111414;
+    background: var(--panel);
     box-shadow: 0 1.75rem 5rem rgb(0 0 0 / 0.42);
 }
 

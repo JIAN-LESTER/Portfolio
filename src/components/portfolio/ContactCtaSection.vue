@@ -64,7 +64,7 @@ function logContactNavigation() {
 .contact-cta p {
     max-width: 44rem;
     margin: 0.85rem 0 0;
-    color: #aeb3ae;
+    color: var(--muted);
     font-size: 0.9rem;
     line-height: 1.65;
 }
@@ -79,7 +79,7 @@ function logContactNavigation() {
     border: 1px solid rgb(245 166 35 / 0.46);
     border-radius: 999px;
     background: #15251f;
-    color: var(--paper);
+    color: #ede9e2;
     font-family: var(--font-mono);
     font-size: 0.74rem;
     text-decoration: none;
@@ -94,7 +94,7 @@ function logContactNavigation() {
     place-items: center;
     border-radius: 50%;
     background: var(--signal);
-    color: var(--ink);
+    color: var(--on-signal);
     transition: transform 180ms ease;
 }
 

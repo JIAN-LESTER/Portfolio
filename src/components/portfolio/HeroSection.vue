@@ -188,7 +188,7 @@ function handleImageError() {
     isolation: isolate;
     background:
         radial-gradient(circle at 50% 105%, rgb(245 166 35 / 0.1), transparent 31%),
-        #0b0d0d;
+        var(--ink);
 }
 
 .hero::after {
@@ -198,7 +198,7 @@ function handleImageError() {
     left: 0;
     z-index: 0;
     height: 1px;
-    background: rgb(237 233 226 / 0.15);
+    background: color-mix(in srgb, var(--paper) 15%, transparent);
     content: '';
 }
 
@@ -251,7 +251,7 @@ function handleImageError() {
 
 .hero-role {
     margin-top: 0.75rem;
-    color: rgb(237 233 226 / 0.76);
+    color: color-mix(in srgb, var(--paper) 76%, transparent);
     font-size: clamp(0.9rem, 1.15vw, 1.05rem);
     font-weight: 500;
 }
@@ -265,7 +265,7 @@ function handleImageError() {
 }
 
 .hero-location span {
-    color: rgb(237 233 226 / 0.45);
+    color: color-mix(in srgb, var(--paper) 45%, transparent);
     font-family: var(--font-mono);
     font-size: clamp(0.62rem, 0.68vw, 0.72rem);
 }
@@ -292,7 +292,7 @@ function handleImageError() {
     justify-content: center;
     border: 1px solid rgb(237 233 226 / 0.14);
     border-radius: 50%;
-    color: rgb(237 233 226 / 0.5);
+    color: color-mix(in srgb, var(--paper) 50%, transparent);
     font-family: var(--font-mono);
     font-size: 0.58rem;
     line-height: 1.2;
@@ -375,7 +375,7 @@ function handleImageError() {
 .orbit {
     position: absolute;
     display: block;
-    border: 1px solid rgb(237 233 226 / 0.12);
+    border: 1px solid color-mix(in srgb, var(--paper) 12%, transparent);
     border-radius: 50%;
     box-shadow: inset 0 0 3rem rgb(255 255 255 / 0.025);
 }
@@ -385,9 +385,9 @@ function handleImageError() {
     left: 11%;
     width: 78%;
     aspect-ratio: 1;
-    border-color: rgb(237 233 226 / 0.08);
+    border-color: color-mix(in srgb, var(--paper) 8%, transparent);
     background:
-        radial-gradient(circle at 50% 38%, rgb(40 45 45 / 0.98), rgb(20 24 24 / 0.98) 55%, rgb(12 15 15 / 0.98) 76%);
+        radial-gradient(circle at 50% 38%, var(--panel-2), var(--panel) 76%);
     box-shadow:
         inset 0 0 4rem rgb(0 0 0 / 0.3),
         0 2rem 5rem rgb(0 0 0 / 0.32);
@@ -398,7 +398,7 @@ function handleImageError() {
     left: 2%;
     width: 96%;
     aspect-ratio: 1;
-    border-color: rgb(237 233 226 / 0.09);
+    border-color: color-mix(in srgb, var(--paper) 9%, transparent);
 }
 
 .orbit-small {
@@ -456,7 +456,7 @@ function handleImageError() {
 .social-block > p,
 .expertise-block > p {
     margin-bottom: 0.85rem;
-    color: rgb(237 233 226 / 0.65);
+    color: color-mix(in srgb, var(--paper) 65%, transparent);
     font-size: clamp(0.95rem, 1.05vw, 1.08rem);
     font-weight: 500;
 }
@@ -472,10 +472,10 @@ function handleImageError() {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid rgb(237 233 226 / 0.14);
+    border: 1px solid color-mix(in srgb, var(--paper) 14%, transparent);
     border-radius: 50%;
-    background: rgb(11 13 13 / 0.66);
-    color: rgb(237 233 226 / 0.75);
+    background: color-mix(in srgb, var(--panel) 66%, transparent);
+    color: color-mix(in srgb, var(--paper) 75%, transparent);
     transition:
         border-color 180ms ease,
         color 180ms ease,
@@ -523,7 +523,7 @@ function handleImageError() {
 
 .experience-context {
     margin-top: 0.45rem;
-    color: rgb(237 233 226 / 0.7);
+    color: color-mix(in srgb, var(--paper) 70%, transparent);
     font-size: clamp(0.88rem, 0.95vw, 1rem);
     line-height: 1.45;
 }
@@ -531,7 +531,7 @@ function handleImageError() {
 .experience-domains {
     display: block;
     margin-top: 0.4rem;
-    color: rgb(237 233 226 / 0.4);
+    color: color-mix(in srgb, var(--paper) 40%, transparent);
     font-size: clamp(0.82rem, 0.9vw, 0.95rem);
     line-height: 1.5;
 }
@@ -550,7 +550,7 @@ function handleImageError() {
 .quote-block p {
     margin-top: 0.65rem;
     margin-left: auto;
-    color: rgb(237 233 226 / 0.72);
+    color: color-mix(in srgb, var(--paper) 72%, transparent);
     font-size: clamp(1.05rem, 1.2vw, 1.25rem);
     line-height: 1.55;
 }
@@ -571,10 +571,10 @@ function handleImageError() {
 
 .expertise-block li {
     padding: 0.62rem 1rem;
-    border: 1px solid rgb(237 233 226 / 0.12);
+    border: 1px solid color-mix(in srgb, var(--paper) 12%, transparent);
     border-radius: 999px;
-    background: rgb(17 19 19 / 0.72);
-    color: rgb(237 233 226 / 0.7);
+    background: color-mix(in srgb, var(--panel) 72%, transparent);
+    color: color-mix(in srgb, var(--paper) 70%, transparent);
     font-family: var(--font-mono);
     font-size: clamp(0.8rem, 0.9vw, 0.92rem);
 }
@@ -582,7 +582,7 @@ function handleImageError() {
 .expertise-block li.highlight {
     border-color: var(--signal);
     background: var(--signal);
-    color: var(--ink);
+    color: var(--on-signal);
 }
 
 .hero-actions {
@@ -626,7 +626,7 @@ function handleImageError() {
 
 .btn-primary {
     background: var(--signal);
-    color: var(--ink);
+    color: var(--on-signal);
 }
 
 .btn-primary span {
@@ -636,14 +636,14 @@ function handleImageError() {
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    background: var(--ink);
+    background: var(--on-signal);
     color: var(--signal);
     font-size: 0.4rem;
 }
 
 .btn-secondary {
-    border-color: rgb(237 233 226 / 0.26);
-    background: rgb(11 13 13 / 0.84);
+    border-color: color-mix(in srgb, var(--paper) 26%, transparent);
+    background: color-mix(in srgb, var(--panel) 84%, transparent);
     color: var(--paper);
     backdrop-filter: blur(10px);
 }
@@ -660,7 +660,7 @@ function handleImageError() {
     z-index: 7;
     overflow: hidden;
     border-block: 1px solid rgb(245 166 35 / 0.28);
-    background: rgb(11 13 13 / 0.94);
+    background: color-mix(in srgb, var(--panel) 94%, transparent);
     color: var(--paper);
 }
 
@@ -847,7 +847,7 @@ function handleImageError() {
         max-width: 28rem;
         margin-inline: auto;
         padding-top: 1.4rem;
-        border-top: 1px solid rgb(237 233 226 / 0.1);
+        border-top: 1px solid color-mix(in srgb, var(--paper) 10%, transparent);
     }
 
     .side-detail-left {

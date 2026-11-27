@@ -337,14 +337,14 @@ h3 {
     padding: 0.55rem 0.35rem;
     border: 1px solid rgb(237 233 226 / 0.1);
     border-radius: 0.65rem;
-    background: rgb(237 233 226 / 0.035);
+    background: color-mix(in srgb, var(--paper) 3.5%, transparent);
     transition: border-color 180ms ease, background-color 180ms ease,
         transform 180ms ease;
 }
 
 .skill-item:hover {
     border-color: rgb(245 166 35 / 0.5);
-    background: rgb(237 233 226 / 0.07);
+    background: color-mix(in srgb, var(--paper) 7%, transparent);
     transform: translateY(-2px);
 }
 

@@ -134,7 +134,7 @@ onMounted(() => {
     border: 1px solid rgb(245 166 35 / 0.46);
     border-radius: 999px;
     background: #15251f;
-    color: var(--paper);
+    color: #ede9e2;
     font-family: var(--font-mono);
     font-size: 0.74rem;
     text-decoration: none;
@@ -149,7 +149,7 @@ onMounted(() => {
     place-items: center;
     border-radius: 50%;
     background: var(--signal);
-    color: var(--ink);
+    color: var(--on-signal);
     transition: transform 180ms ease;
 }
 

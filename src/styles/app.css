@@ -7,20 +7,53 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
+    --ink: #f4f1e9;
+    --panel: #fffdf7;
+    --panel-2: #e9e4d9;
+    --line: #c9c1b2;
+    --paper: #171b19;
+    --muted: #5f6863;
+    --signal: #f5a623;
+    --on-signal: #0b0d0d;
+    --overlay-paper: #ede9e2;
+    --overlay-muted: rgb(237 233 226 / 0.78);
+    --error: #b42318;
+    --signal-dim: #9a640c;
+    --depth: #53675e;
+    --depth-dim: #9eaa9f;
+    --nav-surface: rgb(255 253 247 / 0.82);
+    --nav-menu-surface: rgb(255 253 247 / 0.97);
+    --nav-border: rgb(23 27 25 / 0.12);
+    --nav-divider: rgb(23 27 25 / 0.1);
+    --nav-control: rgb(23 27 25 / 0.05);
+    --nav-control-hover: rgb(245 166 35 / 0.12);
+    --nav-shadow: 0 18px 50px rgb(52 44 31 / 0.14);
+    --nav-menu-shadow: 0 20px 50px rgb(52 44 31 / 0.2);
+
+    --font-display: 'Space Grotesk', sans-serif;
+    --font-body: 'IBM Plex Sans', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+}
+
+.dark {
     --ink: #0b0d0d;
     --panel: #121616;
     --panel-2: #191e1d;
     --line: #2a302e;
     --paper: #ede9e2;
     --muted: #9a9f9b;
-    --signal: #f5a623;
     --signal-dim: #7a5518;
+    --error: #fca5a5;
     --depth: #d4c7b1;
     --depth-dim: #665a47;
-
-    --font-display: 'Space Grotesk', sans-serif;
-    --font-body: 'IBM Plex Sans', sans-serif;
-    --font-mono: 'JetBrains Mono', monospace;
+    --nav-surface: rgb(11 14 18 / 0.78);
+    --nav-menu-surface: rgb(11 14 18 / 0.96);
+    --nav-border: rgb(237 233 226 / 0.1);
+    --nav-divider: rgb(237 233 226 / 0.08);
+    --nav-control: rgb(237 233 226 / 0.05);
+    --nav-control-hover: rgb(245 166 35 / 0.12);
+    --nav-shadow: 0 18px 50px rgb(0 0 0 / 0.2);
+    --nav-menu-shadow: 0 20px 50px rgb(0 0 0 / 0.35);
 }
 
 html {
@@ -122,8 +155,8 @@ html::-webkit-scrollbar {
 }
 
 :root {
-    --background: #0b0d0d;
-    --foreground: #ede9e2;
+    --background: var(--ink);
+    --foreground: var(--paper);
     --card: hsl(0 0% 100%);
     --card-foreground: hsl(0 0% 3.9%);
     --popover: hsl(0 0% 100%);
@@ -132,8 +165,8 @@ html::-webkit-scrollbar {
     --primary-foreground: hsl(0 0% 98%);
     --secondary: hsl(0 0% 92.1%);
     --secondary-foreground: hsl(0 0% 9%);
-    --muted: #9a9f9b;
-    --muted-foreground: #9a9f9b;
+    --muted: #5f6863;
+    --muted-foreground: #5f6863;
     --accent: hsl(0 0% 96.1%);
     --accent-foreground: hsl(0 0% 9%);
     --destructive: hsl(0 84.2% 60.2%);
@@ -159,8 +192,8 @@ html::-webkit-scrollbar {
 }
 
 .dark {
-    --background: hsl(0 0% 3.9%);
-    --foreground: hsl(0 0% 98%);
+    --background: var(--ink);
+    --foreground: var(--paper);
     --card: hsl(0 0% 3.9%);
     --card-foreground: hsl(0 0% 98%);
     --popover: hsl(0 0% 3.9%);
@@ -169,8 +202,8 @@ html::-webkit-scrollbar {
     --primary-foreground: hsl(0 0% 9%);
     --secondary: hsl(0 0% 14.9%);
     --secondary-foreground: hsl(0 0% 98%);
-    --muted: hsl(0 0% 16.08%);
-    --muted-foreground: hsl(0 0% 63.9%);
+    --muted: #9a9f9b;
+    --muted-foreground: #9a9f9b;
     --accent: hsl(0 0% 14.9%);
     --accent-foreground: hsl(0 0% 98%);
     --destructive: hsl(0 84% 60%);
@@ -216,7 +249,7 @@ html::-webkit-scrollbar {
 
 /* A restrained end rule separates sections without adding decorative UI. */
 .stage-section:not(.site-footer) {
-        border-bottom: 1px solid rgb(237 233 226 / 0.11);
+        border-bottom: 1px solid color-mix(in srgb, var(--paper) 11%, transparent);
 }
 
 .stage-section:not(.hero):not(.site-footer)::before,
@@ -230,7 +263,7 @@ html::-webkit-scrollbar {
 .stage-section:not(.hero):not(.site-footer)::before {
         width: clamp(14rem, 30vw, 32rem);
         aspect-ratio: 1;
-        border: 1px solid rgb(237 233 226 / 0.07);
+        border: 1px solid color-mix(in srgb, var(--paper) 7%, transparent);
         border-radius: 50%;
 }
 
@@ -261,8 +294,8 @@ html::-webkit-scrollbar {
 
 .stage-section.skills {
         background-image:
-            linear-gradient(rgb(237 233 226 / 0.025) 1px, transparent 1px),
-            linear-gradient(90deg, rgb(237 233 226 / 0.025) 1px, transparent 1px),
+            linear-gradient(color-mix(in srgb, var(--paper) 2.5%, transparent) 1px, transparent 1px),
+            linear-gradient(90deg, color-mix(in srgb, var(--paper) 2.5%, transparent) 1px, transparent 1px),
             radial-gradient(circle at 88% 22%, rgb(245 166 35 / 0.08), transparent 24%);
         background-size: 4.5rem 4.5rem, 4.5rem 4.5rem, auto;
 }
@@ -280,7 +313,7 @@ html::-webkit-scrollbar {
 .stage-section.projects {
         background-image:
             radial-gradient(circle at 84% 50%, rgb(245 166 35 / 0.1), transparent 26%),
-            linear-gradient(90deg, transparent 48%, rgb(237 233 226 / 0.025) 50%, transparent 52%);
+            linear-gradient(90deg, transparent 48%, color-mix(in srgb, var(--paper) 2.5%, transparent) 50%, transparent 52%);
 }
 
 .stage-section.projects::before {
@@ -314,7 +347,7 @@ html::-webkit-scrollbar {
 
 .stage-section.journey {
         background-image:
-            linear-gradient(90deg, rgb(237 233 226 / 0.05), transparent 18%),
+            linear-gradient(90deg, color-mix(in srgb, var(--paper) 5%, transparent), transparent 18%),
             radial-gradient(circle at 12% 78%, rgb(245 166 35 / 0.09), transparent 23%);
 }
 
@@ -332,7 +365,7 @@ html::-webkit-scrollbar {
 .stage-section.resume {
         background-image:
             radial-gradient(circle at 78% 46%, rgb(245 166 35 / 0.09), transparent 25%),
-            linear-gradient(135deg, transparent 65%, rgb(237 233 226 / 0.025));
+            linear-gradient(135deg, transparent 65%, color-mix(in srgb, var(--paper) 2.5%, transparent));
 }
 
 .stage-section.resume::before {
@@ -348,7 +381,7 @@ html::-webkit-scrollbar {
 .stage-section.contact {
         background-image:
             radial-gradient(circle at 16% 34%, rgb(245 166 35 / 0.12), transparent 24%),
-            radial-gradient(circle at 88% 82%, rgb(237 233 226 / 0.045), transparent 22%);
+            radial-gradient(circle at 88% 82%, color-mix(in srgb, var(--paper) 4.5%, transparent), transparent 22%);
 }
 
 .stage-section.contact::before {

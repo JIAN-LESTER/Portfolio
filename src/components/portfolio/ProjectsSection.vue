@@ -148,7 +148,7 @@ function cardWeight(index: number) {
     border: 1px solid rgb(245 166 35 / 0.46);
     border-radius: 999px;
     background: #15251f;
-    color: var(--paper);
+    color: #ede9e2;
     font-family: var(--font-mono);
     font-size: 0.74rem;
     text-decoration: none;
@@ -163,7 +163,7 @@ function cardWeight(index: number) {
     place-items: center;
     border-radius: 50%;
     background: var(--signal);
-    color: var(--ink);
+    color: var(--on-signal);
     transition: transform 180ms ease;
 }
 
@@ -194,7 +194,7 @@ function cardWeight(index: number) {
     flex: var(--card-weight) 1 0;
     min-width: 0;
     overflow: hidden;
-    border: 1px solid rgb(237 233 226 / 0.13);
+    border: 1px solid color-mix(in srgb, var(--paper) 13%, transparent);
     border-radius: 0.65rem;
     background: var(--panel);
     cursor: crosshair;
@@ -255,14 +255,14 @@ function cardWeight(index: number) {
     font-weight: 600;
     line-height: 1;
     letter-spacing: -0.035em;
-    color: var(--paper);
+    color: var(--overlay-paper);
     white-space: nowrap;
 }
 
 .project-copy p {
     max-width: 38rem;
     margin: 0.75rem 0 0;
-    color: rgb(237 233 226 / 0.78);
+    color: var(--overlay-muted);
     font-size: clamp(0.88rem, 1.25vw, 1rem);
     line-height: 1.6;
     opacity: 0;

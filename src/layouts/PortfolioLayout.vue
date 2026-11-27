@@ -38,7 +38,7 @@ onMounted(() => {
 
 <template>
     <div
-        class="relative min-h-screen overflow-x-clip bg-[var(--ink)] font-[var(--font-body)] text-[var(--paper)] [&_*:focus-visible]:outline-2 [&_*:focus-visible]:outline-offset-[3px] [&_*:focus-visible]:outline-[var(--signal)] [&_.hero]:h-svh [&_.hero]:min-h-svh [&_.hero]:overflow-hidden [&_.stage-section:not(.hero):not(.about):not(.services):not(.site-footer)]:py-[clamp(4rem,8vh,6rem)] [&_.stage-section]:relative [&_.stage-section]:z-[1] [&_.stage-section]:h-auto [&_.stage-section]:min-h-0 [&_.stage-section]:w-full [&_.stage-section]:scroll-mt-20 [&_.stage-section]:overflow-visible [&_.stage-section]:opacity-100 [&_.stage-section]:[backface-visibility:hidden] [&_.stage-section]:[transform:translateZ(0)] [&_[data-stage-scroll]]:max-h-none [&_[data-stage-scroll]]:overflow-y-visible [&_[data-stage-scroll]]:overscroll-auto [&_[v-cloak]]:hidden motion-reduce:[&_.stage-section]:transition-none max-[780px]:[&_.hero]:h-auto max-[780px]:[&_.hero]:min-h-svh max-[780px]:[&_.hero]:overflow-visible"
+        class="portfolio-layout relative min-h-screen overflow-x-clip bg-[var(--ink)] font-[var(--font-body)] text-[var(--paper)] [&_*:focus-visible]:outline-2 [&_*:focus-visible]:outline-offset-[3px] [&_*:focus-visible]:outline-[var(--signal)] [&_.hero]:h-svh [&_.hero]:min-h-svh [&_.hero]:overflow-hidden [&_.stage-section:not(.hero):not(.about):not(.services):not(.site-footer)]:py-[clamp(4rem,8vh,6rem)] [&_.stage-section]:relative [&_.stage-section]:z-[1] [&_.stage-section]:h-auto [&_.stage-section]:min-h-0 [&_.stage-section]:w-full [&_.stage-section]:scroll-mt-20 [&_.stage-section]:overflow-visible [&_.stage-section]:opacity-100 [&_.stage-section]:[backface-visibility:hidden] [&_.stage-section]:[transform:translateZ(0)] [&_[data-stage-scroll]]:max-h-none [&_[data-stage-scroll]]:overflow-y-visible [&_[data-stage-scroll]]:overscroll-auto [&_[v-cloak]]:hidden motion-reduce:[&_.stage-section]:transition-none max-[780px]:[&_.hero]:h-auto max-[780px]:[&_.hero]:min-h-svh max-[780px]:[&_.hero]:overflow-visible"
     >
         <BackgroundField />
         <Navbar />
@@ -48,3 +48,25 @@ onMounted(() => {
         </main>
     </div>
 </template>
+
+<style scoped>
+/*
+ * Native document scrolling owns the vertical axis. These rules override
+ * legacy full-screen-stage styles that can otherwise trap wheel and touch
+ * input inside a section instead of allowing it to reach the page.
+ */
+.portfolio-layout :deep([data-stage-scroll]) {
+    max-height: none !important;
+    overflow-x: clip !important;
+    overflow-y: visible !important;
+    overscroll-behavior-y: auto !important;
+}
+
+@media (max-width: 780px) {
+    .portfolio-layout :deep(.stage-section) {
+        overflow-x: clip !important;
+        overflow-y: visible !important;
+        overscroll-behavior-y: auto !important;
+    }
+}
+</style>

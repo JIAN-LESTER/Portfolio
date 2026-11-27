@@ -194,7 +194,7 @@ onMounted(() => {
     overflow: hidden;
     border: 1px solid rgb(245 166 35 / 0.36);
     border-radius: 0.85rem;
-    background: #18211d;
+    background: var(--panel);
     box-shadow: 0 1.5rem 4rem rgb(0 0 0 / 0.24);
 }
 
@@ -241,7 +241,7 @@ onMounted(() => {
 
 .feature-content h3 {
     margin: 0;
-    color: var(--paper);
+    color: var(--overlay-paper);
     font-family: var(--font-display);
     font-size: clamp(2.25rem, 5vw, 3.75rem);
     letter-spacing: -0.045em;
@@ -251,7 +251,7 @@ onMounted(() => {
 .feature-description {
     max-width: 38rem;
     margin: 0.9rem 0 0;
-    color: rgb(237 233 226 / 0.78);
+    color: var(--overlay-muted);
     line-height: 1.65;
 }
 
@@ -269,7 +269,7 @@ onMounted(() => {
     border: 1px solid rgb(237 233 226 / 0.24);
     border-radius: 999px;
     background: rgb(7 10 9 / 0.48);
-    color: var(--paper);
+    color: var(--overlay-paper);
     font-family: var(--font-mono);
     font-size: 0.72rem;
     backdrop-filter: blur(0.35rem);
@@ -304,7 +304,7 @@ onMounted(() => {
 }
 
 .hobby-list button:hover {
-    background: rgb(237 233 226 / 0.045);
+    background: color-mix(in srgb, var(--paper) 4.5%, transparent);
     transform: translateX(0.3rem);
 }
 
@@ -318,7 +318,7 @@ onMounted(() => {
     overflow: hidden;
     border: 1px solid rgb(237 233 226 / 0.12);
     border-radius: 0.5rem;
-    background: #18211d;
+    background: var(--panel);
 }
 
 .hobby-thumbnail img {

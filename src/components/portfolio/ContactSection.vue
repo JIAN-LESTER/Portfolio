@@ -544,7 +544,7 @@ async function submitBuildRequest() {
 }
 
 .field-group label {
-    color: rgb(237 233 226 / 0.78);
+    color: color-mix(in srgb, var(--paper) 78%, transparent);
     font-family: var(--font-mono);
     font-size: 0.73rem;
     font-weight: 600;
@@ -555,10 +555,10 @@ async function submitBuildRequest() {
 .field-group textarea {
     width: 100%;
     min-height: 2.8rem;
-    border: 1px solid rgb(237 233 226 / 0.12);
+    border: 1px solid color-mix(in srgb, var(--paper) 12%, transparent);
     border-radius: 10px;
     outline: none;
-    background: rgb(11 13 13 / 0.72);
+    background: color-mix(in srgb, var(--panel) 72%, transparent);
     color: var(--paper);
     font: inherit;
     font-size: 0.78rem;
@@ -578,12 +578,12 @@ async function submitBuildRequest() {
 
 .field-group input::placeholder,
 .field-group textarea::placeholder {
-    color: rgb(237 233 226 / 0.36);
+    color: color-mix(in srgb, var(--paper) 36%, transparent);
 }
 
 .field-group select:invalid,
 .field-group select option[value=''] {
-    color: rgb(237 233 226 / 0.42);
+    color: color-mix(in srgb, var(--paper) 42%, transparent);
 }
 
 .field-group select option {
@@ -621,7 +621,7 @@ async function submitBuildRequest() {
 }
 
 .form-error {
-    color: #fca5a5;
+    color: var(--error);
 }
 
 .success-toast {
@@ -638,7 +638,7 @@ async function submitBuildRequest() {
     border: 1px solid rgb(245 166 35 / 0.35);
     border-radius: 14px;
     color: var(--paper);
-    background: rgb(23 23 23 / 0.97);
+    background: color-mix(in srgb, var(--panel) 97%, transparent);
     box-shadow: 0 20px 55px rgb(0 0 0 / 0.35);
 }
 
@@ -648,7 +648,7 @@ async function submitBuildRequest() {
     height: 2.15rem;
     place-items: center;
     border-radius: 50%;
-    color: var(--ink);
+    color: var(--on-signal);
     background: var(--signal);
 }
 
@@ -684,7 +684,7 @@ async function submitBuildRequest() {
 
 .toast-dismiss:hover {
     color: var(--paper);
-    background: rgb(255 255 255 / 0.08);
+    background: color-mix(in srgb, var(--paper) 8%, transparent);
 }
 
 .toast-dismiss:focus-visible {
@@ -712,7 +712,7 @@ async function submitBuildRequest() {
     padding: 0.3rem 0.35rem 0.3rem 1.15rem;
     border: 1px solid var(--signal);
     border-radius: 999px;
-    color: var(--ink);
+    color: var(--on-signal);
     background: var(--signal);
     font-size: 0.78rem;
     font-weight: 700;
@@ -745,7 +745,7 @@ async function submitBuildRequest() {
     place-items: center;
     border-radius: 50%;
     color: var(--signal);
-    background: var(--ink);
+    background: var(--on-signal);
 }
 
 @media (max-width: 800px) {

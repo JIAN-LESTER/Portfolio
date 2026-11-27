@@ -47,7 +47,7 @@ onMounted(() => {
     padding-block: clamp(5rem, 11vw, 9rem);
     background:
         radial-gradient(circle at 88% 20%, rgb(245 166 35 / 0.13), transparent 27%),
-        #101414;
+        var(--panel);
 }
 
 .section-inner {
