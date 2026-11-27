@@ -24,6 +24,8 @@ interface StageState {
 
 const STAGE_KEY = Symbol('portfolio-scroll-stage');
 const STAGE_TRANSITION_MS = 900;
+const SCROLL_REVEAL_ATTRIBUTE = 'data-scroll-reveal';
+const SCROLL_REVEALED_CLASS = 'is-scroll-revealed';
 
 /**
  * Tracks the section currently visible in the browser's native scroll area and
@@ -46,6 +48,10 @@ export function provideScrollStage(sections: StageSection[]) {
 
     let unlockTimer: number | undefined;
     let sectionObserver: IntersectionObserver | undefined;
+
+    function revealSectionElement(section: HTMLElement) {
+        section.classList.add(SCROLL_REVEALED_CLASS);
+    }
 
     function lock(duration = reducedMotion ? 50 : STAGE_TRANSITION_MS) {
         state.isAnimating = true;
@@ -127,6 +133,7 @@ export function provideScrollStage(sections: StageSection[]) {
 
         state.activeSection = index;
         state.revealedSections[index] = true;
+        revealSectionElement(section);
         section.scrollIntoView({ behavior: 'auto', block: 'start' });
         console.info(`[ScrollStage] Scrolled to section "${state.sections[index].id}".`);
     }
@@ -155,11 +162,37 @@ export function provideScrollStage(sections: StageSection[]) {
             console.error('[ScrollStage] One or more page sections could not be observed.');
         }
 
+        sectionElements.forEach((section) => {
+            const excludesScrollReveal =
+                section.classList.contains('hero') ||
+                section.classList.contains('page-hero') ||
+                section.classList.contains('site-footer');
+
+            if (excludesScrollReveal || reducedMotion) {
+                revealSectionElement(section);
+                return;
+            }
+
+            section.setAttribute(SCROLL_REVEAL_ATTRIBUTE, '');
+        });
+
+        if (!('IntersectionObserver' in window)) {
+            sectionElements.forEach(revealSectionElement);
+            console.error(
+                '[ScrollStage] IntersectionObserver is unavailable; scroll animations were skipped.',
+            );
+            return;
+        }
+
         const visibility = new Map<Element, number>();
         sectionObserver = new IntersectionObserver(
             (entries) => {
                 entries.forEach((entry) => {
                     visibility.set(entry.target, entry.intersectionRatio);
+
+                    if (entry.isIntersecting) {
+                        revealSectionElement(entry.target as HTMLElement);
+                    }
                 });
 
                 const mostVisible = [...visibility.entries()].sort(
@@ -179,7 +212,10 @@ export function provideScrollStage(sections: StageSection[]) {
                     state.revealedSections[nextIndex] = true;
                 }
             },
-            { threshold: [0, 0.25, 0.5, 0.75, 1] },
+            {
+                rootMargin: '0px 0px -12% 0px',
+                threshold: [0, 0.15, 0.25, 0.5, 0.75, 1],
+            },
         );
 
         sectionElements.forEach((section) => sectionObserver?.observe(section));
