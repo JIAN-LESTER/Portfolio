@@ -41,7 +41,7 @@ function handleImageError() {
                 <div class="chart-viewport">
                     <img
                         v-if="imageAvailable"
-                        src="/github.png"
+                        src="/github.webp"
                         :alt="`${username ?? 'My'} GitHub contribution activity for the past year`"
                         loading="lazy"
                         @load="handleImageLoad"

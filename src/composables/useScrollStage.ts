@@ -50,7 +50,20 @@ export function provideScrollStage(sections: StageSection[]) {
     let sectionObserver: IntersectionObserver | undefined;
 
     function revealSectionElement(section: HTMLElement) {
+        const sectionIndex = state.sections.findIndex(
+            (item) => item.id === section.id,
+        );
+        const wasRevealed =
+            sectionIndex >= 0 && state.revealedSections[sectionIndex];
+
         section.classList.add(SCROLL_REVEALED_CLASS);
+
+        if (sectionIndex < 0 || wasRevealed) {
+            return;
+        }
+
+        state.revealedSections[sectionIndex] = true;
+        console.info(`[ScrollStage] Revealed section "${section.id}".`);
     }
 
     function lock(duration = reducedMotion ? 50 : STAGE_TRANSITION_MS) {
@@ -132,7 +145,6 @@ export function provideScrollStage(sections: StageSection[]) {
         }
 
         state.activeSection = index;
-        state.revealedSections[index] = true;
         revealSectionElement(section);
         section.scrollIntoView({ behavior: 'auto', block: 'start' });
         console.info(`[ScrollStage] Scrolled to section "${state.sections[index].id}".`);
@@ -209,7 +221,6 @@ export function provideScrollStage(sections: StageSection[]) {
 
                 if (nextIndex >= 0) {
                     state.activeSection = nextIndex;
-                    state.revealedSections[nextIndex] = true;
                 }
             },
             {

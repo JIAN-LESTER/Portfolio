@@ -1,7 +1,7 @@
 
 <script setup lang="ts">
 import { ArrowDown } from 'lucide-vue-next';
-import { computed } from 'vue';
+import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
 import { portfolioData } from '@/data/portfolio';
 
 type HeroVariant = 'about' | 'projects' | 'services';
@@ -38,6 +38,7 @@ const heroContent: Record<HeroVariant, PageHeroContent> = {
 };
 
 const content = computed(() => heroContent[props.variant]);
+const isRevealReady = ref(false);
 const projectPreviews = portfolioData.projects
     .filter((project) => project.image)
     .slice(0, 3);
@@ -50,6 +51,23 @@ const handlePreviewLoad = (label: string) => {
 const handlePreviewError = (label: string) => {
     console.error(`[PageHero] Failed to load the ${label} hero preview.`);
 };
+
+let revealFrame: number | undefined;
+let paintFrame: number | undefined;
+
+onMounted(() => {
+    paintFrame = window.requestAnimationFrame(() => {
+        revealFrame = window.requestAnimationFrame(() => {
+            isRevealReady.value = true;
+            console.info(`[PageHero] Started the ${props.variant} hero entrance.`);
+        });
+    });
+});
+
+onBeforeUnmount(() => {
+    window.cancelAnimationFrame(paintFrame ?? 0);
+    window.cancelAnimationFrame(revealFrame ?? 0);
+});
 </script>
 
 <template>
@@ -60,7 +78,10 @@ const handlePreviewError = (label: string) => {
                border-b border-[var(--paper)]/10
                px-5 pb-20 pt-32
                text-[var(--paper)] sm:px-8 lg:px-16"
-        :class="`page-hero--${variant}`"
+        :class="[
+            `page-hero--${variant}`,
+            { 'is-reveal-ready': isRevealReady },
+        ]"
     >
         <!-- Main content -->
         <div
@@ -77,7 +98,7 @@ const handlePreviewError = (label: string) => {
                 <h1
                     class="hero-reveal font-[family-name:var(--font-display)]
                            font-bold tracking-[-0.07em]"
-                    style="--delay: 160ms"
+                    style="--delay: 0ms"
                 >
                     <span class="page-hero-title">{{ content.title }}</span>
 
@@ -98,7 +119,7 @@ const handlePreviewError = (label: string) => {
                            text-sm leading-relaxed
                            text-[var(--paper)]/60
                            sm:text-base lg:text-lg"
-                    style="--delay: 240ms"
+                    style="--delay: 70ms"
                 >
                     {{ content.description }}
                 </p>
@@ -107,7 +128,7 @@ const handlePreviewError = (label: string) => {
             <div
                 v-if="variant === 'projects'"
                 class="hero-showcase projects-showcase hero-reveal"
-                style="--delay: 300ms"
+                style="--delay: 0ms"
                 aria-label="Featured project previews"
             >
                 <figure
@@ -139,7 +160,7 @@ const handlePreviewError = (label: string) => {
             <div
                 v-else-if="variant === 'services'"
                 class="hero-showcase services-showcase hero-reveal"
-                style="--delay: 300ms"
+                style="--delay: 0ms"
                 aria-label="Service previews"
             >
                 <figure
@@ -167,10 +188,10 @@ const handlePreviewError = (label: string) => {
         <figure
             v-if="variant === 'about'"
             class="hero-showcase about-showcase hero-reveal"
-            style="--delay: 300ms"
+            style="--delay: 0ms"
         >
             <img
-                src="/images/about.jpg"
+                src="/images/about.webp"
                 :alt="`${portfolioData.personal.name}, ${portfolioData.personal.role}`"
                 @load="handlePreviewLoad('about hero portrait')"
                 @error="handlePreviewError('about hero portrait')"
@@ -433,6 +454,11 @@ const handlePreviewError = (label: string) => {
 }
 
 .hero-reveal {
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.page-hero.is-reveal-ready .hero-reveal {
     animation: reveal 650ms cubic-bezier(0.2, 0.75, 0.25, 1)
         var(--delay, 0ms) both;
 }
@@ -659,6 +685,11 @@ const handlePreviewError = (label: string) => {
     .hero-reveal,
     .scroll-indicator {
         animation: none;
+    }
+
+    .hero-reveal {
+        opacity: 1;
+        transform: none;
     }
 }
 </style>
