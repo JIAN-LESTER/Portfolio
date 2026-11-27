@@ -7,6 +7,7 @@ import {
 } from 'lucide-vue-next';
 import { computed, onMounted  } from 'vue';
 import type {Component} from 'vue';
+import { RouterLink } from 'vue-router';
 import ServiceCard from '@/components/ui/ServiceCard.vue';
 import { useSectionSlide } from '@/composables/useScrollStage';
 import type { ServiceItem } from '@/types/portfolio';
@@ -69,12 +70,12 @@ onMounted(() => {
                 />
             </div>
 
-            <a class="split-button" href="/services">
+            <RouterLink class="split-button" to="/services">
                 <span>View all services</span>
                 <span class="split-button-icon" aria-hidden="true">
                     <ArrowRight :size="18" />
                 </span>
-            </a>
+            </RouterLink>
         </div>
     </section>
 </template>

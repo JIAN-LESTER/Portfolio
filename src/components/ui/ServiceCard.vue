@@ -2,6 +2,7 @@
 
 import { Braces } from 'lucide-vue-next';
 import type { Component } from 'vue';
+import { RouterLink } from 'vue-router';
 import type { ServiceItem } from '@/types/portfolio';
 
 defineProps<{
@@ -50,12 +51,12 @@ function handleImageError(service: ServiceItem) {
             <h3>{{ service.title }}</h3>
             <p class="service-description">{{ service.paragraphs[0] }}</p>
 
-            <a class="service-link" href="/#contact">
+            <RouterLink class="service-link" to="/#contact">
                 <span>Discuss this service</span>
                 <span class="service-link-icon" aria-hidden="true">
                     <ArrowRight :size="16" />
                 </span>
-            </a>
+            </RouterLink>
         </div>
     </article>
 </template>

@@ -1,12 +1,14 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
+import { RouterLink, useRoute } from 'vue-router';
 import { ArrowRight, Menu, Moon, Sun, X } from 'lucide-vue-next';
 import { normalizePath, siteNavigation } from '@/data/navigation';
 
 const THEME_STORAGE_KEY = 'portfolio-theme';
 const isMenuOpen = ref(false);
 const isDarkMode = ref(document.documentElement.classList.contains('dark'));
-const currentPath = normalizePath(window.location.pathname);
+const route = useRoute();
+const currentPath = computed(() => normalizePath(route.path));
 const contactNavigation = siteNavigation.find((item) => item.path === '/#contact');
 const primaryNavigation = siteNavigation.filter((item) => item !== contactNavigation);
 
@@ -39,15 +41,15 @@ function toggleTheme() {
 <template>
     <header class="site-header" :class="{ 'menu-open': isMenuOpen }">
         <nav class="navbar" aria-label="Primary navigation">
-            <a
-                href="/"
+            <RouterLink
+                to="/"
                 class="brand"
                 aria-label="Jian Lester Tabarno, home"
                 @click="handleNavigation('/')"
             >
                 <span class="brand-mark">JLT</span>
                 <span class="brand-name">Jian Lester Tabarno</span>
-            </a>
+            </RouterLink>
 
             <button
                 type="button"
@@ -63,17 +65,17 @@ function toggleTheme() {
 
             <div id="primary-menu" class="nav-menu">
                 <div class="nav-links">
-                    <a
+                    <RouterLink
                         v-for="item in primaryNavigation"
                         :key="item.path"
-                        :href="item.path"
+                        :to="item.path"
                         class="nav-link"
                         :class="{ 'is-active': currentPath === item.path }"
                         :aria-current="currentPath === item.path ? 'page' : undefined"
                         @click="handleNavigation(item.path)"
                     >
                         {{ item.label }}
-                    </a>
+                    </RouterLink>
                 </div>
 
                 <div class="nav-actions">
@@ -87,9 +89,9 @@ function toggleTheme() {
                         <Sun v-if="isDarkMode" :size="17" aria-hidden="true" />
                         <Moon v-else :size="17" aria-hidden="true" />
                     </button>
-                    <a
+                    <RouterLink
                         v-if="contactNavigation"
-                        :href="contactNavigation.path"
+                        :to="contactNavigation.path"
                         class="contact-link"
                         @click="handleNavigation(contactNavigation.path)"
                     >
@@ -97,7 +99,7 @@ function toggleTheme() {
                         <span class="contact-arrow" aria-hidden="true">
                             <ArrowRight :size="16" />
                         </span>
-                    </a>
+                    </RouterLink>
                 </div>
             </div>
         </nav>

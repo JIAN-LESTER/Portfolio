@@ -1,5 +1,6 @@
 import { createApp } from 'vue';
 import App from './App.vue';
+import router from './router';
 import './styles/app.css';
 
 const THEME_STORAGE_KEY = 'portfolio-theme';
@@ -22,4 +23,15 @@ function initializeTheme() {
 
 initializeTheme();
 
-createApp(App).mount('#app');
+const app = createApp(App);
+app.use(router);
+
+router
+    .isReady()
+    .then(() => {
+        app.mount('#app');
+        console.info('[App] Portfolio mounted after the initial route was resolved.');
+    })
+    .catch((error) => {
+        console.error('[App] Portfolio could not mount because the initial route failed.', error);
+    });

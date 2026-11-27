@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue';
+import { RouterLink } from 'vue-router';
 import {
     Facebook,
     Github,
@@ -56,13 +57,13 @@ function goToTop() {
 
                 <div class="footer-column">
                     <h3>Navigation</h3>
-                    <a
+                    <RouterLink
                         v-for="item in siteNavigation"
                         :key="item.path"
-                        :href="item.path"
+                        :to="item.path"
                     >
                         {{ item.label }}
-                    </a>
+                    </RouterLink>
                 </div>
 
                 <div class="footer-column">

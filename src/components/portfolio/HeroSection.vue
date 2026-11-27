@@ -7,6 +7,7 @@ import {
     Quote,
     Star,
 } from 'lucide-vue-next';
+import { RouterLink } from 'vue-router';
 import { useSectionSlide } from '@/composables/useScrollStage';
 import type { PersonalInfo } from '@/types/portfolio';
 
@@ -155,13 +156,13 @@ function handleImageError() {
             </aside>
 
             <div class="hero-actions" aria-label="Portfolio actions">
-                <a class="btn btn-primary" href="/projects">
+                <RouterLink class="btn btn-primary" to="/projects">
                     View my works
                     <span aria-hidden="true">●</span>
-                </a>
-                <a class="btn btn-secondary" href="/#contact">
+                </RouterLink>
+                <RouterLink class="btn btn-secondary" to="/#contact">
                     Contact me
-                </a>
+                </RouterLink>
             </div>
         </div>
 

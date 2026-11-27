@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ArrowRight } from 'lucide-vue-next';
 import { computed, ref } from 'vue';
+import { RouterLink } from 'vue-router';
 import type { ProjectItem } from '@/types/portfolio';
 
 const props = withDefaults(
@@ -82,12 +83,12 @@ function cardWeight(index: number) {
             </div>
 
             <div v-if="!showAll" class="projects-actions">
-                <a class="projects-button" href="/projects">
+                <RouterLink class="projects-button" to="/projects">
                     <span>See all projects</span>
                     <span class="projects-button-icon" aria-hidden="true">
                         <ArrowRight :size="18" />
                     </span>
-                </a>
+                </RouterLink>
             </div>
         </div>
     </section>

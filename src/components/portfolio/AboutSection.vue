@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { RouterLink } from 'vue-router';
 import { useSectionSlide } from '@/composables/useScrollStage';
 import type {
     EducationItem,
@@ -190,9 +191,9 @@ function handlePortraitError() {
                             >&darr;</span
                         >
                     </a>
-                    <a
+                    <RouterLink
                         class="inline-flex min-h-12 items-center gap-3 rounded-full border border-[var(--line)] py-1 pr-1 pl-5 font-[var(--font-display)] text-sm font-bold text-[var(--paper)] transition-[transform,border-color,color] duration-200 hover:-translate-y-0.5 hover:border-[var(--signal)] hover:text-[var(--signal)] max-[480px]:flex-1 max-[480px]:justify-between"
-                        href="/about#journey"
+                        to="/about#journey"
                     >
                         Know more
                         <span
@@ -200,7 +201,7 @@ function handlePortraitError() {
                             aria-hidden="true"
                             >&rarr;</span
                         >
-                    </a>
+                    </RouterLink>
                 </div>
             </div>
         </div>

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ArrowRight } from 'lucide-vue-next';
+import { RouterLink } from 'vue-router';
 
 function logContactNavigation() {
     console.info('[ContactCtaSection] Opening the homepage contact form.');
@@ -17,8 +18,8 @@ function logContactNavigation() {
                 </p>
             </div>
 
-            <a
-                href="/#contact"
+            <RouterLink
+                to="/#contact"
                 class="contact-cta-link"
                 @click="logContactNavigation"
             >
@@ -26,7 +27,7 @@ function logContactNavigation() {
                 <span class="contact-cta-icon" aria-hidden="true">
                     <ArrowRight :size="18" />
                 </span>
-            </a>
+            </RouterLink>
         </div>
     </section>
 </template>
