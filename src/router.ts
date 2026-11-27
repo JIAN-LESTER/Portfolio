@@ -19,7 +19,7 @@ const router = createRouter({
             path: '/',
             component: Home,
             meta: {
-                title: 'Jian Lester Tabarno - Software Engineer',
+                title: 'Jian Lester Tabarno | Full Stack Developer',
                 sections: [
                     { id: 'hero', label: 'Home', slides: 1 },
                     { id: 'services', label: 'What I\nDo', slides: 1 },
@@ -35,7 +35,7 @@ const router = createRouter({
             path: '/about',
             component: About,
             meta: {
-                title: 'About - Jian Lester Tabarno',
+                title: 'Jian Lester Tabarno | About Me',
                 sections: [
                     { id: 'about-hero', label: 'About', slides: 1 },
                     { id: 'about-content', label: 'Introduction', slides: 1 },
@@ -51,7 +51,7 @@ const router = createRouter({
             path: '/projects',
             component: Projects,
             meta: {
-                title: 'Projects - Jian Lester Tabarno',
+                title: 'Jian Lester Tabarno | Projects',
                 sections: [
                     { id: 'projects', label: 'Projects', slides: 1 },
                     { id: 'footer', label: 'Footer', slides: 1 },
@@ -62,7 +62,7 @@ const router = createRouter({
             path: '/services',
             component: Services,
             meta: {
-                title: 'Services - Jian Lester Tabarno',
+                title: 'Jian Lester Tabarno | Services',
                 sections: [
                     { id: 'services', label: 'What I\nDo', slides: 1 },
                     { id: 'footer', label: 'Footer', slides: 1 },
