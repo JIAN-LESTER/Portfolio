@@ -58,29 +58,9 @@ const handlePreviewError = (label: string) => {
         class="page-hero relative isolate flex
                items-center overflow-hidden
                border-b border-[var(--paper)]/10
-               bg-[#0b0d0d] px-5 pb-20 pt-32
+               px-5 pb-20 pt-32
                text-[var(--paper)] sm:px-8 lg:px-16"
     >
-        <!-- Decorative background -->
-        <div
-            class="pointer-events-none absolute inset-0 -z-10
-                   overflow-hidden"
-            aria-hidden="true"
-        >
-            <!-- Radial glow -->
-            <div
-                class="absolute left-1/2 top-1/2
-                       h-[36rem] w-[36rem]
-                       -translate-x-1/2 -translate-y-1/2
-                       rounded-full bg-[#f5a623]/[0.06]
-                       blur-[120px]"
-            />
-
-            <div class="page-backdrop absolute inset-0">
-                <div class="page-backdrop-veil" />
-            </div>
-        </div>
-
         <!-- Main content -->
         <div
             :key="variant"
@@ -181,25 +161,26 @@ const handlePreviewError = (label: string) => {
                 </figure>
             </div>
 
-            <figure
-                v-else-if="variant === 'about' && portfolioData.personal.image"
-                class="hero-showcase about-showcase hero-reveal"
-                style="--delay: 300ms"
-            >
-                <img
-                    :src="portfolioData.personal.image"
-                    :alt="`${portfolioData.personal.name}, ${portfolioData.personal.role}`"
-                    @load="handlePreviewLoad('about portrait')"
-                    @error="handlePreviewError('about portrait')"
-                />
-            </figure>
         </div>
+
+        <figure
+            v-if="variant === 'about'"
+            class="hero-showcase about-showcase hero-reveal"
+            style="--delay: 300ms"
+        >
+            <img
+                src="/images/about.jpg"
+                :alt="`${portfolioData.personal.name}, ${portfolioData.personal.role}`"
+                @load="handlePreviewLoad('about hero portrait')"
+                @error="handlePreviewError('about hero portrait')"
+            />
+        </figure>
 
         <!-- Bottom scroll indicator -->
         <a
             :href="`#${variant}-content`"
             aria-label="Scroll to page content"
-            class="absolute bottom-6 left-1/2 flex
+            class="absolute bottom-6 left-1/2 z-10 flex
                    -translate-x-1/2 flex-col items-center gap-2
                    text-[var(--paper)]/35 transition-colors
                    hover:text-[var(--signal)]"
@@ -216,7 +197,7 @@ const handlePreviewError = (label: string) => {
 
         <!-- Bottom accent -->
         <div
-            class="absolute bottom-0 left-1/2 h-px w-1/2
+            class="absolute bottom-0 left-1/2 z-10 h-px w-1/2
                    -translate-x-1/2 bg-gradient-to-r
                    from-transparent via-[#f5a623]/40
                    to-transparent"
@@ -229,6 +210,9 @@ const handlePreviewError = (label: string) => {
     min-height: 100svh;
     min-height: 100dvh;
     justify-content: flex-start;
+    background:
+        radial-gradient(circle at 50% 105%, rgb(245 166 35 / 0.1), transparent 31%),
+        #0b0d0d;
 }
 
 .page-hero-content {
@@ -284,16 +268,6 @@ const handlePreviewError = (label: string) => {
     margin-right: auto;
     margin-left: 0;
     font-size: clamp(0.95rem, 1.35vw, 1.2rem);
-}
-
-.page-backdrop::before {
-    position: absolute;
-    inset: 0;
-    background-image:
-        linear-gradient(rgb(237 233 226 / 0.035) 1px, transparent 1px),
-        linear-gradient(90deg, rgb(237 233 226 / 0.035) 1px, transparent 1px);
-    background-size: 4.5rem 4.5rem;
-    content: '';
 }
 
 .hero-showcase {
@@ -425,19 +399,30 @@ const handlePreviewError = (label: string) => {
 }
 
 .about-showcase img {
-    width: 100%;
+    display: block;
+    width: auto;
+    max-width: none;
     height: 100%;
+    margin-left: auto;
     object-fit: contain;
-    object-position: center bottom;
-    filter: grayscale(0.12) contrast(0.96);
-}
-
-.page-backdrop-veil {
-    position: absolute;
-    inset: 0;
-    background:
-        linear-gradient(90deg, #0b0d0d 0%, rgb(11 13 13 / 0.95) 33%, rgb(11 13 13 / 0.28) 75%, #0b0d0d 100%),
-        linear-gradient(0deg, #0b0d0d 0%, transparent 28%, transparent 76%, rgb(11 13 13 / 0.8) 100%);
+    object-position: right center;
+    filter: contrast(0.96) brightness(0.82);
+    -webkit-mask-image: linear-gradient(
+        to right,
+        transparent 0%,
+        rgb(0 0 0 / 0.18) 12%,
+        rgb(0 0 0 / 0.58) 28%,
+        black 46%,
+        black 100%
+    );
+    mask-image: linear-gradient(
+        to right,
+        transparent 0%,
+        rgb(0 0 0 / 0.18) 12%,
+        rgb(0 0 0 / 0.58) 28%,
+        black 46%,
+        black 100%
+    );
 }
 
 .hero-reveal {
@@ -493,11 +478,6 @@ const handlePreviewError = (label: string) => {
         max-width: 30rem;
     }
 
-    .page-backdrop-veil {
-        background:
-            linear-gradient(90deg, #0b0d0d 0%, rgb(11 13 13 / 0.88) 64%, rgb(11 13 13 / 0.35) 100%),
-            linear-gradient(0deg, #0b0d0d 0%, transparent 30%, transparent 72%, rgb(11 13 13 / 0.82) 100%);
-    }
 }
 
 @media (min-width: 960px) {
@@ -535,25 +515,17 @@ const handlePreviewError = (label: string) => {
         opacity: 0.5;
     }
 
-    .page-hero-content--about .about-showcase {
-        right: clamp(1rem, 5vw, 5rem);
-        width: clamp(28rem, 42vw, 43rem);
-        min-height: clamp(32rem, 48vw, 44rem);
-        opacity: 0.82;
-        -webkit-mask-image: linear-gradient(
-            to right,
-            transparent 0%,
-            rgb(0 0 0 / 0.3) 22%,
-            black 46%,
-            black 100%
-        );
-        mask-image: linear-gradient(
-            to right,
-            transparent 0%,
-            rgb(0 0 0 / 0.3) 22%,
-            black 46%,
-            black 100%
-        );
+    .page-hero > .about-showcase {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 1;
+        display: block;
+        width: min(59vw, 60rem);
+        height: 100%;
+        margin: 0;
+        opacity: 0.9;
     }
 }
 

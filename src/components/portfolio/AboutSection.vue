@@ -28,6 +28,8 @@ const professionalRoles = [
     'Mobile Application Developer',
 ];
 
+const aboutSectionImage = '/images/aboutsection-transparent.png';
+
 function handlePortraitLoad() {
     console.info('[AboutSection] Profile image loaded successfully.');
 }
@@ -48,7 +50,6 @@ function handlePortraitError() {
             data-stage-scroll
         >
             <figure
-                v-if="personal.image"
                 class="relative order-1 mx-auto w-[min(100%,27rem)] -translate-x-5 opacity-0 transition-[opacity,transform] duration-700 ease-[cubic-bezier(0.2,0.75,0.25,1)] group-[.is-active]:translate-x-0 group-[.is-active]:opacity-100 group-[.is-active]:delay-[80ms] motion-reduce:translate-x-0 motion-reduce:opacity-100 motion-reduce:transition-none max-[780px]:w-[min(66vw,19rem)] max-[480px]:w-[min(62vw,15.5rem)]"
             >
                 <div
@@ -58,13 +59,17 @@ function handlePortraitError() {
                         class="absolute -inset-[4%] -z-20 -rotate-12 rounded-full border border-dashed border-[rgb(245_166_35_/_0.26)]"
                         aria-hidden="true"
                     ></span>
-                    <img
-                        class="block h-[112%] w-[112%] rounded-b-[50%] object-contain object-bottom drop-shadow-[0_1.4rem_1.5rem_rgb(0_0_0_/_0.24)]"
-                        :src="personal.image"
-                        :alt="`Portrait of ${personal.name}`"
-                        @load="handlePortraitLoad"
-                        @error="handlePortraitError"
-                    />
+                    <div
+                        class="absolute inset-0 overflow-hidden rounded-full"
+                    >
+                        <img
+                            class="absolute top-0 left-1/2 block h-[142%] w-[142%] max-w-none -translate-x-1/2 object-cover object-top drop-shadow-[0_1.4rem_1.5rem_rgb(0_0_0_/_0.24)]"
+                            :src="aboutSectionImage"
+                            :alt="`Portrait of ${personal.name}`"
+                            @load="handlePortraitLoad"
+                            @error="handlePortraitError"
+                        />
+                    </div>
                 </div>
 
                 <ul class="role-badges" aria-label="Professional roles">
