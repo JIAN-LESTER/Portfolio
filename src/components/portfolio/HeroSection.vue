@@ -1,473 +1,701 @@
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue';
-import { useScrollStage, useSectionSlide } from '@/composables/useScrollStage';
+import {
+    Facebook,
+    Github,
+    Linkedin,
+    Mail,
+    Quote,
+    Star,
+} from 'lucide-vue-next';
+import { RouterLink } from 'vue-router';
+import { useSectionSlide } from '@/composables/useScrollStage';
 import type { PersonalInfo } from '@/types/portfolio';
 
-const props = defineProps<{ personal: PersonalInfo }>();
+defineProps<{ personal: PersonalInfo }>();
 
 const { isActiveSection } = useSectionSlide('hero');
-const stage = useScrollStage();
 
-const query = ref('');
-const resultLine = ref('');
-const showResult = ref(false);
-const showIdentity = ref(false);
-const showTerminal = ref(true);
+const serviceHighlights = [
+    'Custom software development',
+    'SaaS',
+    'Web application',
+    'Mobile application',
+    'Prototyping',
+    'Wireframing',
+    'Dashboard',
+    'Website design',
+];
 
-const fullQuery = `query --role='software-engineer' --status='open-to-work' --location='${props.personal.location}'`;
-const fullResult = '-> 1 match found';
-
-const reducedMotion =
-    typeof window !== 'undefined' && window.matchMedia
-        ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
-        : false;
-
-const resumeSectionIndex = computed(() =>
-    stage.state.sections.findIndex((section) => section.id === 'resume'),
-);
-
-function goToResume() {
-    if (resumeSectionIndex.value >= 0) {
-        stage.goToSection(resumeSectionIndex.value);
-    }
+function handleImageLoad() {
+    console.info('[HeroSection] Transparent profile image loaded successfully.');
 }
 
-function typeLine(
-    text: string,
-    target: typeof query,
-    speed: number,
-    onDone?: () => void,
-) {
-    let i = 0;
-    const step = () => {
-        target.value = text.slice(0, i);
-        i += 1;
-
-        if (i <= text.length) {
-            window.setTimeout(step, speed);
-        } else {
-            onDone?.();
-        }
-    };
-    step();
+function handleImageError() {
+    console.error('[HeroSection] Transparent profile image could not be loaded.');
 }
-
-onMounted(() => {
-    if (reducedMotion) {
-        query.value = fullQuery;
-        resultLine.value = fullResult;
-        showTerminal.value = false;
-        showResult.value = true;
-        showIdentity.value = true;
-
-        return;
-    }
-
-    window.setTimeout(() => {
-        typeLine(fullQuery, query, 24, () => {
-            window.setTimeout(() => {
-                showResult.value = true;
-                typeLine(fullResult, resultLine, 30, () => {
-                    window.setTimeout(() => {
-                        window.setTimeout(() => {
-                            showTerminal.value = false;
-                            window.setTimeout(
-                                () => (showIdentity.value = true),
-                                250,
-                            );
-                        }, 600);
-                    }, 250);
-                });
-            }, 350);
-        });
-    }, 400);
-});
 </script>
 
 <template>
     <section
-        v-cloak
+        id="hero"
         class="stage-section hero"
         :class="{ 'is-active': isActiveSection }"
     >
-        <div class="section-inner" data-stage-scroll>
-            <div class="hero-copy">
-                <p class="eyebrow"></p>
+        <div class="hero-inner" data-stage-scroll>
+            <header class="hero-heading">
+                <p class="hero-greeting">Hello there</p>
 
-                <transition name="terminal-fade">
-                    <div v-if="showTerminal" class="terminal" role="status">
-                        <div class="terminal-head">
-                            <span class="dot r"></span
-                            ><span class="dot y"></span
-                            ><span class="dot g"></span>
-                            <span class="terminal-title"
-                                >jian@portfolio &mdash; retrieve</span
-                            >
-                        </div>
-                        <div class="terminal-body">
-                            <p class="line">
-                                <span class="prompt">$</span> {{ query
-                                }}<span class="cursor" v-if="!showResult"
-                                    >&#9608;</span
-                                >
-                            </p>
-                            <p v-if="showResult" class="line result">
-                                {{ resultLine }}:
-                                <strong>{{ personal.name }}</strong>
-                            </p>
-                        </div>
-                    </div>
-                </transition>
+                <h1>
+                    I&rsquo;m {{ personal.name.split(' ')[0] }} {{ personal.name.split(' ')[1] }}
+                    <span>{{ personal.name.split(' ')[2] }}</span>
+                </h1>
+                <p class="hero-role">{{ personal.role }}</p>
+                <p class="hero-location">
+                    <span>Based in</span>
+                    <strong>the Philippines</strong>
+                </p>
+            </header>
 
-                <div class="identity" :class="{ show: showIdentity }">
-                    <h1 class="name">{{ personal.name }}</h1>
-                    <p class="role">{{ personal.role }}</p>
-                    <p class="tagline">{{ personal.tagline }}</p>
+            <div class="availability-seal" aria-label="Open to work">
+                <span>Open to</span>
+                <strong>Work</strong>
+                <i aria-hidden="true"></i>
+            </div>
 
-                    <div class="meta-row">
-                        <span class="chip">{{ personal.location }}</span>
-                        <span
-                            v-if="personal.availability"
-                            class="chip chip-signal"
-                            >{{ personal.availability }}</span
-                        >
-                    </div>
-
-                    <div class="cta-row">
-                        <a
-                            class="btn btn-primary"
-                            :href="`mailto:${personal.email}`"
-                            >Email me</a
-                        >
-                        <a
-                            v-if="personal.resumeUrl"
-                            class="btn btn-ghost"
-                            href="#resume"
-                            @click.prevent="goToResume"
-                            >View resume</a
-                        >
+            <aside class="side-detail side-detail-left" aria-label="Social links and experience">
+                <div class="social-block">
+                    <p>Follow me on</p>
+                    <div class="social-links">
                         <a
                             v-if="personal.github"
-                            class="btn btn-ghost"
                             :href="personal.github"
                             target="_blank"
                             rel="noreferrer"
-                            >GitHub</a
+                            aria-label="View GitHub profile"
                         >
+                            <Github :size="16" aria-hidden="true" />
+                        </a>
                         <a
                             v-if="personal.linkedin"
-                            class="btn btn-ghost"
                             :href="personal.linkedin"
                             target="_blank"
                             rel="noreferrer"
-                            >LinkedIn</a
+                            aria-label="View LinkedIn profile"
                         >
+                            <Linkedin :size="16" aria-hidden="true" />
+                        </a>
                         <a
                             v-if="personal.facebook"
-                            class="btn btn-ghost"
                             :href="personal.facebook"
                             target="_blank"
                             rel="noreferrer"
-                            >Facebook</a
+                            aria-label="View Facebook profile"
                         >
+                            <Facebook :size="16" aria-hidden="true" />
+                        </a>
+                        <a :href="`mailto:${personal.email}`" aria-label="Send an email">
+                            <Mail :size="16" aria-hidden="true" />
+                        </a>
                     </div>
                 </div>
-            </div>
 
-            <figure
-                v-if="personal.image"
-                class="profile-figure"
-                :class="{ show: showIdentity, expanded: !showTerminal }"
-            >
+                <div class="experience-block">
+                    <div class="stars" aria-label="Experienced software developer">
+                        <Star
+                            v-for="star in 5"
+                            :key="star"
+                            :size="13"
+                            aria-hidden="true"
+                        />
+                    </div>
+                    <p class="experience-duration">
+                        <strong>3+ years</strong> of hands-on experience
+                    </p>
+                    <p class="experience-context">
+                        Project-based, academic, and internship work
+                    </p>
+                    <span class="experience-domains">
+                        Web, mobile, AI, and database systems
+                    </span>
+                </div>
+            </aside>
+
+            <figure v-if="personal.image" class="portrait-wrap">
+                <span class="portrait-orbits" aria-hidden="true">
+                    <i class="orbit orbit-large"></i>
+                    <i class="orbit orbit-medium"></i>
+                    <i class="orbit orbit-small"></i>
+                    <i class="orbit orbit-dot"></i>
+                </span>
                 <img
-                    class="profile-image"
+                    class="portrait"
                     :src="personal.image"
-                    :alt="personal.name"
+                    :alt="`${personal.name}, ${personal.role}`"
+                    @load="handleImageLoad"
+                    @error="handleImageError"
                 />
-                <figcaption class="sr-only">{{ personal.name }}</figcaption>
+                <figcaption class="sr-only">Portrait of {{ personal.name }}</figcaption>
             </figure>
 
-            <p class="scroll-hint">scroll to continue &darr;</p>
+            <aside class="side-detail side-detail-right" aria-label="Professional summary">
+                <div class="quote-block">
+                    <Quote :size="25" aria-hidden="true" />
+                    <p>{{ personal.tagline }}</p>
+                </div>
+
+                <div class="expertise-block">
+                    <p>Expertise</p>
+                    <ul>
+                        <li>Frontend</li>
+                        <li class="highlight">Backend</li>
+                        <li>Mobile</li>
+                        <li class="highlight">AI</li>
+                        <li>Web Design</li>
+                    </ul>
+                </div>
+            </aside>
+
+            <div class="hero-actions" aria-label="Portfolio actions">
+                <RouterLink class="btn btn-primary" to="/projects">
+                    View my works
+                    <span aria-hidden="true">●</span>
+                </RouterLink>
+                <RouterLink class="btn btn-secondary" to="/#contact">
+                    Contact me
+                </RouterLink>
+            </div>
+        </div>
+
+        <div class="service-marquee" aria-label="Services offered">
+            <div class="service-marquee-track">
+                <ul class="service-marquee-group">
+                    <li v-for="service in serviceHighlights" :key="service">
+                        {{ service }}
+                    </li>
+                </ul>
+                <ul class="service-marquee-group" aria-hidden="true">
+                    <li v-for="service in serviceHighlights" :key="`duplicate-${service}`">
+                        {{ service }}
+                    </li>
+                </ul>
+            </div>
         </div>
     </section>
 </template>
 
 <style scoped>
 .hero {
-    display: flex;
-    align-items: center;
+    isolation: isolate;
+    background:
+        radial-gradient(circle at 50% 105%, rgb(245 166 35 / 0.1), transparent 31%),
+        var(--ink);
 }
 
-.terminal-fade-leave-active {
-    transition:
-        opacity 0.4s ease,
-        transform 0.4s ease,
-        max-height 0.4s ease,
-        margin-bottom 0.4s ease;
-    overflow: hidden;
-    max-height: 220px;
-}
-.terminal-fade-leave-to {
-    opacity: 0;
-    transform: translateY(-10px) scale(0.97);
-    max-height: 0;
-    margin-bottom: 0;
-}
-
-.profile-figure.expanded {
-    width: min(36vw, 420px);
-    transition:
-        opacity 0.6s ease,
-        transform 0.6s ease,
-        width 0.5s ease 0.1s;
-}
-
-.section-inner {
-    width: 100%;
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(220px, 360px);
-    gap: clamp(1rem, 4vw, 3rem);
-    align-items: center;
-    padding: 0 15px;
-    padding-inline: clamp(15px, 8vw, 140px);
-    max-width: 1600px;
-    margin-inline: auto;
-}
-
-.hero-copy {
-    min-width: 0;
-}
-
-.eyebrow {
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
-    letter-spacing: 0.18em;
-    color: var(--depth);
-    margin-bottom: 1.75rem;
-}
-
-.profile-figure {
-    position: relative;
-    justify-self: end;
-    width: min(32vw, 360px);
-    min-width: 220px;
-    aspect-ratio: 4 / 5;
-    opacity: 0;
-    transform: translateY(16px);
-    transition:
-        opacity 0.6s ease,
-        transform 0.6s ease;
-}
-
-.profile-figure::before {
-    content: '';
+.hero::after {
     position: absolute;
-    inset: 12px -12px -12px 12px;
-    border: 1px solid var(--depth-dim);
-    border-radius: 16px;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 0;
+    height: 1px;
+    background: color-mix(in srgb, var(--paper) 15%, transparent);
+    content: '';
 }
 
-.profile-image {
+.hero-inner {
     position: relative;
+    z-index: 1;
+    width: min(100%, 112rem);
+    min-height: 100vh;
+    min-height: 100svh;
+    box-sizing: border-box;
+    margin-inline: auto;
+    padding: clamp(5.6rem, 10vh, 6.7rem) clamp(1.25rem, 5.5vw, 5.5rem) 5rem;
+}
+
+.hero-heading {
+    position: relative;
+    z-index: 4;
+    max-width: 72rem;
+    margin-inline: auto;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(0.75rem);
+}
+
+.is-active .hero-heading {
+    animation: reveal 600ms ease-out 80ms forwards;
+}
+
+.hero-greeting {
+    color: var(--signal);
+    font-family: var(--font-display);
+    font-size: clamp(1.35rem, 1.85vw, 1.75rem);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+}
+
+.hero-heading h1 {
+    margin-top: 0.55rem;
+    color: var(--paper);
+    font-family: var(--font-display);
+    font-size: clamp(3.15rem, 5.6vw, 5.4rem);
+    font-weight: 700;
+    letter-spacing: -0.07em;
+    line-height: 0.95;
+}
+
+.hero-heading h1 span {
+    color: var(--signal);
+}
+
+.hero-role {
+    margin-top: 0.75rem;
+    color: color-mix(in srgb, var(--paper) 76%, transparent);
+    font-size: clamp(0.9rem, 1.15vw, 1.05rem);
+    font-weight: 500;
+}
+
+.hero-location {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 0.55rem;
+    margin-top: 0.5rem;
+}
+
+.hero-location span {
+    color: color-mix(in srgb, var(--paper) 45%, transparent);
+    font-family: var(--font-mono);
+    font-size: clamp(0.62rem, 0.68vw, 0.72rem);
+}
+
+.hero-location strong {
+    color: var(--signal);
+    font-family: var(--font-display);
+    font-size: clamp(1rem, 1.3vw, 1.25rem);
+    font-style: italic;
+    font-weight: 600;
+    letter-spacing: -0.04em;
+}
+
+.availability-seal {
+    position: absolute;
+    top: clamp(7rem, 15vh, 9.2rem);
+    right: clamp(1.5rem, 8vw, 8rem);
+    z-index: 5;
+    width: 5.15rem;
+    height: 5.15rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgb(237 233 226 / 0.14);
+    border-radius: 50%;
+    color: color-mix(in srgb, var(--paper) 50%, transparent);
+    font-family: var(--font-mono);
+    font-size: 0.58rem;
+    line-height: 1.2;
+    opacity: 0;
+    transform: rotate(8deg) scale(0.9);
+}
+
+.is-active .availability-seal {
+    animation: seal-reveal 600ms ease-out 420ms forwards;
+}
+
+.availability-seal::before,
+.availability-seal::after {
+    position: absolute;
+    border-radius: inherit;
+    content: '';
+}
+
+.availability-seal::before {
+    inset: 0.38rem;
+    border: 1px dashed rgb(237 233 226 / 0.13);
+}
+
+.availability-seal::after {
+    inset: 50%;
+    width: 0.34rem;
+    height: 0.34rem;
+    background: var(--signal);
+    box-shadow: 0 0 0 0.22rem rgb(245 166 35 / 0.1);
+    transform: translate(-50%, 1.1rem);
+}
+
+.availability-seal strong {
+    color: var(--paper);
+    font-size: 0.78rem;
+    font-weight: 600;
+}
+
+.availability-seal i {
+    display: none;
+}
+
+.portrait-wrap {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    z-index: 2;
+    width: min(48vw, 46rem);
+    min-width: 30rem;
+    height: min(66vh, 44rem);
+    margin: 0;
+    opacity: 0;
+    pointer-events: none;
+    transform: translate(-50%, 1.5rem);
+}
+
+.is-active .portrait-wrap {
+    animation: portrait-reveal 800ms cubic-bezier(0.2, 0.75, 0.25, 1) 180ms forwards;
+}
+
+.portrait-wrap::before {
+    position: absolute;
+    right: 7%;
+    bottom: -2rem;
+    left: 7%;
+    z-index: -1;
+    height: 38%;
+    border-radius: 50%;
+    background: rgb(245 166 35 / 0.1);
+    filter: blur(4.5rem);
+    content: '';
+}
+
+.portrait-orbits {
+    position: absolute;
+    inset: 5% -9% 3%;
+    z-index: 0;
+}
+
+.orbit {
+    position: absolute;
+    display: block;
+    border: 1px solid color-mix(in srgb, var(--paper) 12%, transparent);
+    border-radius: 50%;
+    box-shadow: inset 0 0 3rem rgb(255 255 255 / 0.025);
+}
+
+.orbit-large {
+    top: 4%;
+    left: 11%;
+    width: 78%;
+    aspect-ratio: 1;
+    border-color: color-mix(in srgb, var(--paper) 8%, transparent);
+    background:
+        radial-gradient(circle at 50% 38%, var(--panel-2), var(--panel) 76%);
+    box-shadow:
+        inset 0 0 4rem rgb(0 0 0 / 0.3),
+        0 2rem 5rem rgb(0 0 0 / 0.32);
+}
+
+.orbit-medium {
+    top: 0;
+    left: 2%;
+    width: 96%;
+    aspect-ratio: 1;
+    border-color: color-mix(in srgb, var(--paper) 9%, transparent);
+}
+
+.orbit-small {
+    top: 24%;
+    right: 1%;
+    width: 25%;
+    aspect-ratio: 1;
+    border-style: dashed;
+    border-color: rgb(245 166 35 / 0.55);
+}
+
+.orbit-dot {
+    top: 13%;
+    right: 12%;
+    width: 6%;
+    aspect-ratio: 1;
+    border: 0;
+    background: var(--signal);
+    box-shadow: 0 0 0 0.65rem rgb(245 166 35 / 0.12);
+}
+
+.portrait {
+    position: relative;
+    z-index: 1;
     width: 100%;
     height: 100%;
     display: block;
-    object-fit: cover;
-    border: 1px solid var(--line);
-    border-radius: 16px;
-    background: var(--panel);
+    object-fit: contain;
+    object-position: center bottom;
+    filter: drop-shadow(0 1.5rem 2rem rgb(0 0 0 / 0.28));
 }
 
-.profile-figure.show {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.terminal {
-    background: var(--panel);
-    border: 1px solid var(--line);
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.6);
+.side-detail {
+    position: absolute;
+    top: 48%;
+    z-index: 4;
+    width: min(23vw, 20rem);
     opacity: 0;
-    transform: translateY(14px);
+    transform: translateY(0.8rem);
 }
 
-.is-active .terminal {
-    animation: rise 0.7s ease-out 0.15s forwards;
+.is-active .side-detail {
+    animation: reveal 600ms ease-out 340ms forwards;
 }
 
-.terminal-head {
+.side-detail-left {
+    left: clamp(1.5rem, 4.5vw, 5rem);
+}
+
+.side-detail-right {
+    right: clamp(1.5rem, 4.5vw, 5rem);
+    text-align: right;
+}
+
+.social-block > p,
+.expertise-block > p {
+    margin-bottom: 0.85rem;
+    color: color-mix(in srgb, var(--paper) 65%, transparent);
+    font-size: clamp(0.95rem, 1.05vw, 1.08rem);
+    font-weight: 500;
+}
+
+.social-links {
     display: flex;
-    align-items: center;
-    gap: 0.4rem;
-    padding: 0.6rem 0.9rem;
-    border-bottom: 1px solid var(--line);
-    background: var(--panel-2);
-}
-
-.dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 999px;
-}
-.dot.r {
-    background: #e05a4e;
-}
-.dot.y {
-    background: #e6b450;
-}
-.dot.g {
-    background: #4f9b6e;
-}
-
-.terminal-title {
-    margin-left: 0.6rem;
-    font-family: var(--font-mono);
-    font-size: 0.68rem;
-    color: var(--muted);
-}
-
-.terminal-body {
-    padding: 1.1rem 1.2rem 1.3rem;
-    font-family: var(--font-mono);
-    font-size: 0.85rem;
-}
-
-.line {
-    color: var(--paper);
-    min-height: 1.4em;
-}
-
-.prompt {
-    color: var(--signal);
-    margin-right: 0.4em;
-}
-
-.cursor {
-    color: var(--signal);
-    animation: blink 1s step-end infinite;
-}
-
-.result {
-    margin-top: 0.5rem;
-    color: var(--signal);
-}
-
-.result strong {
-    color: var(--paper);
-}
-
-.identity {
-    margin-top: 2.25rem;
-    opacity: 0;
-    transform: translateY(16px);
-    transition:
-        opacity 0.6s ease,
-        transform 0.6s ease;
-}
-
-.identity.show {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.name {
-    font-family: var(--font-display);
-    font-weight: 600;
-    font-size: clamp(2.1rem, 5.5vw, 3.4rem);
-    line-height: 1.05;
-    color: var(--paper);
-    letter-spacing: -0.01em;
-}
-
-.role {
-    margin-top: 0.6rem;
-    font-family: var(--font-mono);
-    font-size: 0.95rem;
-    color: var(--depth);
-}
-
-.tagline {
-    margin-top: 1rem;
-    max-width: 54ch;
-    color: var(--muted);
-    line-height: 1.65;
-    font-size: 1rem;
-}
-
-.meta-row {
-    margin-top: 1.4rem;
-    display: flex;
-    flex-wrap: wrap;
     gap: 0.6rem;
 }
 
-.chip {
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
-    letter-spacing: 0.03em;
-    padding: 0.35rem 0.7rem;
-    border: 1px solid var(--line);
-    border-radius: 999px;
-    color: var(--muted);
+.social-links a {
+    width: 3rem;
+    height: 3rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid color-mix(in srgb, var(--paper) 14%, transparent);
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--panel) 66%, transparent);
+    color: color-mix(in srgb, var(--paper) 75%, transparent);
+    transition:
+        border-color 180ms ease,
+        color 180ms ease,
+        transform 180ms ease;
 }
 
-.chip-signal {
-    border-color: var(--signal-dim);
+.social-links a :deep(svg) {
+    width: 1.2rem;
+    height: 1.2rem;
+}
+
+.social-links a:hover {
+    border-color: var(--signal);
+    color: var(--signal);
+    transform: translateY(-2px);
+}
+
+.experience-block {
+    margin-top: clamp(3.5rem, 10vh, 6rem);
+}
+
+.stars {
+    display: flex;
+    gap: 0.18rem;
     color: var(--signal);
 }
 
-.cta-row {
-    margin-top: 1.75rem;
+.stars :deep(svg) {
+    width: 1.05rem;
+    height: 1.05rem;
+    fill: currentColor;
+}
+
+.experience-duration {
+    margin-top: 0.55rem;
+    color: var(--paper);
+    font-size: clamp(1rem, 1.15vw, 1.18rem);
+    line-height: 1.4;
+}
+
+.experience-duration strong {
+    color: var(--signal);
+    font-weight: 600;
+}
+
+.experience-context {
+    margin-top: 0.45rem;
+    color: color-mix(in srgb, var(--paper) 70%, transparent);
+    font-size: clamp(0.88rem, 0.95vw, 1rem);
+    line-height: 1.45;
+}
+
+.experience-domains {
+    display: block;
+    margin-top: 0.4rem;
+    color: color-mix(in srgb, var(--paper) 40%, transparent);
+    font-size: clamp(0.82rem, 0.9vw, 0.95rem);
+    line-height: 1.5;
+}
+
+.quote-block {
+    margin-left: auto;
+}
+
+.quote-block svg {
+    width: 2.75rem;
+    height: 2.75rem;
+    color: var(--signal);
+    fill: var(--signal);
+}
+
+.quote-block p {
+    margin-top: 0.65rem;
+    margin-left: auto;
+    color: color-mix(in srgb, var(--paper) 72%, transparent);
+    font-size: clamp(1.05rem, 1.2vw, 1.25rem);
+    line-height: 1.55;
+}
+
+.expertise-block {
+    margin-top: clamp(2.4rem, 6vh, 4rem);
+}
+
+.expertise-block ul {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.75rem;
+    justify-content: flex-end;
+    gap: 0.55rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.expertise-block li {
+    padding: 0.62rem 1rem;
+    border: 1px solid color-mix(in srgb, var(--paper) 12%, transparent);
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--panel) 72%, transparent);
+    color: color-mix(in srgb, var(--paper) 70%, transparent);
+    font-family: var(--font-mono);
+    font-size: clamp(0.8rem, 0.9vw, 0.92rem);
+}
+
+.expertise-block li.highlight {
+    border-color: var(--signal);
+    background: var(--signal);
+    color: var(--on-signal);
+}
+
+.hero-actions {
+    position: absolute;
+    bottom: clamp(5rem, 8vh, 5.8rem);
+    left: 50%;
+    z-index: 6;
+    display: flex;
+    gap: 0.5rem;
+    opacity: 0;
+    transform: translate(-50%, 0.8rem);
+}
+
+.is-active .hero-actions {
+    animation: action-reveal 600ms ease-out 560ms forwards;
 }
 
 .btn {
-    font-family: var(--font-mono);
-    font-size: 0.78rem;
-    letter-spacing: 0.03em;
-    padding: 0.7rem 1.3rem;
+    min-height: 3.15rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.48rem;
+    padding: 0.78rem 1.5rem;
+    border: 1px solid transparent;
     border-radius: 999px;
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    font-weight: 500;
     text-decoration: none;
+    white-space: nowrap;
     transition:
-        transform 0.18s ease,
-        background-color 0.18s ease,
-        border-color 0.18s ease,
-        color 0.18s ease;
+        transform 180ms ease,
+        border-color 180ms ease,
+        background-color 180ms ease;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
 }
 
 .btn-primary {
     background: var(--signal);
-    color: var(--ink);
-    border: 1px solid var(--signal);
+    color: var(--on-signal);
 }
 
-.btn-primary:hover {
-    transform: translateY(-2px);
+.btn-primary span {
+    width: 1rem;
+    height: 1rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: var(--on-signal);
+    color: var(--signal);
+    font-size: 0.4rem;
 }
 
-.btn-ghost {
-    border: 1px solid var(--line);
+.btn-secondary {
+    border-color: color-mix(in srgb, var(--paper) 26%, transparent);
+    background: color-mix(in srgb, var(--panel) 84%, transparent);
+    color: var(--paper);
+    backdrop-filter: blur(10px);
+}
+
+.btn-secondary:hover {
+    border-color: var(--signal);
+}
+
+.service-marquee {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 7;
+    overflow: hidden;
+    border-block: 1px solid rgb(245 166 35 / 0.28);
+    background: color-mix(in srgb, var(--panel) 94%, transparent);
     color: var(--paper);
 }
 
-.btn-ghost:hover {
-    border-color: var(--depth);
-    color: var(--depth);
-    transform: translateY(-2px);
+.service-marquee-track {
+    width: max-content;
+    display: flex;
+    animation: marquee-scroll 32s linear infinite;
 }
 
-.scroll-hint {
-    grid-column: 1 / -1;
-    margin-top: 1rem;
-    font-family: var(--font-mono);
-    font-size: 0.68rem;
-    color: var(--muted);
-    opacity: 0.7;
-    animation: bob 2.4s ease-in-out infinite;
+.service-marquee-group {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.service-marquee-group li {
+    display: flex;
+    align-items: center;
+    gap: clamp(1.25rem, 2.5vw, 2.75rem);
+    padding-block: 0.95rem;
+    padding-left: clamp(1.25rem, 2.5vw, 2.75rem);
+    font-family: var(--font-display);
+    font-size: clamp(1rem, 1.45vw, 1.3rem);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    white-space: nowrap;
+}
+
+.service-marquee-group li::after {
+    color: var(--signal);
+    content: '+';
+    font-size: 1.2em;
+    font-weight: 500;
 }
 
 .sr-only {
@@ -482,114 +710,229 @@ onMounted(() => {
     border: 0;
 }
 
-@keyframes rise {
+@keyframes reveal {
     to {
         opacity: 1;
         transform: translateY(0);
     }
 }
 
-@keyframes blink {
-    50% {
-        opacity: 0;
+@keyframes portrait-reveal {
+    to {
+        opacity: 1;
+        transform: translate(-50%, 0);
     }
 }
 
-@keyframes bob {
-    0%,
-    100% {
-        transform: translateY(0);
-    }
-    50% {
-        transform: translateY(4px);
+@keyframes action-reveal {
+    to {
+        opacity: 1;
+        transform: translate(-50%, 0);
     }
 }
 
-@media (max-width: 820px) {
-    .section-inner {
-        grid-template-columns: 1fr;
-        gap: 1.35rem;
-    }
-
-    .profile-figure {
-        justify-self: start;
-        width: min(72vw, 280px);
-        min-width: 0;
-    }
-
-    .profile-figure.expanded {
-        width: min(62vw, 240px);
-    }
-
-    .scroll-hint {
-        margin-top: 0.5rem;
+@keyframes seal-reveal {
+    to {
+        opacity: 1;
+        transform: rotate(8deg) scale(1);
     }
 }
 
-@media (max-width: 640px) {
+@keyframes marquee-scroll {
+    to {
+        transform: translateX(-50%);
+    }
+}
+
+@media (max-width: 900px) {
+    .availability-seal {
+        right: 2rem;
+    }
+
+    .portrait-wrap {
+        width: min(57vw, 37rem);
+        min-width: 26rem;
+    }
+
+    .side-detail {
+        width: 13.5rem;
+    }
+
+    .side-detail-left {
+        left: 2rem;
+    }
+
+    .side-detail-right {
+        right: 2rem;
+    }
+
+    .quote-block p {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 700px) {
     .hero {
-        align-items: stretch;
-    }
-
-    .section-inner {
-        max-height: 100%;
+        height: auto !important;
+        min-height: 100svh !important;
+        display: flex;
+        flex-direction: column;
+        overflow-x: hidden;
         overflow-y: auto;
         overscroll-behavior: contain;
-        padding-block: 5.25rem 2rem;
-        padding-inline: clamp(18px, 6vw, 30px);
-        align-items: start;
     }
 
-    .eyebrow {
+    .hero-inner {
+        height: auto;
+        min-height: 0;
+        flex: 1 0 auto;
+        display: grid;
+        grid-template-columns: 1fr;
+        justify-items: center;
+        padding: 6rem 1.2rem 0;
+        transform: translate(-0.4rem, clamp(5rem, 6vh, 6.25rem));
+    }
+
+    .hero-heading {
+        grid-row: 1;
+        width: 100%;
+        margin-inline: auto;
+        text-align: center;
+    }
+
+    .hero-heading h1 {
+        font-size: clamp(3rem, 12.5vw, 4rem);
+    }
+
+    .hero-role {
+        max-width: 23rem;
+        margin-inline: auto;
+        line-height: 1.45;
+    }
+
+    .availability-seal {
         display: none;
     }
 
-    .terminal-title {
+    .portrait-wrap {
+        position: relative;
+        bottom: auto;
+        left: auto;
+        grid-row: 2;
+        justify-self: center;
+        width: min(96vw, 34rem);
         min-width: 0;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
+        height: auto;
+        aspect-ratio: 4 / 5;
+        margin: 1.25rem auto 0;
+        transform: translateY(1.25rem);
     }
 
-    .terminal-body {
-        padding: 0.95rem;
-        font-size: 0.72rem;
-        overflow-wrap: anywhere;
+    .is-active .portrait-wrap {
+        animation-name: mobile-portrait-reveal;
     }
 
-    .line {
-        overflow-wrap: anywhere;
+    .hero-actions,
+    .side-detail {
+        display: none;
     }
 
-    .identity {
-        margin-top: 1.35rem;
+    .service-marquee {
+        position: relative;
+        margin-top: auto;
+    }
+}
+
+@media (max-width: 430px) {
+    .hero-inner {
+        padding-inline: 1rem;
     }
 
-    .name {
-        font-size: clamp(2rem, 12vw, 2.65rem);
+    .hero-greeting {
+        font-size: 1.35rem;
     }
 
-    .cta-row {
-        gap: 0.6rem;
+    .hero-location strong {
+        font-size: 1.05rem;
+    }
+
+    .side-detail-left,
+    .side-detail-right {
+        grid-template-columns: 1fr;
+    }
+
+    .hero-actions {
+        width: fit-content;
+        max-width: 100%;
     }
 
     .btn {
-        padding-inline: 1rem;
+        flex: 0 0 auto;
+    }
+}
+
+@keyframes mobile-portrait-reveal {
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .is-active .terminal {
+    .hero-heading,
+    .availability-seal,
+    .portrait-wrap,
+    .side-detail,
+    .hero-actions,
+    .is-active .hero-heading,
+    .is-active .availability-seal,
+    .is-active .portrait-wrap,
+    .is-active .side-detail,
+    .is-active .hero-actions {
         animation: none;
         opacity: 1;
-        transform: none;
     }
-    .identity,
-    .profile-figure {
+
+    .portrait-wrap,
+    .is-active .portrait-wrap {
+        transform: translate(-50%, 0);
+    }
+
+    .hero-actions,
+    .is-active .hero-actions {
+        transform: translate(-50%, 0);
+    }
+
+    .social-links a,
+    .btn {
         transition: none;
     }
-    .scroll-hint {
+
+    .service-marquee-track {
+        width: 100%;
         animation: none;
+    }
+
+    .service-marquee-group {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .service-marquee-group[aria-hidden='true'] {
+        display: none;
+    }
+
+    .service-marquee-group li {
+        white-space: normal;
+    }
+}
+
+@media (max-width: 700px) and (prefers-reduced-motion: reduce) {
+    .portrait-wrap,
+    .is-active .portrait-wrap,
+    .hero-actions,
+    .is-active .hero-actions {
+        transform: none;
     }
 }
 </style>

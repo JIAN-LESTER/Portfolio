@@ -138,7 +138,7 @@ const { isActiveSection } = useSectionSlide('resume');
 
 .btn-primary {
     background: var(--signal);
-    color: var(--ink);
+    color: var(--on-signal);
     border: 1px solid var(--signal);
 }
 

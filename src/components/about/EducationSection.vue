@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import EducationCard from '@/components/portfolio/EducationCard.vue';
+import EducationCard from '@/components/about/EducationCard.vue';
 import type { EducationItem } from '@/types/portfolio';
 
 defineProps<{

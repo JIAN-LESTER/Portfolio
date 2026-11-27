@@ -1,180 +1,72 @@
 <script setup lang="ts">
-import { computed } from 'vue';
+import { onMounted } from 'vue';
 import BackgroundField from '@/components/portfolio/BackgroundField.vue';
-import SectionNav from '@/components/portfolio/SectionNav.vue';
+import Navbar from '@/components/ui/Navbar.vue';
 import { provideScrollStage } from '@/composables/useScrollStage';
 import type { StageSection } from '@/composables/useScrollStage';
-import { portfolioData } from '@/data/portfolio';
 
-const sections: StageSection[] = [
-    { id: 'hero', label: '', slides: 1 },
-    { id: 'about', label: 'About', slides: 1 },
-    { id: 'skills', label: 'Tech\nStack', slides: 1 },
-    {
-        id: 'projects',
-        label: 'Projects',
-        slides: portfolioData.projects.length,
-    },
-    {
-        id: 'services',
-        label: 'What I\nDo',
-        slides: portfolioData.services.length,
-    },
-    { id: 'journey', label: 'Education\nExperience', slides: 3 },
-    { id: 'resume', label: 'Resume', slides: 1 },
-    { id: 'contact', label: 'Contact Me', slides: 1 },
-];
+const props = defineProps<{
+    sections: StageSection[];
+}>();
 
-const stage = provideScrollStage(sections);
+const stage = provideScrollStage(props.sections);
 
-const trackStyle = computed(() => ({
-    transform: `translate3d(0, calc(var(--vh, 1vh) * -100 * ${stage.state.activeSection}), 0)`,
-}));
+onMounted(() => {
+    const requestedSection = window.location.hash.replace('#', '');
+
+    if (!requestedSection) {
+        return;
+    }
+
+    const sectionIndex = props.sections.findIndex(
+        (section) => section.id === requestedSection,
+    );
+
+    if (sectionIndex < 0) {
+        console.error(
+            `[PortfolioLayout] Section "${requestedSection}" was not found on this page.`,
+        );
+        return;
+    }
+
+    stage.goToSection(sectionIndex);
+    console.info(
+        `[PortfolioLayout] Opened section "${requestedSection}" on the current page.`,
+    );
+});
 </script>
 
 <template>
-    <div class="stage">
+    <div
+        class="portfolio-layout relative min-h-screen overflow-x-clip bg-[var(--ink)] font-[var(--font-body)] text-[var(--paper)] [&_*:focus-visible]:outline-2 [&_*:focus-visible]:outline-offset-[3px] [&_*:focus-visible]:outline-[var(--signal)] [&_.hero]:h-svh [&_.hero]:min-h-svh [&_.hero]:overflow-hidden [&_.stage-section:not(.hero):not(.about):not(.services):not(.site-footer)]:py-[clamp(4rem,8vh,6rem)] [&_.stage-section]:relative [&_.stage-section]:z-[1] [&_.stage-section]:h-auto [&_.stage-section]:min-h-0 [&_.stage-section]:w-full [&_.stage-section]:scroll-mt-20 [&_.stage-section]:overflow-visible [&_.stage-section]:opacity-100 [&_.stage-section]:[backface-visibility:hidden] [&_.stage-section]:[transform:translateZ(0)] [&_[data-stage-scroll]]:max-h-none [&_[data-stage-scroll]]:overflow-y-visible [&_[data-stage-scroll]]:overscroll-auto motion-reduce:[&_.stage-section]:transition-none max-[780px]:[&_.hero]:h-auto max-[780px]:[&_.hero]:min-h-svh max-[780px]:[&_.hero]:overflow-visible"
+    >
         <BackgroundField />
+        <Navbar />
 
-        <a href="#hero" class="brand" @click.prevent="stage.goToSection(0)">
-            <span class="brand-mark">JLT</span>
-            <span class="brand-name">Jian Lester Tabarno</span>
-        </a>
-
-        <SectionNav
-            :sections="sections"
-            :active="stage.state.activeSection"
-            @go="stage.goToSection"
-        />
-
-        <div class="stage-track" :style="trackStyle">
+        <main class="relative">
             <slot />
-        </div>
+        </main>
     </div>
 </template>
 
-<style>
-/* Global tokens — intentionally unscoped so every portfolio section can use them. */
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
-
-:root {
-    --ink: #0b0e12;
-    --panel: #151a21;
-    --panel-2: #1b222b;
-    --line: #262f3a;
-    --paper: #ede9e2;
-    --muted: #8b93a1;
-    --signal: #f5a623;
-    --signal-dim: #7a5518;
-    --depth: #6c7bff;
-    --depth-dim: #2e3468;
-
-    --font-display: 'Space Grotesk', sans-serif;
-    --font-body: 'IBM Plex Sans', sans-serif;
-    --font-mono: 'JetBrains Mono', monospace;
-}
-
-html.stage-lock,
-html.stage-lock body {
-    height: 100%;
-    margin: 0;
-    overflow: hidden;
-    overscroll-behavior: none;
-    background: var(--ink);
-}
-
-body {
-    font-family: var(--font-body);
-    color: var(--paper);
-}
-
-/* Shared section sizing — each portfolio section component renders its own
-   root <section class="stage-section">, sized here so the layout can page
-   through them by translating .stage-track. */
-.stage-section {
-    position: relative;
-    width: 100%;
-    height: calc(var(--vh, 1vh) * 100);
-    flex-shrink: 0;
-    overflow: hidden;
-    z-index: 1;
-    opacity: 1;
-    transform: translateZ(0);
-    backface-visibility: hidden;
-}
-
-.stage-section.is-active {
-    opacity: 1;
-}
-
-*:focus-visible {
-    outline: 2px solid var(--signal);
-    outline-offset: 3px;
-}
-
-[v-cloak] {
-    display: none;
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .stage-section {
-        transition: none;
-    }
-}
-</style>
-
 <style scoped>
-.stage {
-    position: fixed;
-    inset: 0;
-    background: var(--ink);
-    overflow: hidden;
+/*
+ * Native document scrolling owns the vertical axis. These rules override
+ * legacy full-screen-stage styles that can otherwise trap wheel and touch
+ * input inside a section instead of allowing it to reach the page.
+ */
+.portfolio-layout :deep([data-stage-scroll]) {
+    max-height: none !important;
+    overflow-x: clip !important;
+    overflow-y: visible !important;
+    overscroll-behavior-y: auto !important;
 }
 
-.stage-track {
-    display: flex;
-    flex-direction: column;
-    transition: transform 0.85s cubic-bezier(0.65, 0, 0.35, 1);
-    will-change: transform;
-}
-
-.brand {
-    position: fixed;
-    top: clamp(1rem, 3vw, 1.75rem);
-    left: clamp(1rem, 3vw, 2rem);
-    z-index: 40;
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-    text-decoration: none;
-}
-
-.brand-mark {
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
-    letter-spacing: 0.08em;
-    color: var(--ink);
-    background: var(--signal);
-    padding: 0.25rem 0.5rem;
-    border-radius: 5px;
-}
-
-.brand-name {
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
-    color: var(--muted);
-    letter-spacing: 0.03em;
-}
-
-@media (max-width: 720px) {
-    .brand-name {
-        display: none;
-    }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .stage-track {
-        transition: none;
+@media (max-width: 780px) {
+    .portfolio-layout :deep(.stage-section) {
+        overflow-x: clip !important;
+        overflow-y: visible !important;
+        overscroll-behavior-y: auto !important;
     }
 }
 </style>
