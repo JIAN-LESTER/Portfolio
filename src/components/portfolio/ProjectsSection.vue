@@ -47,13 +47,6 @@ function cardWeight(index: number) {
                 <div>
                     <h2>My Projects</h2>
                 </div>
-
-                <a v-if="!showAll" class="projects-button" href="/projects">
-                    <span>See all projects</span>
-                    <span class="projects-button-icon" aria-hidden="true">
-                        <ArrowRight :size="18" />
-                    </span>
-                </a>
             </header>
 
             <div
@@ -88,6 +81,14 @@ function cardWeight(index: number) {
                 </article>
             </div>
 
+            <div v-if="!showAll" class="projects-actions">
+                <a class="projects-button" href="/projects">
+                    <span>See all projects</span>
+                    <span class="projects-button-icon" aria-hidden="true">
+                        <ArrowRight :size="18" />
+                    </span>
+                </a>
+            </div>
         </div>
     </section>
 </template>
@@ -124,7 +125,7 @@ function cardWeight(index: number) {
 .section-heading h2 {
     margin: 0;
     font-family: var(--font-display);
-    font-size: clamp(2rem, 4.2vw, 4.25rem);
+    font-size: var(--section-heading-size);
     font-weight: 600;
     line-height: 0.95;
     letter-spacing: -0.045em;
@@ -140,6 +141,8 @@ function cardWeight(index: number) {
 
 .projects-button {
     display: inline-flex;
+    width: fit-content;
+    max-width: 100%;
     min-height: 3rem;
     flex: 0 0 auto;
     align-items: center;
@@ -179,6 +182,12 @@ function cardWeight(index: number) {
 .projects-button:focus-visible {
     outline: 2px solid var(--signal);
     outline-offset: 3px;
+}
+
+.projects-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: clamp(1.25rem, 2.5vw, 2rem);
 }
 
 .project-carousel {
@@ -300,7 +309,7 @@ function cardWeight(index: number) {
     }
 
     .section-heading {
-        grid-template-columns: 1fr;
+        display: block;
         align-items: start;
     }
 
@@ -309,28 +318,23 @@ function cardWeight(index: number) {
     }
 
     .projects-button {
-        width: 100%;
-        justify-content: space-between;
+        width: fit-content;
     }
 
     .project-carousel {
-        height: 30rem;
-        margin-inline: calc(clamp(15px, 5vw, 80px) * -1);
-        padding-inline: clamp(15px, 5vw, 80px);
-        overflow-x: auto;
-        scroll-snap-type: x mandatory;
-        scrollbar-width: none;
-    }
-
-    .project-carousel::-webkit-scrollbar {
-        display: none;
+        flex-direction: column;
+        gap: 0.75rem;
+        height: auto;
+        overflow: visible;
     }
 
     .project-card,
     .project-card.is-exposed,
     .project-card.is-covered {
-        flex: 0 0 min(82vw, 27rem);
-        scroll-snap-align: center;
+        width: 100%;
+        min-height: 25rem;
+        flex: none;
+        cursor: default;
     }
 
     .project-copy {
@@ -341,6 +345,10 @@ function cardWeight(index: number) {
     .project-card.is-exposed .project-copy p {
         opacity: 1;
         transform: none;
+    }
+
+    .projects-actions {
+        justify-content: flex-start;
     }
 
     .interaction-hint span:first-child {

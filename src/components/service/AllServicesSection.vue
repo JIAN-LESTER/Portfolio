@@ -235,7 +235,7 @@ onMounted(() => {
     margin: 0;
     color: var(--paper);
     font-family: var(--font-display);
-    font-size: clamp(2.4rem, 5vw, 4.6rem);
+    font-size: var(--section-heading-size);
     font-weight: 700;
     letter-spacing: -0.06em;
     line-height: 0.98;
@@ -484,17 +484,34 @@ onMounted(() => {
             rgb(15 19 18 / 0.42)
         );
     }
+
+    .service-tabs {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        overflow: visible;
+        padding: 0.3rem;
+    }
+
+    .service-tab {
+        min-width: 0;
+        min-height: 3.35rem;
+        flex: 1 1 auto;
+        justify-content: flex-start;
+        padding: 0.6rem;
+        font-size: 0.7rem;
+        text-align: left;
+        white-space: normal;
+    }
+
+    .service-panel {
+        padding-top: 2rem;
+    }
 }
 
 @media (max-width: 600px) {
     .all-services-inner {
         padding-inline: 1rem;
     }
-
-    .all-services-header h2 {
-        font-size: clamp(2.35rem, 12vw, 3.6rem);
-    }
-
 }
 
 @media (prefers-reduced-motion: reduce) {

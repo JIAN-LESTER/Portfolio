@@ -69,7 +69,7 @@ h2 {
     margin: 0;
     color: var(--paper);
     font-family: var(--font-display);
-    font-size: clamp(2.5rem, 6.5vw, 6rem);
+    font-size: var(--section-heading-size);
     font-weight: 650;
     letter-spacing: -0.065em;
     line-height: 0.93;

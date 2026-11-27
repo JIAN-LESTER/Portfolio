@@ -37,7 +37,6 @@ function handleImageError() {
 <template>
     <section
         id="hero"
-        v-cloak
         class="stage-section hero"
         :class="{ 'is-active': isActiveSection }"
     >
@@ -773,6 +772,10 @@ function handleImageError() {
 
 @media (max-width: 700px) {
     .hero {
+        height: auto !important;
+        min-height: 100svh !important;
+        display: flex;
+        flex-direction: column;
         overflow-x: hidden;
         overflow-y: auto;
         overscroll-behavior: contain;
@@ -780,15 +783,20 @@ function handleImageError() {
 
     .hero-inner {
         height: auto;
-        min-height: 100vh;
-        min-height: 100svh;
+        min-height: 0;
+        flex: 1 0 auto;
         display: grid;
         grid-template-columns: 1fr;
-        padding: 6rem 1.2rem 2rem;
+        justify-items: center;
+        padding: 6rem 1.2rem 0;
+        transform: translate(-0.4rem, clamp(5rem, 6vh, 6.25rem));
     }
 
     .hero-heading {
         grid-row: 1;
+        width: 100%;
+        margin-inline: auto;
+        text-align: center;
     }
 
     .hero-heading h1 {
@@ -802,10 +810,7 @@ function handleImageError() {
     }
 
     .availability-seal {
-        top: 10.75rem;
-        right: 1rem;
-        width: 3.7rem;
-        height: 3.7rem;
+        display: none;
     }
 
     .portrait-wrap {
@@ -813,10 +818,12 @@ function handleImageError() {
         bottom: auto;
         left: auto;
         grid-row: 2;
-        width: min(100vw, 34rem);
+        justify-self: center;
+        width: min(96vw, 34rem);
         min-width: 0;
-        height: min(62vh, 34rem);
-        margin: 1.5rem auto 0;
+        height: auto;
+        aspect-ratio: 4 / 5;
+        margin: 1.25rem auto 0;
         transform: translateY(1.25rem);
     }
 
@@ -824,68 +831,14 @@ function handleImageError() {
         animation-name: mobile-portrait-reveal;
     }
 
-    .hero-actions {
-        position: relative;
-        bottom: auto;
-        left: auto;
-        grid-row: 3;
-        justify-content: center;
-        margin-top: -2.6rem;
-        transform: translateY(0.8rem);
-    }
-
-    .is-active .hero-actions {
-        animation-name: reveal;
-    }
-
+    .hero-actions,
     .side-detail {
-        position: relative;
-        top: auto;
-        right: auto;
-        left: auto;
-        width: 100%;
-        max-width: 28rem;
-        margin-inline: auto;
-        padding-top: 1.4rem;
-        border-top: 1px solid color-mix(in srgb, var(--paper) 10%, transparent);
-    }
-
-    .side-detail-left {
-        grid-row: 4;
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 1rem;
-        margin-top: 1.8rem;
-    }
-
-    .experience-block {
-        margin-top: 0;
-    }
-
-    .side-detail-right {
-        grid-row: 5;
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 1rem;
-        margin-top: 1.4rem;
-        text-align: left;
-    }
-
-    .quote-block,
-    .quote-block p {
-        margin-left: 0;
-    }
-
-    .expertise-block {
-        margin-top: 0;
-    }
-
-    .expertise-block ul {
-        justify-content: flex-start;
+        display: none;
     }
 
     .service-marquee {
         position: relative;
+        margin-top: auto;
     }
 }
 
@@ -902,21 +855,18 @@ function handleImageError() {
         font-size: 1.05rem;
     }
 
-    .availability-seal {
-        display: none;
-    }
-
     .side-detail-left,
     .side-detail-right {
         grid-template-columns: 1fr;
     }
 
     .hero-actions {
-        width: 100%;
+        width: fit-content;
+        max-width: 100%;
     }
 
     .btn {
-        flex: 1 1 0;
+        flex: 0 0 auto;
     }
 }
 

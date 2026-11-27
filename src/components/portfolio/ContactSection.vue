@@ -430,7 +430,7 @@ async function submitBuildRequest() {
     margin-top: 1rem;
     color: var(--paper);
     font-family: var(--font-display);
-    font-size: clamp(2.4rem, 5vw, 4.6rem);
+    font-size: var(--section-heading-size);
     font-weight: 700;
     line-height: 0.98;
     letter-spacing: -0.06em;
@@ -771,10 +771,6 @@ async function submitBuildRequest() {
     .success-toast {
         top: 0.75rem;
         right: 1rem;
-    }
-
-    .contact-copy h2 {
-        font-size: clamp(2.35rem, 12vw, 3.6rem);
     }
 
     .form-grid {

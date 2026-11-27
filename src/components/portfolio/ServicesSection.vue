@@ -55,13 +55,6 @@ onMounted(() => {
         <div class="services-inner" data-stage-scroll>
             <header class="services-header">
                 <h2 id="services-title">Services I provide</h2>
-
-                <a class="split-button" href="/services">
-                    <span>View all services</span>
-                    <span class="split-button-icon" aria-hidden="true">
-                        <ArrowRight :size="18" />
-                    </span>
-                </a>
             </header>
 
             <div class="service-grid">
@@ -75,6 +68,13 @@ onMounted(() => {
                     :reveal-delay="`${120 + index * 80}ms`"
                 />
             </div>
+
+            <a class="split-button" href="/services">
+                <span>View all services</span>
+                <span class="split-button-icon" aria-hidden="true">
+                    <ArrowRight :size="18" />
+                </span>
+            </a>
         </div>
     </section>
 </template>
@@ -91,6 +91,8 @@ onMounted(() => {
 }
 
 .services-inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
     width: min(100%, 92rem);
     margin-inline: auto;
     padding: clamp(6rem, 11vh, 8rem) clamp(1.25rem, 7vw, 6rem) clamp(4rem, 8vh, 6rem);
@@ -117,7 +119,7 @@ onMounted(() => {
     margin: 0;
     color: var(--paper);
     font-family: var(--font-display);
-    font-size: clamp(2.4rem, 5vw, 4.6rem);
+    font-size: var(--section-heading-size);
     font-weight: 700;
     letter-spacing: -0.06em;
     line-height: 0.98;
@@ -126,10 +128,16 @@ onMounted(() => {
 
 .split-button {
     display: inline-flex;
+    grid-column: 2;
+    grid-row: 1;
     min-height: 3rem;
     flex: 0 0 auto;
+    align-self: end;
     align-items: center;
     gap: 0.45rem;
+    width: fit-content;
+    max-width: 100%;
+    margin-bottom: clamp(2rem, 5vh, 3.4rem);
     padding: 0.28rem 0.3rem 0.28rem 1.15rem;
     border: 1px solid rgb(245 166 35 / 0.46);
     border-radius: 999px;
@@ -164,6 +172,7 @@ onMounted(() => {
 
 .service-grid {
     display: grid;
+    grid-column: 1 / -1;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: clamp(1rem, 2vw, 1.45rem);
     padding-top: 1.6rem;
@@ -190,6 +199,7 @@ onMounted(() => {
 
 @media (max-width: 600px) {
     .services-inner {
+        grid-template-columns: 1fr;
         padding-inline: 1rem;
     }
 
@@ -198,8 +208,11 @@ onMounted(() => {
         gap: 1.3rem;
     }
 
-    .services-header h2 {
-        font-size: clamp(2.35rem, 12vw, 3.6rem);
+    .split-button {
+        grid-column: 1;
+        grid-row: 3;
+        margin-top: clamp(1.25rem, 2.5vw, 2rem);
+        margin-bottom: 0;
     }
 }
 

@@ -358,8 +358,9 @@ function toggleTheme() {
 
     .nav-actions {
         display: grid;
-        grid-template-columns: 2.75rem minmax(0, 1fr);
+        grid-template-columns: 2.75rem max-content;
         justify-self: stretch;
+        justify-content: start;
         gap: 0.45rem;
         padding-top: 0.35rem;
         border-top: 1px solid var(--nav-divider);

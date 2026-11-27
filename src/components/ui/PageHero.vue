@@ -60,6 +60,7 @@ const handlePreviewError = (label: string) => {
                border-b border-[var(--paper)]/10
                px-5 pb-20 pt-32
                text-[var(--paper)] sm:px-8 lg:px-16"
+        :class="`page-hero--${variant}`"
     >
         <!-- Main content -->
         <div
@@ -216,6 +217,9 @@ const handlePreviewError = (label: string) => {
 }
 
 .page-hero-content {
+    position: relative;
+    z-index: 2;
+    isolation: isolate;
     align-items: flex-start;
     max-width: 90rem;
     text-align: left;
@@ -239,6 +243,9 @@ const handlePreviewError = (label: string) => {
 
 .page-hero-highlight-line {
     display: block;
+    width: max-content;
+    max-width: 100%;
+    white-space: nowrap;
 }
 
 .page-hero-content--showcase h1 {
@@ -458,7 +465,7 @@ const handlePreviewError = (label: string) => {
 
 @media (max-width: 640px) {
     .page-hero-content h1 {
-        max-width: 8ch;
+        max-width: 100%;
     }
 
     .page-hero-title,
@@ -471,13 +478,132 @@ const handlePreviewError = (label: string) => {
     }
 
     .page-hero-content--showcase .page-hero-highlight {
-        font-size: clamp(3.5rem, 16vw, 5.25rem);
+        font-size: clamp(2.9rem, 14.5vw, 4.75rem);
     }
 
     .page-hero-content p {
         max-width: 30rem;
     }
 
+}
+
+@media (max-width: 959px) {
+    .page-hero-copy {
+        position: relative;
+        z-index: 2;
+    }
+
+    .page-hero-content--showcase .hero-showcase {
+        position: relative;
+        z-index: 1;
+        display: block;
+        width: min(100%, 34rem);
+        min-height: clamp(18rem, 62vw, 25rem);
+        margin: clamp(2rem, 6vw, 3.5rem) 0 2rem auto;
+        opacity: 0.52;
+        pointer-events: none;
+        -webkit-mask-image: linear-gradient(
+            to bottom,
+            black 0%,
+            black 76%,
+            transparent 100%
+        );
+        mask-image: linear-gradient(
+            to bottom,
+            black 0%,
+            black 76%,
+            transparent 100%
+        );
+    }
+
+    .page-hero-content--services .hero-showcase {
+        opacity: 0.48;
+    }
+
+    .page-hero > .about-showcase {
+        position: absolute;
+        top: 0;
+        right: auto;
+        bottom: 0;
+        left: 50%;
+        z-index: 1;
+        display: block;
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        translate: -50% 0;
+        opacity: 0.28;
+        pointer-events: none;
+    }
+
+    .about-showcase img {
+        width: 100%;
+        margin: 0 auto;
+        object-position: center bottom;
+        -webkit-mask-image: linear-gradient(
+            to bottom,
+            transparent 0%,
+            rgb(0 0 0 / 0.18) 12%,
+            rgb(0 0 0 / 0.58) 28%,
+            black 46%,
+            black 100%
+        );
+        mask-image: linear-gradient(
+            to bottom,
+            transparent 0%,
+            rgb(0 0 0 / 0.18) 12%,
+            rgb(0 0 0 / 0.58) 28%,
+            black 46%,
+            black 100%
+        );
+    }
+}
+
+@media (max-width: 640px) {
+    .page-hero--about .page-hero-content--about {
+        position: absolute;
+        top: clamp(5.5rem, 12svh, 7rem);
+        right: 1.25rem;
+        left: 1.25rem;
+        width: auto;
+    }
+
+    .page-hero--about .page-hero-title {
+        color: var(--paper);
+        text-shadow: 0 0.2rem 1.1rem rgb(0 0 0 / 0.9);
+    }
+
+    .page-hero--about .page-hero-copy p {
+        color: color-mix(in srgb, var(--paper) 88%, transparent);
+        font-weight: 500;
+        text-shadow: 0 0.15rem 0.8rem rgb(0 0 0 / 0.95);
+    }
+
+    .page-hero--about > .about-showcase {
+        top: 31%;
+        height: 69%;
+        opacity: 0.92;
+    }
+
+    .page-hero--about .about-showcase img {
+        height: 100%;
+        object-fit: cover;
+        object-position: center top;
+        -webkit-mask-image: linear-gradient(
+            to bottom,
+            transparent 0%,
+            rgb(0 0 0 / 0.58) 8%,
+            black 16%,
+            black 100%
+        );
+        mask-image: linear-gradient(
+            to bottom,
+            transparent 0%,
+            rgb(0 0 0 / 0.58) 8%,
+            black 16%,
+            black 100%
+        );
+    }
 }
 
 @media (min-width: 960px) {

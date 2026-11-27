@@ -106,7 +106,7 @@ onMounted(() => {
 .section-heading h2 {
     margin: 0;
     font-family: var(--font-display);
-    font-size: clamp(2rem, 4vw, 3.8rem);
+    font-size: var(--section-heading-size);
     font-weight: 600;
     line-height: 1;
     letter-spacing: -0.045em;

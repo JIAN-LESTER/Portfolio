@@ -257,7 +257,7 @@ if (visibleGroups.value.length === 0) {
 h2 {
     margin: 0;
     font-family: var(--font-display);
-    font-size: clamp(2.3rem, 4.3vw, 4.5rem);
+    font-size: var(--section-heading-size);
     font-weight: 600;
     line-height: 1;
     letter-spacing: -0.055em;
@@ -413,10 +413,6 @@ h3 {
 
     .section-label {
         margin-bottom: 0;
-    }
-
-    h2 {
-        font-size: clamp(1.35rem, 6vw, 2.4rem);
     }
 
     h3 {

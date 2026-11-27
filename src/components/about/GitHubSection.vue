@@ -112,7 +112,7 @@ h2 {
     margin: 0;
     color: var(--paper);
     font-family: var(--font-display);
-    font-size: clamp(2rem, 4.6vw, 4rem);
+    font-size: var(--section-heading-size);
     font-weight: 650;
     letter-spacing: -0.05em;
     line-height: 1;

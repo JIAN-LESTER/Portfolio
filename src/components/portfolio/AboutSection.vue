@@ -21,11 +21,11 @@ withDefaults(
 const { isActiveSection } = useSectionSlide('about');
 
 const professionalRoles = [
-    'Frontend Developer',
+    'Mobile Application Developer',
     'Backend Developer',
     'AI Engineer',
     'Web Developer',
-    'Mobile Application Developer',
+    'Frontend Developer',
 ];
 
 const aboutSectionImage = '/images/aboutsection-transparent.png';
@@ -79,7 +79,7 @@ function handlePortraitError() {
                 </ul>
 
                 <figcaption
-                    class="relative z-30 mx-auto -mt-[1.4rem] flex w-max max-w-[92%] items-center gap-2 rounded-full border border-[rgb(245_166_35_/_0.3)] bg-[var(--panel)] px-[1.15rem] py-[0.75rem] text-center font-[var(--font-display)] text-[clamp(0.76rem,1.2vw,0.9rem)] leading-tight font-semibold tracking-[-0.015em] text-[var(--paper)] shadow-[0_0.9rem_2rem_rgb(0_0_0_/_0.24)]"
+                    class="primary-role-badge"
                 >
                     {{ personal.role }}
                 </figcaption>
@@ -90,7 +90,7 @@ function handlePortraitError() {
             >
             
                 <h2
-                    class="font-[var(--font-display)] text-[clamp(2.4rem,5vw,4.6rem)] leading-[0.98] font-bold tracking-[-0.06em] text-[var(--paper)] [text-wrap:balance] max-[780px]:text-[clamp(2.35rem,12vw,3.6rem)]"
+                    class="about-heading font-[var(--font-display)] leading-[0.98] font-bold tracking-[-0.06em] text-[var(--paper)] [text-wrap:balance]"
                 >
                     Who is {{ personal.name }}?
                 </h2>
@@ -208,6 +208,10 @@ function handlePortraitError() {
 </template>
 
 <style scoped>
+.about-heading {
+    font-size: var(--section-heading-size);
+}
+
 .role-badges {
     position: absolute;
     inset: 0;
@@ -232,6 +236,27 @@ function handlePortraitError() {
     font-size: clamp(0.58rem, 0.8vw, 0.68rem);
     line-height: 1.2;
     letter-spacing: 0.015em;
+    backdrop-filter: blur(0.65rem);
+}
+
+.primary-role-badge {
+    position: relative;
+    z-index: 30;
+    width: max-content;
+    max-width: 92%;
+    margin: -1.15rem auto 0;
+    padding: 0.62rem 0.9rem;
+    border: 1px solid rgb(245 166 35 / 0.32);
+    border-radius: 0.45rem;
+    background: color-mix(in srgb, var(--panel) 94%, transparent);
+    box-shadow: 0 0.9rem 2rem rgb(0 0 0 / 0.24);
+    color: var(--paper);
+    font-family: var(--font-display);
+    font-size: clamp(0.76rem, 1.2vw, 0.9rem);
+    font-weight: 650;
+    line-height: 1.2;
+    letter-spacing: -0.015em;
+    text-align: center;
     backdrop-filter: blur(0.65rem);
 }
 
@@ -260,8 +285,8 @@ function handlePortraitError() {
 }
 
 .role-badges li:nth-child(5) {
-    bottom: 7%;
-    left: -8%;
+    top: 5%;
+    right: -12%;
     transform: rotate(3deg);
 }
 
@@ -283,7 +308,7 @@ function handlePortraitError() {
     }
 
     .role-badges li:nth-child(5) {
-        left: -13%;
+        right: -19%;
     }
 }
 
@@ -295,14 +320,20 @@ function handlePortraitError() {
     }
 
     .role-badges li:nth-child(1),
-    .role-badges li:nth-child(3),
-    .role-badges li:nth-child(5) {
+    .role-badges li:nth-child(3) {
         left: -22%;
     }
 
     .role-badges li:nth-child(2),
-    .role-badges li:nth-child(4) {
+    .role-badges li:nth-child(4),
+    .role-badges li:nth-child(5) {
         right: -27%;
+    }
+
+    .primary-role-badge {
+        margin-top: -0.9rem;
+        padding: 0.52rem 0.72rem;
+        font-size: 0.72rem;
     }
 }
 </style>

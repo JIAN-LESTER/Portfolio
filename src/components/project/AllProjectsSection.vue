@@ -188,7 +188,7 @@ onMounted(() => {
     margin: 0;
     color: var(--paper);
     font-family: var(--font-display);
-    font-size: clamp(2.35rem, 5vw, 4.5rem);
+    font-size: var(--section-heading-size);
     font-weight: 700;
     letter-spacing: -0.06em;
     line-height: 0.95;

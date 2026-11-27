@@ -33,6 +33,13 @@
     --font-display: 'Space Grotesk', sans-serif;
     --font-body: 'IBM Plex Sans', sans-serif;
     --font-mono: 'JetBrains Mono', monospace;
+    --section-heading-size: clamp(2.4rem, 5vw, 4.6rem);
+}
+
+@media (max-width: 780px) {
+    :root {
+        --section-heading-size: clamp(2.35rem, 12vw, 3.6rem);
+    }
 }
 
 .dark {

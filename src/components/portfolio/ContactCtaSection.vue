@@ -71,6 +71,8 @@ function logContactNavigation() {
 
 .contact-cta-link {
     display: inline-flex;
+    width: fit-content;
+    max-width: 100%;
     min-height: 3rem;
     flex: 0 0 auto;
     align-items: center;
