@@ -17,7 +17,7 @@ const hobbies: Hobby[] = [
         title: 'Video games',
         description:
             'I enjoy the teamwork, strategy, and quick decision-making of competitive games.',
-        image: '/images/hobbies/dota-2-steam.jpg',
+        image: '/images/hobbies/dota-2-steam.webp',
         imageAlt: 'Dota 2 gameplay showing a competitive team fight',
         tags: ['Dota 2', 'MLBB', 'Valorant', 'Clash of Clans'],
     },
@@ -26,7 +26,7 @@ const hobbies: Hobby[] = [
         title: 'Gym',
         description:
             'Training keeps me disciplined, consistent, and ready to keep improving one session at a time.',
-        image: '/images/hobbies/gym.png',
+        image: '/images/hobbies/gym.webp',
         imageAlt: 'Athlete preparing to lift a barbell in a modern gym',
     },
     {
@@ -34,7 +34,7 @@ const hobbies: Hobby[] = [
         title: 'Swimming',
         description:
             'Time in the water clears my head and gives me a full reset for both focus and energy.',
-        image: '/images/hobbies/swimming.png',
+        image: '/images/hobbies/swimming.webp',
         imageAlt: 'Swimmer moving through a lap pool at water level',
     },
     {
@@ -42,7 +42,7 @@ const hobbies: Hobby[] = [
         title: 'Badminton',
         description:
             'Fast rallies bring together movement, quick reactions, and the fun of friendly competition.',
-        image: '/images/hobbies/badminton.png',
+        image: '/images/hobbies/badminton.webp',
         imageAlt: 'Badminton racket striking a shuttlecock during a rally',
     },
     {
@@ -50,7 +50,7 @@ const hobbies: Hobby[] = [
         title: 'Music',
         description:
             'Music is the background to deep work, quiet thinking, and the slower moments between projects.',
-        image: '/images/hobbies/music.png',
+        image: '/images/hobbies/music.webp',
         imageAlt: 'Headphones resting on a dark desk in warm light',  
     },
 ];

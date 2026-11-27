@@ -15,7 +15,7 @@ export const portfolioData: PortfolioData = {
         linkedin: 'https://www.linkedin.com/in/jian-lester-tabarno/',
         facebook: 'https://www.facebook.com/jian.lester.tabarno/',
         website: 'https://jianlester.vercel.app',
-        image: '/images/profile-transparent.png',
+        image: '/images/profile-transparent.webp',
         resumeUrl: '/images/Jian_Tabarno_Resume.pdf',
     },
 
@@ -51,7 +51,7 @@ export const portfolioData: PortfolioData = {
             endDate: 'December 2025',
             summary:
                 'A Cross-Platform Inquiry Assistant for CMU-OASP using AI-powered data retrieval.',
-            image: '/images/projects/oasp-assist-thumbnail.png',
+            image: '/images/projects/oasp-assist-thumbnail.webp',
             imageAlt: 'OASP Assist inquiry dashboard preview',
             description:
                 'Developed a cross-platform Flutter inquiry assistant that answers student inquiries using AI-powered data retrieval. Implemented a RAG workflow by converting knowledge-base content into embeddings, storing and searching them in Pinecone, and generating contextual responses through Gemini. Firebase services provide authentication, real-time data, and backend logic.',
@@ -72,7 +72,7 @@ export const portfolioData: PortfolioData = {
             endDate: 'October 2026',
             summary:
                 'A ticketing platform with in-app voice and video calls for support teams.',
-            image: '/images/projects/ticket-hub-thumbnail.png',
+            image: '/images/projects/ticket-hub-thumbnail.webp',
             imageAlt: 'Ticket Hub support workspace preview',
             description:
                 'Built a ticket management system for tracking requests, coordinating responses, and resolving support issues. Integrated WebRTC calls so users and support staff can discuss tickets directly in the app.',
@@ -85,7 +85,7 @@ export const portfolioData: PortfolioData = {
             endDate: 'Present',
             summary:
                 'An online store and ordering platform with rider delivery and a dedicated mobile app.',
-            image: '/images/projects/e-store.png',
+            image: '/images/projects/e-store.webp',
             imageAlt: 'Store System commerce and delivery preview',
             description:
                 'Developed an e-commerce system that connects product browsing, order placement, and delivery workflows. A dedicated React Native app supports mobile ordering and rider delivery operations.',
@@ -98,7 +98,7 @@ export const portfolioData: PortfolioData = {
             endDate: 'July 2026',
             summary:
                 'A job application tracker with an AI resume analyzer and browser extension.',
-            image: '/images/projects/jobtrackr.png',
+            image: '/images/projects/jobtrackr.webp',
             imageAlt: 'JobTrackr application tracking dashboard preview',
             description:
                 'Created a personal job tracking system for applications, statuses, notes, and follow-ups, with a browser extension for capturing job details and an AI resume analyzer that compares job descriptions for tailored recommendations.',
@@ -118,7 +118,7 @@ export const portfolioData: PortfolioData = {
             endDate: 'December 2025',
             summary:
                 'A QR-enabled operations platform for EZ Fitness Gym in Valencia, Bukidnon.',
-            image: '/images/projects/ez-fitness-system-thumbnail.png',
+            image: '/images/projects/ez-fitness-system-thumbnail.webp',
             imageAlt: 'EZ Fitness Gym Management operations preview',
             description:
                 'Built a gym management system with member management, attendance tracking, inventory, point-of-sale, and reporting features. Integrated QR-based member authentication to speed up check-ins and improve attendance accuracy for daily gym operations.',
@@ -131,7 +131,7 @@ export const portfolioData: PortfolioData = {
             endDate: 'October 2025',
             summary:
                 'A real-time weather monitoring system for Bukidnon.',
-            image: '/images/projects/bukcast-thumbnail.png',
+            image: '/images/projects/bukcast-thumbnail.webp',
             imageAlt: 'BukCast weather monitoring map preview',
             description:
                 'Developed a weather dashboard for Bukidnon with an interactive map, real-time weather data, and municipality-specific forecasts using Maps and Weather APIs.',
@@ -207,7 +207,7 @@ export const portfolioData: PortfolioData = {
                 'Role-based workflow and reporting platforms',
             ],
             tools: ['Laravel', 'Spring Boot', 'PostgreSQL', 'Docker'],
-            image: '/images/services/custom-software.jpg',
+            image: '/images/services/custom-software.webp',
             imageAlt: 'Code displayed on a laptop during software development',
         },
         {
@@ -222,7 +222,7 @@ export const portfolioData: PortfolioData = {
                 'Design systems and accessible UI patterns',
             ],
             tools: ['Figma', 'Canva', 'HTML', 'CSS'],
-            image: '/images/services/web-design.jpg',
+            image: '/images/services/web-design.webp',
             imageAlt: 'Designer working at a desk with digital design tools',
         },
         {
@@ -237,7 +237,7 @@ export const portfolioData: PortfolioData = {
                 'API-powered business applications',
             ],
             tools: ['Vue', 'React', 'Laravel', 'REST APIs'],
-            image: '/images/services/web-development.jpg',
+            image: '/images/services/web-development.webp',
             imageAlt: 'Web development workspace with code open on a laptop',
         },
         {
@@ -252,7 +252,7 @@ export const portfolioData: PortfolioData = {
                 'Mobile dashboards with live updates',
             ],
             tools: ['Flutter', 'Dart', 'Firebase', 'Android Studio'],
-            image: '/images/services/mobile-development.jpg',
+            image: '/images/services/mobile-development.webp',
             imageAlt: 'Smartphone displaying a collection of mobile applications',
         },
         {
@@ -267,7 +267,7 @@ export const portfolioData: PortfolioData = {
                 'AI-assisted support and search experiences',
             ],
             tools: ['Python', 'FastAPI', 'RAG', 'Pinecone'],
-            image: '/images/services/ai-development.jpg',
+            image: '/images/services/ai-development.webp',
             imageAlt: 'Abstract artificial intelligence technology visualization',
         },
         {
@@ -282,7 +282,7 @@ export const portfolioData: PortfolioData = {
                 'Usage dashboards and product workflows',
             ],
             tools: ['Next.js', 'PostgreSQL', 'Supabase', 'Vercel'],
-            image: '/images/services/saas.jpg',
+            image: '/images/services/saas.webp',
             imageAlt: 'Software analytics dashboard displayed on a monitor',
         },
         {
@@ -297,7 +297,7 @@ export const portfolioData: PortfolioData = {
                 'Early mobile and web interface concepts',
             ],
             tools: ['Figma', 'Canva', 'HTML', 'JavaScript'],
-            image: '/images/services/prototyping.jpg',
+            image: '/images/services/prototyping.webp',
             imageAlt: 'Designer sketching an interface prototype on paper',
         },
         {
@@ -312,7 +312,7 @@ export const portfolioData: PortfolioData = {
                 'User journeys for key product tasks',
             ],
             tools: ['Figma', 'Canva', 'Pen and paper'],
-            image: '/images/services/wireframing.jpg',
+            image: '/images/services/wireframing.webp',
             imageAlt: 'Interface wireframes being drawn on a tablet',
         },
     ],

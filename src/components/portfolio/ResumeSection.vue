@@ -40,7 +40,7 @@ const { isActiveSection } = useSectionSlide('resume');
                     <div class="preview-frame">
                         <img
                             class="preview-image"
-                            src="/images/Resume.png"
+                            src="/images/Resume.webp"
                             alt="Resume preview"
                             loading="eager"
                             decoding="async"

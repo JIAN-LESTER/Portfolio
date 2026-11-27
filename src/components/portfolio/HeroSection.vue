@@ -908,23 +908,27 @@ function handleImageError() {
         transition: none;
     }
 
+    .service-marquee {
+        overflow-x: auto;
+        scrollbar-width: none;
+    }
+
+    .service-marquee::-webkit-scrollbar {
+        display: none;
+    }
+
     .service-marquee-track {
-        width: 100%;
         animation: none;
     }
 
     .service-marquee-group {
-        flex-wrap: wrap;
-        justify-content: center;
+        flex-wrap: nowrap;
     }
 
     .service-marquee-group[aria-hidden='true'] {
         display: none;
     }
 
-    .service-marquee-group li {
-        white-space: normal;
-    }
 }
 
 @media (max-width: 700px) and (prefers-reduced-motion: reduce) {
