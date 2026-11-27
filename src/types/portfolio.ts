@@ -36,12 +36,15 @@ export interface ExperienceItem {
 
 export interface ProjectItem {
     title: string;
-    tag: string;
+   
+    status: 'completed' | 'ongoing' | 'upcoming';
+    startDate: string;
+    endDate: string;
     summary: string;
     description: string;
     stack: string[];
-    image: string;
-    imageAlt: string;
+    image?: string;
+    imageAlt?: string;
     github?: string;
     live?: string;
 }
@@ -50,6 +53,8 @@ export interface ServiceItem {
     code: string;
     title: string;
     paragraphs: string[];
+    examples: string[];
+    tools: string[];
     image: string;
     imageAlt: string;
 }

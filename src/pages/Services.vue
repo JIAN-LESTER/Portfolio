@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import AllServicesSection from '@/components/portfolio/AllServicesSection.vue';
+import ContactCtaSection from '@/components/portfolio/ContactCtaSection.vue';
+import AllServicesSection from '@/components/service/AllServicesSection.vue';
 import Footer from '@/components/ui/Footer.vue';
 import PageHero from '@/components/ui/PageHero.vue';
 import { portfolioData } from '@/data/portfolio';
@@ -13,16 +14,10 @@ import { portfolioData } from '@/data/portfolio';
             id="services-content"
             class="scroll-mt-24"
         >
-
             <AllServicesSection :services="portfolioData.services" />
-    <Footer :personal="portfolioData.personal" />
-
-            <!-- Development services -->
-            <!-- Design services -->
-            <!-- Development process -->
-            <!-- Frequently asked questions -->
+            <ContactCtaSection />
         </section>
-    </main>
-    
 
+        <Footer :personal="portfolioData.personal" />
+    </main>
 </template>
